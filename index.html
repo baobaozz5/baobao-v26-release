@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baobao OS v26.0 - Release Notes</title>
+    <style>
+        /* CSS 樣式區 */
+        :root { --bg-color: #0d1117; --card-bg: #161b22; --text-main: #c9d1d9; --text-secondary: #8b949e; --accent-green: #238636; --accent-green-hover: #2ea043; --border-color: #30363d; --tag-bg: #1f6feb; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; line-height: 1.6; }
+        .container { max-width: 800px; width: 100%; padding-bottom: 50px; }
+        
+        /* 頭像樣式 */
+        .profile-container { text-align: center; margin-bottom: 20px; }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent-green); object-fit: cover; background-color: var(--card-bg); box-shadow: 0 0 20px rgba(35, 134, 54, 0.3); }
+
+        .header { border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+        .title h1 { margin: 0; font-size: 1.8rem; }
+        .version-tag { background-color: var(--border-color); color: var(--text-main); padding: 4px 12px; border-radius: 20px; font-size: 0.9rem; font-family: monospace; margin-left: 10px; border: 1px solid #6e7681; }
+        .status-badge { background-color: var(--accent-green); color: white; padding: 5px 15px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
+        .section { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+        .section-header { background-color: var(--bg-color); padding: 10px 15px; border-bottom: 1px solid var(--border-color); font-weight: 600; display: flex; align-items: center; }
+        .icon { margin-right: 10px; }
+        .content-list { padding: 15px 20px; margin: 0; list-style: none; }
+        .content-list li { margin-bottom: 10px; position: relative; padding-left: 25px; }
+        .content-list li::before { content: "•"; color: var(--text-secondary); position: absolute; left: 0; font-weight: bold; }
+        .tag { font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; margin-right: 8px; font-weight: 600; text-transform: uppercase; }
+        .tag-feat { background-color: rgba(56, 139, 253, 0.15); color: #58a6ff; border: 1px solid rgba(56, 139, 253, 0.4); }
+        .tag-fix { background-color: rgba(46, 160, 67, 0.15); color: #3fb950; border: 1px solid rgba(46, 160, 67, 0.4); }
+        .tag-bug { background-color: rgba(218, 54, 51, 0.15); color: #f85149; border: 1px solid rgba(218, 54, 51, 0.4); }
+        .code-block { background-color: #0d1117; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 0.9rem; color: #ff7b72; border: 1px solid var(--border-color); margin-top: 10px; }
+        .btn-update { background-color: var(--accent-green); color: white; border: 1px solid rgba(27, 31, 35, 0.15); padding: 12px 24px; font-size: 1.1rem; font-weight: 600; border-radius: 6px; cursor: pointer; width: 100%; transition: 0.2s; margin-top: 20px; }
+        .btn-update:hover { background-color: var(--accent-green-hover); }
+        #celebration-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1000; text-align: center; }
+        .birthday-msg { color: white; font-size: 2rem; margin-bottom: 20px; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .sub-msg { color: #c9d1d9; font-size: 1.2rem; max-width: 80%; }
+        @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+        
+        @media (max-width: 600px) { .header { flex-direction: column; align-items: flex-start; } .status-badge { margin-top: 10px; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- 頭像區：請上傳一張檔名為 baobao.jpg 的照片到 GitHub -->
+        <div class="profile-container">
+            <img src="baobao.jpg" alt="Baobao Profile" class="profile-img" onerror="this.style.display='none'">
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="title">
+                <h1>
+                    <!-- 已更新為 Baobao OS v26.0 -->
+                    Baobao OS <span class="version-tag">v26.0</span> 
+                </h1>
+                <div style="color: var(--text-secondary); margin-top: 5px; font-size: 0.9rem;">
+                    <!-- 已更新為 2026-01-30 -->
+                    Latest release • 2026-01-30
+                </div>
+            </div>
+            <div class="status-badge">Stable Release</div>
+        </div>
+
+        <!-- Section 1: New Features -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🚀</span> New Features
+            </div>
+            <ul class="content-list">
+                <li>
+                    <span class="tag tag-feat">CORE</span>
+                    <strong>Wisdom Upgrade:</strong> Level up to 26. Logic processing speed increased.
+                </li>
+                <li>
+                    <span class="tag tag-feat">UI/UX</span>
+                    <strong>Appearance:</strong> Charm attribute enhanced. Beard texture rendering improved.
+                </li>
+                <li>
+                    <span class="tag tag-feat">NETWORK</span>
+                    <strong>Connection:</strong> Long-distance latency tolerance optimized. Heartbeat sync with Taiwan Server is now real-time.
+                </li>
+                <li>
+                    <span class="tag tag-feat">FUTURE</span>
+                    <!-- 這個 2026 計畫非常重要，呼應年份 -->
+                    <strong>Roadmap:</strong> 2026 Integration Plan (Taiwan x India) is now in Beta testing.
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Bug Fixes -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🐛</span> Bug Fixes & Improvements
+            </div>
+            <ul class="content-list">
+                <li>
+                    <span class="tag tag-fix">PATCH</span>
+                    Fixed an issue where "Work Mode" consumed too much RAM, causing "Reply Girlfriend" process to lag.
+                </li>
+                <li>
+                    <span class="tag tag-fix">PERF</span>
+                    Optimized caffeine intake algorithm. Chai/Coffee dependency remains high but stable.
+                </li>
+                <li>
+                     <span class="tag tag-fix">SYNC</span>
+                     Synchronized sleep schedule to match Taiwan time (GMT+8) occasionally.
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 3: Known Issues -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚠️</span> Known Issues
+            </div>
+            <ul class="content-list">
+                <li>
+                    <span class="tag tag-bug">WONTFIX</span>
+                    Still misses his girlfriend in Taiwan significantly. (Developer Note: This is a feature, not a bug.)
+                </li>
+                <li>
+                     <span class="tag tag-bug">CRITICAL</span>
+                     System crashes when Biryani levels are critically low.
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section 4: Developer Note -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span> Commit Message from Main Contributor
+            </div>
+            <div style="padding: 20px;">
+                <p>Happy 26th Birthday to my favorite human!</p>
+                <p>Even though there are 4,000 km of latency between our servers, my love for you has zero packet loss.</p>
+                
+                <div class="code-block">
+                    while(alive) {<br>
+                    &nbsp;&nbsp;love(you);<br>
+                    &nbsp;&nbsp;miss(you);<br>
+                    &nbsp;&nbsp;if (distance > 0) wait_for_meetup();<br>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Interaction Button -->
+        <button class="btn-update" onclick="deployUpdate()">
+            Deploy Birthday Cake 🎂
+        </button>
+
+    </div>
+
+    <!-- Celebration Overlay -->
+    <div id="celebration-overlay" onclick="closeOverlay()">
+        <div class="birthday-msg">Happy 26th Birthday! 🎉</div>
+        <div class="sub-msg">Baobao OS v26.0 installed successfully!</div>
+        <div style="margin-top:20px; font-size: 3rem;">❤️</div>
+        <div style="margin-top:30px; color: #8b949e; font-size: 0.8rem;">(Click anywhere to close)</div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let confetti = [];
+        const colors = ['#2ea043', '#1f6feb', '#db6d28', '#f85149', '#a371f7'];
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 5 + 5,
+                    speed: Math.random() * 5 + 2,
+                    angle: Math.random() * 6.28
+                });
+            }
+        }
+        function updateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti.forEach((p, index) => {
+                p.y += p.speed;
+                p.x += Math.sin(p.angle) * 2;
+                if (p.y > canvas.height) confetti[index].y = -10;
+                ctx.fillStyle = p.color;
+                ctx.fillRect(p.x, p.y, p.size, p.size);
+            });
+            requestAnimationFrame(updateConfetti);
+        }
+        function deployUpdate() {
+            document.getElementById('celebration-overlay').style.display = 'flex';
+            createConfetti();
+            updateConfetti();
+        }
+        function closeOverlay() {
+            document.getElementById('celebration-overlay').style.display = 'none';
+        }
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
