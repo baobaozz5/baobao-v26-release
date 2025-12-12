@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baobao OS v26.0 - Release Notes</title>
     <style>
-        /* CSS 樣式區 */
         :root { --bg-color: #0d1117; --card-bg: #161b22; --text-main: #c9d1d9; --text-secondary: #8b949e; --accent-green: #238636; --accent-green-hover: #2ea043; --border-color: #30363d; --tag-bg: #1f6feb; }
         body { background-color: var(--bg-color); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; line-height: 1.6; }
         .container { max-width: 800px; width: 100%; padding-bottom: 50px; }
         
-        /* 頭像樣式 */
+        /* New Profile Image Style */
         .profile-container { text-align: center; margin-bottom: 20px; }
         .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent-green); object-fit: cover; background-color: var(--card-bg); box-shadow: 0 0 20px rgba(35, 134, 54, 0.3); }
 
@@ -36,7 +35,6 @@
         .sub-msg { color: #c9d1d9; font-size: 1.2rem; max-width: 80%; }
         @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
-        
         @media (max-width: 600px) { .header { flex-direction: column; align-items: flex-start; } .status-badge { margin-top: 10px; } }
     </style>
 </head>
@@ -44,7 +42,7 @@
 
     <div class="container">
         
-        <!-- 頭像區：請上傳一張檔名為 baobao.jpg 的照片到 GitHub -->
+        <!-- Profile Image Area: Upload a photo named 'baobao.jpg' to your repo -->
         <div class="profile-container">
             <img src="baobao.jpg" alt="Baobao Profile" class="profile-img" onerror="this.style.display='none'">
         </div>
@@ -53,11 +51,9 @@
         <div class="header">
             <div class="title">
                 <h1>
-                    <!-- 已更新為 Baobao OS v26.0 -->
                     Baobao OS <span class="version-tag">v26.0</span> 
                 </h1>
                 <div style="color: var(--text-secondary); margin-top: 5px; font-size: 0.9rem;">
-                    <!-- 已更新為 2026-01-30 -->
                     Latest release • 2026-01-30
                 </div>
             </div>
@@ -76,7 +72,7 @@
                 </li>
                 <li>
                     <span class="tag tag-feat">UI/UX</span>
-                    <strong>Appearance:</strong> Charm attribute enhanced. Beard texture rendering improved.
+                    <strong>Appearance:</strong> Sweet and Charm attribute enhanced. Beard texture rendering improved.
                 </li>
                 <li>
                     <span class="tag tag-feat">NETWORK</span>
@@ -84,7 +80,6 @@
                 </li>
                 <li>
                     <span class="tag tag-feat">FUTURE</span>
-                    <!-- 這個 2026 計畫非常重要，呼應年份 -->
                     <strong>Roadmap:</strong> 2026 Integration Plan (India and Taiwan) is now in Beta testing.
                 </li>
             </ul>
@@ -102,7 +97,7 @@
                 </li>
                 <li>
                     <span class="tag tag-fix">PERF</span>
-                    Optimized tea intake algorithm. Chai dependency remains high but stable.
+                    Optimized protein intake algorithm. Chai/Coffee dependency remains high but stable.
                 </li>
                 <li>
                      <span class="tag tag-fix">SYNC</span>
@@ -119,11 +114,11 @@
             <ul class="content-list">
                 <li>
                     <span class="tag tag-bug">WONTFIX</span>
-                    Girkffriend still misses you in Taiwan significantly. (Developer Note: This is a feature, not a bug.)
+                    His girlfriend still misses him in Taiwan significantly. (Developer Note: This is a feature, not a bug.)
                 </li>
                 <li>
                      <span class="tag tag-bug">CRITICAL</span>
-                     System crashes when Chapati or dal levels are critically low.
+                     System crashes when Chapati levels are critically low.
                 </li>
             </ul>
         </div>
@@ -208,5 +203,4 @@
         });
     </script>
 </body>
-
 </html>
