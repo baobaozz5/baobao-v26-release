@@ -1,8 +1,11 @@
 # 👨‍💻 Project: Baobao OS (Version 26.0)
 
-## 📖 Introduction
+## 🚀 Update Available!
+**A critical patch (v26.0) is ready to install.**
+To complete the birthday update, please click the button below:
+[![Install v26.0](https://img.shields.io/badge/INSTALL_UPDATE-CLICK_HERE-success?style=for-the-badge&logo=github)]([https://baobaozz5.github.io/baobao-v26-release/])
 
-![Love](https://img.shields.io/badge/Love-100%25-red)
+## 📖 Introduction
 
 **Welcome to the official release page of Baobao OS v26.0!**
 
@@ -65,5 +68,6 @@ npm install chole-bhature --remote-wish
 <br>
 
 > © 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.
+
 
 
