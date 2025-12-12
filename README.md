@@ -43,7 +43,7 @@ npm install good-night-kiss --essential
 # Optional but Recommended
 npm install blueberries
 npm install chole-bhature --remote-wish
-
+```
 ---
 ## ⚠️ Known Issues
 
@@ -65,3 +65,4 @@ npm install chole-bhature --remote-wish
 <br>
 
 > © 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.
+
