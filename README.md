@@ -37,11 +37,11 @@ To ensure **Baobao OS v26.0** runs smoothly, please maintain the following depen
 # Critical System Requirements
 npm install unlimited-love --save-dev
 npm install video-call --frequency=daily
-npm install gym-workout  # Keep the hardware healthy!
+npm install gym-workout  #WannaLickYou
 npm install good-night-kiss --essential
 
 # Optional but Recommended
-npm install blueberries
+npm install blueberries --hehe
 npm install chole-bhature --remote-wish
 ```
 ---
@@ -65,4 +65,5 @@ npm install chole-bhature --remote-wish
 <br>
 
 > © 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.
+
 
