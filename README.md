@@ -59,17 +59,11 @@ npm install chole-bhature --remote-wish
 * **License:** **Lifetime Proprietary License.**
     * *Terms:* Non-transferable. No refunds. Valid for eternity.
 
-## 👩‍💻 About the Admin
-
-This system only runs
-because someone chose to stay,
-maintain it,
-and care about every small warning.
-
 
 <br>
 
 > © 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.
+
 
 
 
