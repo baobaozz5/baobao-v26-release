@@ -7,7 +7,7 @@
 
   <style>
     :root {
-      /* Base palette (clean + neutral) */
+      /* Base palette */
       --bg-color: #F7F7F5;
       --text-main: #1F2328;
       --text-secondary: rgba(31,35,40,0.62);
@@ -32,6 +32,20 @@
       --radius-sm: 10px;
 
       --tap: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+      /* iOS-ish typography */
+      --ui-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --ui-font-rounded: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+      /* App icon tokens */
+      --app-icon-size: 52px;
+      --app-icon-radius: 14px;
+      --app-icon-shadow: 0 14px 30px rgba(0,0,0,.18);
+      --app-icon-border: rgba(255,255,255,.55);
+
+      /* Dock magnification */
+      --dock-icon-size: 44px;
+      --dock-icon-radius: 14px;
     }
 
     * { box-sizing: border-box; }
@@ -47,7 +61,7 @@
 
       background: var(--bg-color);
       color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: var(--ui-font);
     }
 
     /* Liquid Glass background */
@@ -81,7 +95,6 @@
       position:relative;
       overflow:hidden;
     }
-    /* hairline highlight */
     .glass::before{
       content:"";
       position:absolute; inset:0;
@@ -99,7 +112,6 @@
       mask-composite: exclude;
       pointer-events:none;
     }
-    /* specular sweep */
     .glass::after{
       content:"";
       position:absolute;
@@ -112,7 +124,6 @@
       opacity:.55;
       pointer-events:none;
     }
-
     @media (hover:hover){
       .glass:hover{ box-shadow: var(--glass-shadow-soft); }
     }
@@ -127,26 +138,26 @@
       position: relative;
     }
 
-    /* Title */
     .workspace-title {
       margin-top: 8px;
       font-size: 11px;
       color: var(--text-secondary);
-      font-weight: 700;
-      letter-spacing: 0.6px;
+      font-weight: 800;
+      font-family: var(--ui-font-rounded);
+      letter-spacing: 0.9px;
       text-transform: uppercase;
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
-    /* App rows become glass cards */
+    /* App rows as Finder-ish list items */
     .app-block {
       display: flex;
       align-items: center;
       gap: 14px;
 
-      width: fit-content;
-      padding: 10px 14px;
-      border-radius: var(--radius-md);
+      width: min(520px, 92vw);
+      padding: 12px 14px;
+      border-radius: 18px;
       cursor: pointer;
 
       background: rgba(255,255,255,.42);
@@ -160,20 +171,66 @@
     .app-block:hover { transform: translateY(-1px); }
     .app-block:active { transform: translateY(0px) scale(.99); background: rgba(255,255,255,.52); }
 
-    .app-icon { font-size: 22px; line-height: 1; }
+    /* Mac/iOS app icon look */
+    .app-icon{
+      width: var(--app-icon-size);
+      height: var(--app-icon-size);
+      display: grid;
+      place-items: center;
+      border-radius: var(--app-icon-radius);
+      font-size: 28px;
+      line-height: 1;
+
+      background: rgba(255,255,255,.38);
+      border: 1px solid var(--app-icon-border);
+      box-shadow: var(--app-icon-shadow);
+      backdrop-filter: blur(18px) saturate(170%);
+      -webkit-backdrop-filter: blur(18px) saturate(170%);
+      position: relative;
+      overflow: hidden;
+
+      transform: translateZ(0);
+      transition: transform .22s var(--tap), box-shadow .22s var(--tap), filter .22s var(--tap);
+    }
+    .app-icon::before{
+      content:"";
+      position:absolute;
+      inset:-30% -30% auto -30%;
+      height: 70%;
+      transform: rotate(-14deg);
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,0));
+      opacity: .55;
+      pointer-events:none;
+    }
+    .app-icon::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: inherit;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -10px 24px rgba(0,0,0,.10);
+      pointer-events:none;
+    }
+    .app-block:hover .app-icon{
+      transform: scale(1.12);
+      filter: saturate(1.05) contrast(1.02);
+      box-shadow: 0 18px 40px rgba(0,0,0,.22);
+    }
+    .app-block:active .app-icon{ transform: scale(1.04); }
+
     .app-label {
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 720;
       color: var(--text-main);
+      letter-spacing: -0.01em;
     }
 
-    /* Sticky note as a warm glass widget */
+    /* Sticky note widget */
     .sticky-note {
       position: absolute;
       top: 48px;
       right: 48px;
-      width: 300px;
-      border-radius: var(--radius-lg);
+      width: 320px;
+      border-radius: 22px;
       padding: 16px 16px;
 
       background: rgba(255, 245, 212, .55);
@@ -204,11 +261,11 @@
       pointer-events:none;
     }
     .sticky-icon { font-size: 20px; margin-top: 0px; }
-    .sticky-content strong { font-weight: 800; }
+    .sticky-content strong { font-weight: 900; font-family: var(--ui-font-rounded); }
     .sticky-content ul { padding-left: 18px; margin: 6px 0 0 0; }
     .sticky-content li { margin-bottom: 4px; color: rgba(31,35,40,0.92); }
 
-    /* --- Windows (Liquid Glass modal) --- */
+    /* --- Windows --- */
     .window {
       position: absolute;
       top: 50%; left: 50%;
@@ -230,10 +287,7 @@
       opacity: 1;
       pointer-events: auto;
     }
-
-    .window.glass{
-      border-radius: 22px;
-    }
+    .window.glass{ border-radius: 22px; }
 
     .window-header {
       display: flex;
@@ -256,7 +310,8 @@
       display: flex;
       gap: 6px;
       align-items: center;
-      font-weight: 700;
+      font-weight: 800;
+      font-family: var(--ui-font-rounded);
     }
 
     .btn-close {
@@ -279,14 +334,14 @@
       max-height: calc(86vh - 52px);
     }
 
-    /* Content styling (clean, readable) */
-    .notion-style h1 { font-size: 30px; font-weight: 850; margin: 0 0 22px 0; letter-spacing: -0.02em; line-height: 1.15; }
-    .notion-style h2 { font-size: 20px; font-weight: 800; margin-top: 28px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(31,35,40,0.10); letter-spacing: -0.01em; }
+    /* README typography */
+    .notion-style h1 { font-size: 30px; font-weight: 920; margin: 0 0 22px 0; letter-spacing: -0.02em; line-height: 1.15; font-family: var(--ui-font-rounded); }
+    .notion-style h2 { font-size: 20px; font-weight: 880; margin-top: 28px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(31,35,40,0.10); letter-spacing: -0.01em; font-family: var(--ui-font-rounded); }
     .notion-style p { font-size: 16px; line-height: 1.7; margin: 0 0 10px 0; color: rgba(31,35,40,0.92); }
     .notion-style ul { padding-left: 22px; margin: 10px 0 16px 0; }
     .notion-style li { margin-bottom: 6px; line-height: 1.7; font-size: 16px; color: rgba(31,35,40,0.92); }
     .notion-style hr { border: 0; border-top: 1px solid rgba(31,35,40,0.10); margin: 26px 0; }
-    .notion-style strong { font-weight: 800; }
+    .notion-style strong { font-weight: 900; }
     .notion-style blockquote {
       margin: 18px 0 0 0;
       padding-left: 14px;
@@ -295,7 +350,6 @@
       font-style: italic;
     }
 
-    /* Code block (glass-ink) */
     .code-block {
       background: rgba(255,255,255,.42);
       border: 1px solid rgba(255,255,255,.40);
@@ -312,7 +366,6 @@
       margin: 14px 0;
       box-shadow: 0 10px 24px rgba(0,0,0,.08);
     }
-
     .notion-style code {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       background: rgba(31,35,40,0.10);
@@ -323,13 +376,59 @@
       border: 1px solid rgba(255,255,255,0.35);
     }
 
-    /* Terminal window specifics */
+    /* Photo */
+    #win-photo .window-content{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding: 18px;
+    }
+    #win-photo img{
+      max-width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.40);
+    }
+
+    /* Music */
+    #win-music .window-content{
+      text-align:center;
+      padding: 28px 28px 30px;
+    }
+    .music-ui h3{
+      margin: 0;
+      font-weight: 920;
+      letter-spacing: -0.01em;
+      font-family: var(--ui-font-rounded);
+    }
+    .music-ui p{
+      margin: 6px 0 0 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .play-btn {
+      background: rgba(31,35,40,0.88);
+      color: white;
+      border: 1px solid rgba(255,255,255,.20);
+      padding: 11px 22px;
+      border-radius: 12px;
+      font-weight: 820;
+      cursor: pointer;
+      margin-top: 18px;
+      transition: transform .15s var(--tap), opacity .15s var(--tap);
+      font-family: var(--ui-font);
+    }
+    .play-btn:hover { opacity: 0.92; }
+    .play-btn:active { transform: scale(.98); }
+
+    /* Terminal */
     #win-terminal .window-content {
       padding: 18px;
       background: rgba(16,18,20,.72);
       color: rgba(120, 255, 140, 0.92);
       border-bottom-left-radius: 22px;
       border-bottom-right-radius: 22px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
     #win-terminal .window-header{
       background: rgba(16,18,20,.55);
@@ -346,51 +445,138 @@
     }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* Photo */
-    #win-photo .window-content{
+    .term-line { opacity: 0.92; }
+    .term-muted { opacity: 0.70; }
+    .term-err { color: rgba(255,110,110,0.92); }
+    .term-ok { color: rgba(120,255,140,0.92); }
+
+    .term-input-row{
       display:flex;
-      justify-content:center;
+      gap:10px;
       align-items:center;
-      padding: 18px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.10);
     }
-    #win-photo img{
-      max-width: 100%;
-      border-radius: 16px;
-      box-shadow: 0 14px 40px rgba(0,0,0,.18);
-      border: 1px solid rgba(255,255,255,.40);
+    .term-prompt{ opacity:.85; }
+    #term-input{
+      flex:1;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(120,255,140,0.92);
+      border-radius: 10px;
+      padding: 10px 12px;
+      outline: none;
+      font-family: inherit;
+      font-size: 13px;
+    }
+    #term-input::placeholder{ color: rgba(120,255,140,0.50); }
+    .term-hint{
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: .70;
     }
 
-    /* Music window */
-    #win-music .window-content{
-      text-align:center;
-      padding: 28px 28px 30px;
+    /* Messages window */
+    #win-messages .window-content{
+      padding: 18px 18px 16px;
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .music-ui h3{
-      margin: 0;
-      font-weight: 850;
-      letter-spacing: -0.01em;
+    .chat{
+      flex: 1;
+      min-height: 320px;
+      max-height: 62vh;
+      overflow-y: auto;
+      padding: 8px 6px 2px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    .music-ui p{
-      margin: 6px 0 0 0;
-      color: var(--text-secondary);
+    .bubble{
+      max-width: 78%;
+      padding: 10px 12px;
+      border-radius: 18px;
+      font-size: 14.5px;
+      line-height: 1.45;
+      border: 1px solid rgba(255,255,255,.34);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      position: relative;
+      overflow:hidden;
+    }
+    .bubble.you{
+      align-self: flex-end;
+      background: rgba(35,131,226,.20);
+      color: rgba(31,35,40,0.92);
+    }
+    .bubble.me{
+      align-self: flex-start;
+      background: rgba(255,255,255,.46);
+      color: rgba(31,35,40,0.92);
+    }
+    .bubble small{
+      display:block;
+      margin-top: 6px;
+      font-size: 11px;
+      opacity: .62;
+    }
+
+    .typing{
+      display:inline-flex;
+      gap: 6px;
+      align-items:center;
+    }
+    .dot{
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(31,35,40,0.35);
+      animation: pop 1s infinite;
+    }
+    .dot:nth-child(2){ animation-delay: .15s; }
+    .dot:nth-child(3){ animation-delay: .30s; }
+    @keyframes pop{
+      0%, 60%, 100% { transform: translateY(0); opacity: .35; }
+      30% { transform: translateY(-4px); opacity: .75; }
+    }
+
+    .chat-compose{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      padding-top: 10px;
+      border-top: 1px solid rgba(31,35,40,0.10);
+    }
+    #msg-input{
+      flex:1;
+      border-radius: 14px;
+      padding: 11px 12px;
+      border: 1px solid rgba(255,255,255,.40);
+      background: rgba(255,255,255,.40);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      outline:none;
+      font-family: var(--ui-font);
       font-size: 14px;
+      color: rgba(31,35,40,0.92);
     }
-    .play-btn {
+    #msg-send{
+      border: 1px solid rgba(255,255,255,.30);
       background: rgba(31,35,40,0.88);
       color: white;
-      border: 1px solid rgba(255,255,255,.20);
-      padding: 11px 22px;
-      border-radius: 12px;
-      font-weight: 750;
-      cursor: pointer;
-      margin-top: 18px;
+      font-weight: 850;
+      padding: 10px 14px;
+      border-radius: 14px;
+      cursor:pointer;
       transition: transform .15s var(--tap), opacity .15s var(--tap);
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--ui-font);
     }
-    .play-btn:hover { opacity: 0.92; }
-    .play-btn:active { transform: scale(.98); }
+    #msg-send:hover{ opacity:.92; }
+    #msg-send:active{ transform: scale(.98); }
 
-    /* Bottom Dock */
+    /* Dock */
     .dock-container {
       position: fixed;
       bottom: 28px;
@@ -400,8 +586,9 @@
     }
     .dock {
       display: flex;
-      gap: 8px;
-      padding: 8px;
+      align-items: flex-end;
+      gap: 10px;
+      padding: 10px;
 
       background: rgba(255,255,255,.50);
       border: 1px solid rgba(255,255,255,.45);
@@ -429,19 +616,35 @@
     }
 
     .dock-item {
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 20px;
+      width: var(--dock-icon-size);
+      height: var(--dock-icon-size);
+      display:grid;
+      place-items:center;
+      border-radius: var(--dock-icon-radius);
+      font-size: 22px;
       cursor: pointer;
 
       background: rgba(255,255,255,.22);
       border: 1px solid rgba(255,255,255,.28);
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
 
-      transition: transform .18s var(--tap), background .18s var(--tap);
+      transition: transform .18s var(--tap), filter .18s var(--tap), width .18s var(--tap), height .18s var(--tap), background .18s var(--tap);
+      transform-origin: bottom center;
     }
-    .dock-item.main { font-size: 22px; }
-    .dock-item:hover { background: rgba(255,255,255,.35); transform: translateY(-1px); }
-    .dock-item:active { transform: translateY(0px) scale(.99); }
+    .dock-item.main{
+      font-size: 24px;
+      background: rgba(255,255,255,.30);
+    }
+
+    .dock:hover .dock-item{ transform: scale(1.0); }
+    .dock:hover .dock-item:hover{ transform: scale(1.35) translateY(-4px); }
+    .dock:hover .dock-item:hover + .dock-item,
+    .dock:hover .dock-item:has(+ .dock-item:hover){
+      transform: scale(1.15) translateY(-2px);
+    }
+    @supports not selector(.dock-item:has(+ .dock-item:hover)){
+      .dock:hover .dock-item:hover{ transform: scale(1.35) translateY(-4px); }
+    }
 
     .dock-sep{
       width:1px;
@@ -450,7 +653,7 @@
       border-radius: 999px;
     }
 
-    /* Overlay (Deploy screen) */
+    /* Overlay */
     #overlay {
       position: fixed; inset: 0;
       display: none;
@@ -462,7 +665,7 @@
       padding: 24px;
     }
     #overlay .overlay-card{
-      width: min(520px, 92vw);
+      width: min(560px, 92vw);
       border-radius: 26px;
       padding: 26px 22px 22px;
       text-align:center;
@@ -471,6 +674,8 @@
       font-size: 2.15rem;
       margin: 0 0 8px 0;
       letter-spacing: -0.02em;
+      font-family: var(--ui-font-rounded);
+      font-weight: 950;
     }
     #overlay p {
       margin: 0;
@@ -479,6 +684,12 @@
     #overlay .cake {
       margin-top: 18px;
       font-size: 4rem;
+    }
+    #overlay .easter{
+      margin-top: 14px;
+      font-size: 14px;
+      color: rgba(31,35,40,0.78);
+      line-height: 1.55;
     }
 
     /* Confetti canvas */
@@ -525,28 +736,46 @@
 
     <div class="workspace-title">Baobao Workspace /</div>
 
+    <!-- Apps -->
     <div class="app-block" onclick="openWindow('win-readme')">
-      <span class="app-icon">📄</span>
+      <span class="app-icon" style="background:
+        linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.20)),
+        radial-gradient(circle at 30% 20%, rgba(35,131,226,.35), transparent 55%);">📄</span>
       <span class="app-label">README.md</span>
     </div>
 
+    <div class="app-block" onclick="openWindow('win-messages'); primeMessages();">
+      <span class="app-icon" style="background:
+        linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.20)),
+        radial-gradient(circle at 30% 20%, rgba(52,199,89,.30), transparent 55%);">💬</span>
+      <span class="app-label">Messages.app</span>
+    </div>
+
     <div class="app-block" onclick="openWindow('win-photo')">
-      <span class="app-icon">🖼️</span>
+      <span class="app-icon" style="background:
+        linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.20)),
+        radial-gradient(circle at 30% 20%, rgba(232,62,140,.32), transparent 55%);">🖼️</span>
       <span class="app-label">Us.jpg</span>
     </div>
 
     <div class="app-block" onclick="openWindow('win-music')">
-      <span class="app-icon">🎵</span>
+      <span class="app-icon" style="background:
+        linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.20)),
+        radial-gradient(circle at 30% 20%, rgba(245,166,35,.30), transparent 55%);">🎵</span>
       <span class="app-label">Voice Note.mp3</span>
     </div>
 
-    <div class="app-block" onclick="openWindow('win-terminal'); runTerminal();">
-      <span class="app-icon">📟</span>
+    <div class="app-block" onclick="openWindow('win-terminal'); runTerminal(); focusTerminal();">
+      <span class="app-icon" style="background:
+        linear-gradient(180deg, rgba(255,255,255,.48), rgba(255,255,255,.14)),
+        radial-gradient(circle at 30% 20%, rgba(16,18,20,.35), transparent 60%);">📟</span>
       <span class="app-label">Terminal.exe</span>
     </div>
 
-    <div class="app-block" onclick="alert('⚠️ System Alert: \\n\\nCannot delete \\'Distance\\'. \\nReason: Fix pending for Feb 2026.')">
-      <span class="app-icon">🗑️</span>
+    <div class="app-block" onclick="openDistance()">
+      <span class="app-icon" style="background:
+        linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.20)),
+        radial-gradient(circle at 30% 20%, rgba(214,59,59,.28), transparent 55%);">🗑️</span>
       <span class="app-label">Distance</span>
     </div>
   </div>
@@ -594,13 +823,13 @@
       <p>To ensure <strong>Baobao OS v26.0</strong> runs smoothly, please maintain the following dependencies:</p>
 
       <div class="code-block"># Critical System Requirements
-npm install unlimited-love 
+npm install unlimited-love
 npm install video-call --frequency=daily
-npm install gym-workout --Wanna Lick You
-npm install good-night-kiss 
-npm install worldguessr-india 
+npm install gym-workout --WannaLickYou
+npm install good-night-kiss
+npm install worldguessr-india
 npm install ek-min --peewell
-        
+
 # Optional but Recommended
 npm install blueberries --hehe
 npm install chole-bhature --remote-wish</div>
@@ -640,6 +869,22 @@ npm install chole-bhature --remote-wish</div>
     </div>
   </div>
 
+  <!-- Messages window -->
+  <div id="win-messages" class="window glass" style="max-width: 560px;">
+    <div class="window-header">
+      <div class="window-breadcrumb">💬 Messages</div>
+      <button class="btn-close" onclick="closeWindow('win-messages')">✕</button>
+    </div>
+    <div class="window-content">
+      <div id="chat" class="chat"></div>
+
+      <div class="chat-compose">
+        <input id="msg-input" type="text" placeholder="Write something… (or just press Send)" />
+        <button id="msg-send" onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Photo window -->
   <div id="win-photo" class="window glass">
     <div class="window-header">
@@ -652,15 +897,22 @@ npm install chole-bhature --remote-wish</div>
     </div>
   </div>
 
-  <!-- Terminal window -->
+  <!-- Terminal window (interactive) -->
   <div id="win-terminal" class="window glass">
     <div class="window-header">
       <div class="window-breadcrumb" style="color:rgba(255,255,255,.65)">📟 Terminal</div>
       <button class="btn-close" onclick="closeWindow('win-terminal')" style="color:rgba(255,255,255,.70)">✕</button>
     </div>
     <div class="window-content">
-      <div id="terminal-content" style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size:14px; line-height:1.6;"></div>
-      <span class="cursor"></span>
+      <div id="terminal-content"></div>
+
+      <div class="term-input-row">
+        <span class="term-prompt">&gt;</span>
+        <input id="term-input" type="text" autocomplete="off" spellcheck="false"
+               placeholder="try: help  |  love --status  |  hug --request  |  song --play" />
+      </div>
+
+      <div class="term-hint term-muted">Tip: also try <b>open messages</b> or <b>open readme</b>. (And yes… there is a secret key combo.)</div>
     </div>
   </div>
 
@@ -682,6 +934,7 @@ npm install chole-bhature --remote-wish</div>
   <div class="dock-container">
     <div class="dock">
       <div class="dock-item" onclick="openWindow('win-readme')" title="Readme">📄</div>
+      <div class="dock-item" onclick="openWindow('win-messages'); primeMessages();" title="Messages">💬</div>
       <div class="dock-item" onclick="openWindow('win-photo')" title="Photos">🖼️</div>
       <div class="dock-sep"></div>
       <div class="dock-item main" onclick="deploySystem()" title="DEPLOY">🚀</div>
@@ -691,9 +944,10 @@ npm install chole-bhature --remote-wish</div>
   <!-- Overlay -->
   <div id="overlay" onclick="hideOverlay()">
     <div class="overlay-card glass">
-      <h1>Happy 26th Birthday!</h1>
-      <p>Baobao OS Update Complete.</p>
-      <div class="cake">🎂</div>
+      <h1 id="overlay-title">Happy 26th Birthday!</h1>
+      <p id="overlay-sub">Baobao OS Update Complete.</p>
+      <div class="cake" id="overlay-emoji">🎂</div>
+      <div class="easter" id="overlay-easter" style="display:none;"></div>
       <p style="margin-top:12px; font-size:12px; opacity:.75;">(Tap anywhere to close)</p>
     </div>
   </div>
@@ -701,7 +955,9 @@ npm install chole-bhature --remote-wish</div>
   <canvas id="confetti-canvas"></canvas>
 
   <script>
-    // Window Management
+    /* =========================
+       Window Management
+       ========================= */
     function openWindow(id) {
       document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
       const el = document.getElementById(id);
@@ -712,46 +968,20 @@ npm install chole-bhature --remote-wish</div>
       if (el) el.classList.remove('open');
     }
 
-    // Audio
+    /* =========================
+       Audio
+       ========================= */
     const audio = new Audio('voice-note.mp3');
     audio.preload = 'auto';
     function playAudio() {
       audio.play().catch(() => alert("Please upload 'voice-note.mp3' next to this HTML file!"));
     }
 
-    // Terminal Auto-Type
-    function runTerminal() {
-      const termContent = document.getElementById('terminal-content');
-      termContent.innerHTML = "";
-      const lines = [
-        "> connect --target=Naveen",
-        "> Resolving heart... found.",
-        "> Authentication: Girlfriend-Access-Token... Verified.",
-        "> Downloading love packages...",
-        ".......................... 100%",
-        "> Happy Birthday, Baobao! ❤️"
-      ];
-      let lineIndex = 0;
-
-      function typeLine() {
-        if (lineIndex < lines.length) {
-          termContent.innerHTML += lines[lineIndex] + "<br>";
-          lineIndex++;
-          setTimeout(typeLine, 780);
-        }
-      }
-      setTimeout(typeLine, 420);
-    }
-
-    // Overlay helpers
-    function hideOverlay(){
-      document.getElementById('overlay').style.display = 'none';
-    }
-
-    // Confetti Logic (kept simple, works anywhere)
+    /* =========================
+       Confetti
+       ========================= */
     const canvas = document.getElementById('confetti-canvas');
     const ctx = canvas.getContext('2d');
-
     function resizeCanvas(){
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -765,7 +995,7 @@ npm install chole-bhature --remote-wish</div>
 
     function createConfetti() {
       confetti = [];
-      for (let i = 0; i < 160; i++) {
+      for (let i = 0; i < 170; i++) {
         confetti.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height - canvas.height,
@@ -776,15 +1006,12 @@ npm install chole-bhature --remote-wish</div>
         });
       }
     }
-
     function updateConfetti() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       let active = 0;
-
       confetti.forEach((p) => {
         p.y += p.speed;
         p.x += Math.sin(p.angle) * 2;
-
         if (p.y < canvas.height) {
           ctx.fillStyle = p.color;
           ctx.fillRect(p.x, p.y, p.size, p.size);
@@ -795,21 +1022,298 @@ npm install chole-bhature --remote-wish</div>
           active++;
         }
       });
-
       if (active > 0) requestAnimationFrame(updateConfetti);
     }
 
-    function deploySystem() {
+    function showOverlay({title, sub, emoji, easterText}){
       const overlay = document.getElementById('overlay');
-      overlay.style.display = 'flex';
+      document.getElementById('overlay-title').textContent = title || "Happy 26th Birthday!";
+      document.getElementById('overlay-sub').textContent = sub || "Baobao OS Update Complete.";
+      document.getElementById('overlay-emoji').textContent = emoji || "🎂";
 
-      // Try play audio (may require user gesture, but deploy is a gesture)
+      const easter = document.getElementById('overlay-easter');
+      if (easterText) {
+        easter.style.display = 'block';
+        easter.innerHTML = easterText;
+      } else {
+        easter.style.display = 'none';
+        easter.innerHTML = "";
+      }
+
+      overlay.style.display = 'flex';
+    }
+
+    function hideOverlay(){
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    function deploySystem() {
+      showOverlay({ title: "Happy 26th Birthday!", sub: "Baobao OS Update Complete.", emoji: "🎂" });
+
       audio.play().catch(() => { /* ignore */ });
 
       isConfettiSpawning = true;
       createConfetti();
       updateConfetti();
       setTimeout(() => { isConfettiSpawning = false; }, 2800);
+    }
+
+    /* =========================
+       Distance (make it a window-ish alert)
+       ========================= */
+    function openDistance(){
+      showOverlay({
+        title: "System Alert",
+        sub: "Cannot delete 'Distance'.",
+        emoji: "⚠️",
+        easterText: "Reason: Fix pending for <b>Feb 2026</b>.<br>Temporary workaround: <b>VideoCall API</b> + <b>GoodNightKiss</b>."
+      });
+    }
+
+    /* =========================
+       Terminal (interactive commands)
+       ========================= */
+    const termContent = document.getElementById('terminal-content');
+    const termInput = document.getElementById('term-input');
+
+    function focusTerminal(){
+      setTimeout(() => termInput && termInput.focus(), 120);
+    }
+
+    function termPrint(text, cls){
+      const div = document.createElement('div');
+      div.className = 'term-line' + (cls ? (' ' + cls) : '');
+      div.innerHTML = text;
+      termContent.appendChild(div);
+      termContent.scrollTop = termContent.scrollHeight;
+    }
+
+    function runTerminal() {
+      termContent.innerHTML = "";
+      const bootLines = [
+        "<span class='term-muted'>> boot --profile=Naveen</span>",
+        "> Resolving heart... <span class='term-ok'>found</span>.",
+        "> Authentication: Girlfriend-Access-Token... <span class='term-ok'>Verified</span>.",
+        "> Type <b>help</b> to see commands."
+      ];
+      let i = 0;
+      function step(){
+        if (i < bootLines.length){
+          termPrint(bootLines[i]);
+          i++;
+          setTimeout(step, 520);
+        }
+      }
+      step();
+    }
+
+    function normalizeCmd(s){
+      return (s || "").trim().replace(/\s+/g, " ");
+    }
+
+    function handleCommand(raw){
+      const cmd = normalizeCmd(raw);
+      if (!cmd)́) return;
+
+      termPrint(`<span class="term-muted">&gt; ${escapeHtml(cmd)}</span>`);
+
+      const lower = cmd.toLowerCase();
+
+      if (lower === "help"){
+        termPrint(
+          "Commands:<br>" +
+          "<span class='term-muted'>- love --status</span><br>" +
+          "<span class='term-muted'>- hug --request</span><br>" +
+          "<span class='term-muted'>- song --play</span><br>" +
+          "<span class='term-muted'>- open messages | open readme | open photo</span><br>" +
+          "<span class='term-muted'>- clear</span><br>" +
+          "<span class='term-muted'>Bonus:</span> there is a secret key combo 😉"
+        , "term-muted");
+        return;
+      }
+
+      if (lower === "clear"){
+        termContent.innerHTML = "";
+        termPrint("<span class='term-muted'>> screen cleared.</span>", "term-muted");
+        return;
+      }
+
+      if (lower === "love --status"){
+        termPrint("Love service: <span class='term-ok'>running ✅</span>", "term-ok");
+        termPrint("Uptime: <span class='term-ok'>99.9%</span> (downtime only when you skip meals 😌)", "term-muted");
+        return;
+      }
+
+      if (lower === "hug --request"){
+        termPrint("Request received: <span class='term-ok'>queued ✅</span>", "term-ok");
+        termPrint("ETA: Feb 2026. Priority: <b>highest</b>.", "term-muted");
+        return;
+      }
+
+      if (lower === "song --play"){
+        openWindow('win-music');
+        setTimeout(() => playAudio(), 120);
+        termPrint("Launching Voice Note… <span class='term-ok'>ok</span>", "term-ok");
+        return;
+      }
+
+      if (lower === "open messages" || lower === "open message"){
+        openWindow('win-messages');
+        primeMessages();
+        termPrint("Opening Messages.app… <span class='term-ok'>ok</span>", "term-ok");
+        return;
+      }
+      if (lower === "open readme" || lower === "open README"){
+        openWindow('win-readme');
+        termPrint("Opening README.md… <span class='term-ok'>ok</span>", "term-ok");
+        return;
+      }
+      if (lower === "open photo" || lower === "open us.jpg" || lower === "open us"){
+        openWindow('win-photo');
+        termPrint("Opening Us.jpg… <span class='term-ok'>ok</span>", "term-ok");
+        return;
+      }
+
+      // cute hidden command
+      if (lower === "open abi"){
+        termPrint("Found: <b>Abi</b>", "term-ok");
+        termPrint("Status: <b>yours</b> (non-transferable).", "term-muted");
+        termPrint("Note: If you miss her, try <b>video-call --now</b> 😌", "term-muted");
+        return;
+      }
+
+      termPrint(`Unknown command: <span class="term-err">${escapeHtml(cmd)}</span>`, "term-err");
+      termPrint("Try: <b>help</b>", "term-muted");
+    }
+
+    function escapeHtml(str){
+      return (str || "").replace(/[&<>"']/g, (m) => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[m]));
+    }
+
+    termInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter'){
+        const value = termInput.value;
+        termInput.value = "";
+        handleCommand(value);
+      }
+    });
+
+    /* =========================
+       Messages (bubbles + typing + send)
+       ========================= */
+    const chatEl = document.getElementById('chat');
+    const msgInput = document.getElementById('msg-input');
+
+    let messagesPrimed = false;
+    function addBubble(text, who, meta){
+      const b = document.createElement('div');
+      b.className = 'bubble ' + (who === 'you' ? 'you' : 'me');
+      b.innerHTML = text + (meta ? `<small>${meta}</small>` : '');
+      chatEl.appendChild(b);
+      chatEl.scrollTop = chatEl.scrollHeight;
+    }
+
+    function addTyping(){
+      const b = document.createElement('div');
+      b.className = 'bubble me';
+      b.id = 'typing-bubble';
+      b.innerHTML = `<span class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><small>Naveen is typing…</small>`;
+      chatEl.appendChild(b);
+      chatEl.scrollTop = chatEl.scrollHeight;
+    }
+    function removeTyping(){
+      const t = document.getElementById('typing-bubble');
+      if (t) t.remove();
+    }
+
+    function primeMessages(){
+      if (messagesPrimed) return;
+      messagesPrimed = true;
+
+      chatEl.innerHTML = "";
+      addBubble("Happy birthday, Baobao OS v26.0 is ready 🫧", "you", "Abi");
+      addBubble("ok but… do we have a patch for Distance?", "me", "Naveen");
+      addBubble("Fix scheduled for Feb 2026. Until then: VideoCall API + GoodNightKiss 😌", "you", "Abi");
+      addBubble("approved. also you’re my favorite feature.", "me", "Naveen");
+    }
+
+    function sendMessage(){
+      const text = (msgInput.value || "").trim();
+      const payload = text.length ? escapeHtml(text) : "sending u a small update…";
+      msgInput.value = "";
+
+      addBubble(payload, "you", "Abi");
+
+      // typing then reply
+      addTyping();
+      setTimeout(() => {
+        removeTyping();
+        addBubble(
+          "Received ✅<br><b>Happy birthday, Naveen.</b> And yes… your girlfriend is still the only admin 😌",
+          "me",
+          "Naveen"
+        );
+      }, 1400);
+    }
+
+    msgInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter'){
+        sendMessage();
+      }
+    });
+
+    /* =========================
+       Konami Code Easter Egg
+       ========================= */
+    const KONAMI = ["arrowup","arrowup","arrowdown","arrowdown","arrowleft","arrowright","arrowleft","arrowright","b","a"];
+    let konamiIndex = 0;
+    let konamiCooldown = false;
+
+    window.addEventListener('keydown', (e) => {
+      if (konamiCooldown) return;
+
+      const key = (e.key || "").toLowerCase();
+      if (key === KONAMI[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === KONAMI.length) {
+          konamiIndex = 0;
+          konamiCooldown = true;
+          triggerEasterEgg();
+          setTimeout(() => konamiCooldown = false, 1200);
+        }
+      } else {
+        konamiIndex = (key === KONAMI[0]) ? 1 : 0;
+      }
+    });
+
+    function triggerEasterEgg(){
+      // confetti + special overlay + try to play audio
+      isConfettiSpawning = true;
+      createConfetti();
+      updateConfetti();
+      setTimeout(() => { isConfettiSpawning = false; }, 3200);
+
+      audio.play().catch(() => { /* ignore */ });
+
+      showOverlay({
+        title: "Developer Mode Unlocked",
+        sub: "Konami detected. Respect ✅",
+        emoji: "🫧",
+        easterText:
+          "Secret patch notes:<br>" +
+          "1) Girlfriend-Access-Token: <b>permanent</b><br>" +
+          "2) Hug module: <b>shipping soon</b><br>" +
+          "3) Love service: <b>always-on</b> 🧠❤️"
+      });
+
+      // also drop a little hint in terminal if it's open
+      const termWin = document.getElementById('win-terminal');
+      if (termWin && termWin.classList.contains('open')){
+        termPrint("<span class='term-muted'>[easter]</span> Developer mode unlocked 🫧", "term-muted");
+        termPrint("Try: <b>open abi</b>", "term-ok");
+      }
     }
   </script>
 </body>
