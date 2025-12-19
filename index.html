@@ -3,112 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Baobao OS v26.0 (Dark)</title>
+    <title>Baobao OS v26.0</title>
     <style>
         :root {
-            /* Notion Dark Mode & Mac Palette */
-            --bg-color: #191919; /* Notion Dark Background */
-            --window-bg: #202020; /* Notion Dark Sidebar/Card */
-            --text-main: #FFFFFF; /* High contrast text */
-            --text-secondary: #9B9B9B; /* Secondary text */
-            --border-color: #2F2F2F;
+            /* Notion Palette */
+            --bg-color: #F7F7F5; /* Notion Page Background */
+            --window-bg: #FFFFFF;
+            --text-main: #37352F;
+            --text-secondary: #787774;
+            --border-color: #E6E6E6;
             --accent-blue: #2383E2;
-            --selection-color: rgba(35, 131, 226, 0.3);
-            --mac-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            --dock-bg: rgba(40, 40, 40, 0.75);
+            --selection-bg: rgba(35, 131, 226, 0.15);
+            --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
         
         body {
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
-            /* Mac System Font Stack */
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            /* Mac System Fonts */
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
             color: var(--text-main);
             overflow: hidden;
             height: 100vh;
             width: 100vw;
             user-select: none;
-            -webkit-font-smoothing: antialiased; /* Crisp text */
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* --- Desktop Layout --- */
         .desktop {
-            padding: 40px;
+            padding: 48px;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 16px;
             height: 100%;
             box-sizing: border-box;
             position: relative;
-            align-items: flex-start;
         }
 
-        /* Mac-style Desktop Icons (Squircle) */
-        .app-container {
+        /* Workspace Title */
+        .workspace-title {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* Notion-style List Items (Files) */
+        .app-block {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 14px;
+            padding: 8px 12px;
+            border-radius: 6px;
             cursor: pointer;
-            width: 80px;
-            transition: transform 0.1s;
+            width: fit-content;
+            transition: background 0.15s ease;
+            user-select: none;
+        }
+
+        .app-block:hover {
+            background: rgba(55, 53, 47, 0.08);
         }
         
-        .app-container:active { transform: scale(0.95); opacity: 0.8; }
-
-        .app-icon {
-            width: 58px;
-            height: 58px;
-            background: linear-gradient(145deg, #3a3a3a, #2a2a2a); /* Subtle dark gradient */
-            border-radius: 14px; /* Mac Icon Shape */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            border: 1px solid #444;
+        .app-block:active {
+            background: rgba(55, 53, 47, 0.16);
         }
 
+        .app-icon { font-size: 22px; line-height: 1; }
         .app-label {
-            font-size: 13px;
-            color: var(--text-main);
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+            font-size: 15px;
             font-weight: 500;
-            letter-spacing: 0.3px;
-            text-align: center;
+            color: var(--text-main);
+            border-bottom: 1px solid transparent;
         }
 
-        /* --- Sticky Note (Dark Mode Callout) --- */
+        /* --- Sticky Note (Notion Callout Style) --- */
         .sticky-note {
             position: absolute;
-            top: 40px; right: 40px;
-            width: 240px;
-            /* Notion Dark Callout Color (Yellow/Brownish) */
-            background: #3F341F; 
-            border: 1px solid #55482F;
+            top: 48px;
+            right: 48px;
+            width: 280px;
+            background: #FBF3DB; /* Notion Yellow */
             border-radius: 6px;
             padding: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: flex; gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            display: flex;
+            gap: 12px;
             font-size: 14px;
+            line-height: 1.5;
             z-index: 10;
+            border: 1px solid rgba(55, 53, 47, 0.08);
         }
-        .sticky-icon { font-size: 18px; }
-        .sticky-content strong { color: #E8C175; display: block; margin-bottom: 6px; }
-        .sticky-content ul { padding-left: 18px; margin: 0; color: #D3D3D3; }
-        .sticky-content li { margin-bottom: 4px; }
+        .sticky-icon { font-size: 20px; margin-top: 0px; }
+        .sticky-content ul { padding-left: 18px; margin: 6px 0 0 0; }
+        .sticky-content li { margin-bottom: 4px; color: var(--text-main); }
 
-        /* --- Windows (Mac Dark Mode Style) --- */
+        /* --- Windows (Clean Modal Style) --- */
         .window {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -48%) scale(0.96);
             width: 90%; max-width: 720px; max-height: 85vh;
             background: var(--window-bg);
-            border: 1px solid #333;
+            border: 1px solid var(--border-color);
             border-radius: 10px;
-            box-shadow: var(--mac-shadow);
+            box-shadow: var(--shadow-soft);
             display: flex; flex-direction: column;
             opacity: 0; pointer-events: none;
             transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -121,131 +125,119 @@
         }
 
         .window-header {
-            display: flex; align-items: center;
-            padding: 12px 16px;
-            background: #252525;
-            border-bottom: 1px solid #111;
-            border-radius: 10px 10px 0 0;
-            position: relative;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        /* Mac Traffic Lights */
-        .traffic-lights { display: flex; gap: 8px; }
-        .light { width: 12px; height: 12px; border-radius: 50%; }
-        .close { background: #FF5F57; cursor: pointer; }
-        .min { background: #FEBC2E; }
-        .max { background: #28C840; }
-
-        .window-title {
-            position: absolute; left: 0; right: 0; text-align: center;
-            font-size: 13px; font-weight: 600; color: #BBB; pointer-events: none;
+        .window-breadcrumb { font-size: 13px; color: var(--text-secondary); display: flex; gap: 6px; align-items: center; font-weight: 500;}
+        
+        .btn-close {
+            background: transparent; border: none; cursor: pointer;
+            font-size: 16px; color: var(--text-secondary); padding: 4px;
+            border-radius: 4px; transition: 0.2s;
         }
+        .btn-close:hover { background: rgba(235, 87, 87, 0.1); color: #EB5757; }
 
         .window-content {
-            padding: 40px 50px;
+            padding: 40px 50px; 
             overflow-y: auto;
             flex-grow: 1;
-            /* Notion Dark Scrollbar */
-            scrollbar-width: thin;
-            scrollbar-color: #444 #202020;
+        }
+
+        /* --- Content Styling (Strict Notion Look) --- */
+        .notion-style h1 { font-size: 30px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; line-height: 1.2; }
+        .notion-style h2 { font-size: 22px; font-weight: 600; margin-top: 32px; margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; letter-spacing: -0.01em; }
+        .notion-style p { font-size: 16px; line-height: 1.6; margin-bottom: 8px; }
+        .notion-style ul { padding-left: 24px; margin-bottom: 16px; }
+        .notion-style li { margin-bottom: 4px; line-height: 1.6; font-size: 16px; }
+        .notion-style hr { border: 0; border-top: 1px solid var(--border-color); margin: 32px 0; }
+        .notion-style strong { font-weight: 600; }
+        .notion-style blockquote {
+            border-left: 3px solid var(--text-main);
+            margin: 20px 0; padding-left: 14px;
+            font-style: italic; color: var(--text-secondary);
         }
         
-        /* Webkit Scrollbar */
-        .window-content::-webkit-scrollbar { width: 8px; }
-        .window-content::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
-
-        /* --- Content Styling (Notion Dark + Mac Font) --- */
-        .notion-style h1 { font-size: 28px; font-weight: 700; margin-bottom: 24px; color: #FFF; letter-spacing: -0.5px; }
-        .notion-style h2 { font-size: 22px; font-weight: 600; margin-top: 32px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: #FFF; }
-        .notion-style p { font-size: 15px; line-height: 1.6; margin-bottom: 12px; color: #D3D3D3; }
-        .notion-style ul { padding-left: 20px; margin-bottom: 16px; color: #D3D3D3; }
-        .notion-style li { margin-bottom: 6px; line-height: 1.6; }
-        .notion-style hr { border: 0; border-top: 1px solid var(--border-color); margin: 32px 0; }
-        .notion-style strong { font-weight: 600; color: #FFF; }
-        
-        /* Code Block (Dark Theme) */
+        /* Code Block Style */
         .code-block {
-            background: #121212; /* Very dark for code */
-            color: #FF5F5F; /* Code Red */
-            padding: 16px 20px;
+            background: #F7F6F3;
+            color: #EB5757; 
+            padding: 24px;
             border-radius: 4px;
             font-family: "SF Mono", "Menlo", monospace;
             font-size: 13px;
             line-height: 1.5;
             white-space: pre-wrap;
             margin: 16px 0;
-            border: 1px solid #333;
         }
         
         /* Inline Code */
         .notion-style code {
             font-family: "SF Mono", "Menlo", monospace;
-            background: rgba(255,255,255,0.1);
-            color: #FF5F5F;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-size: 0.9em;
+            background: rgba(135,131,120,0.15);
+            color: #EB5757;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
         }
 
         /* --- Terminal Window Specifics --- */
         #win-terminal .window-content {
-            background: #000000;
-            color: #33FF00; /* Classic Hacker Green */
-            font-family: "SF Mono", monospace;
-            padding: 20px;
+            background: #1E1E1E; 
+            color: #4AF626;
+            font-family: "SF Mono", "Menlo", monospace;
+            padding: 24px;
+            font-size: 14px;
         }
-        .cursor { display: inline-block; width: 8px; height: 16px; background: #33FF00; animation: blink 1s infinite; vertical-align: middle; }
+        .cursor { display: inline-block; width: 8px; height: 16px; background: #4AF626; animation: blink 1s infinite; vertical-align: middle; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* --- Bottom Dock (Mac Style) --- */
+        /* --- Bottom Dock (Simple) --- */
         .dock-container {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
             z-index: 90;
         }
         
         .dock {
-            display: flex; gap: 12px;
-            padding: 10px 14px;
-            background: var(--dock-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: flex; gap: 8px;
+            padding: 6px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
 
         .dock-item {
-            width: 45px; height: 45px;
-            border-radius: 10px;
-            background: #333;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 20px;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-            border: 1px solid #444;
+            transition: all 0.2s;
         }
-        .dock-item:hover { transform: scale(1.15) translateY(-10px); background: #444; }
-        .dock-item.main { background: linear-gradient(135deg, #2383E2, #5AC8FA); border: none; }
+        .dock-item:hover { background: #F7F7F5; transform: translateY(-2px); }
+        .dock-item.main { font-size: 22px; } 
 
         /* --- Overlay --- */
         #overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); 
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95); 
             display: none; align-items: center; justify-content: center; 
             z-index: 1500; flex-direction: column; text-align: center;
         }
         
+        .music-ui { text-align: center; }
         .play-btn { 
-            background: #FFF; color: #000; border: none; 
-            padding: 10px 24px; border-radius: 20px; font-weight: 600; cursor: pointer;
-            margin-top: 20px; transition: transform 0.1s;
+            background: var(--text-main); color: white; border: none; 
+            padding: 10px 24px; border-radius: 6px; font-weight: 500; cursor: pointer;
+            margin-top: 20px; transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        .play-btn:active { transform: scale(0.95); }
+        .play-btn:hover { opacity: 0.9; }
 
         @media (max-width: 600px) {
-            .desktop { padding: 20px; }
-            .sticky-note { position: relative; top: 0; right: 0; width: 100%; box-sizing: border-box; margin-bottom: 20px;}
-            .window-content { padding: 20px; }
+            .desktop { padding: 24px; }
+            .sticky-note { position: relative; top: 0; right: 0; width: 100%; box-sizing: border-box; margin-bottom: 24px;}
+            .window-content { padding: 24px; }
         }
     </style>
 </head>
@@ -258,30 +250,37 @@
             <div class="sticky-content">
                 <strong>Important Tasks</strong>
                 <ul>
-                    <li>Video Call <span style="color:#28C840">✔</span></li>
-                    <li>Eat well <span style="color:#28C840">✔</span></li>
+                    <li>Video Call <span style="color:#34C759">✔</span></li>
+                    <li>Eat well <span style="color:#34C759">✔</span></li>
                     <li>Hug Abi (Pending...)</li>
                 </ul>
             </div>
         </div>
 
-        <div class="app-container" onclick="openWindow('win-readme')">
-            <div class="app-icon">📄</div>
+        <div class="workspace-title">Baobao Workspace /</div>
+        
+        <div class="app-block" onclick="openWindow('win-readme')">
+            <span class="app-icon">📄</span>
             <span class="app-label">README.md</span>
         </div>
 
-        <div class="app-container" onclick="openWindow('win-photo')">
-            <div class="app-icon">🖼️</div>
+        <div class="app-block" onclick="openWindow('win-photo')">
+            <span class="app-icon">🖼️</span>
             <span class="app-label">Us.jpg</span>
         </div>
 
-        <div class="app-container" onclick="openWindow('win-terminal'); runTerminal();">
-            <div class="app-icon" style="background: #000; border: 1px solid #333;">📟</div>
-            <span class="app-label">Terminal</span>
+        <div class="app-block" onclick="openWindow('win-music')">
+            <span class="app-icon">🎵</span>
+            <span class="app-label">Voice Note.mp3</span>
         </div>
 
-        <div class="app-container" onclick="alert('⚠️ System Alert: \n\nCannot delete \'Distance\'. \nReason: Fix pending for Feb 2026.')">
-            <div class="app-icon">🗑️</div>
+        <div class="app-block" onclick="openWindow('win-terminal'); runTerminal();">
+            <span class="app-icon">📟</span>
+            <span class="app-label">Terminal.exe</span>
+        </div>
+
+        <div class="app-block" onclick="alert('⚠️ System Alert: \n\nCannot delete \'Distance\'. \nReason: Fix pending for Feb 2026.')">
+            <span class="app-icon">🗑️</span>
             <span class="app-label">Distance</span>
         </div>
 
@@ -289,12 +288,8 @@
 
     <div id="win-readme" class="window">
         <div class="window-header">
-            <div class="traffic-lights">
-                <div class="light close" onclick="closeWindow('win-readme')"></div>
-                <div class="light min"></div>
-                <div class="light max"></div>
-            </div>
-            <div class="window-title">Project: Baobao OS v26.0</div>
+            <div class="window-breadcrumb">🏠 / workspace / README.md</div>
+            <button class="btn-close" onclick="closeWindow('win-readme')">✕</button>
         </div>
         <div class="window-content notion-style">
             
@@ -380,26 +375,18 @@ npm install chole-bhature --remote-wish</div>
 
     <div id="win-photo" class="window">
         <div class="window-header">
-            <div class="traffic-lights">
-                <div class="light close" onclick="closeWindow('win-photo')"></div>
-                <div class="light min"></div>
-                <div class="light max"></div>
-            </div>
-            <div class="window-title">Us.jpg</div>
+            <div class="window-breadcrumb">🖼️ Us.jpg</div>
+            <button class="btn-close" onclick="closeWindow('win-photo')">✕</button>
         </div>
-        <div class="window-content" style="display:flex; justify-content:center; align-items:center; background: #111;">
-            <img src="baobao.jpg" alt="Us" style="max-width:100%; border-radius:4px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
+        <div class="window-content" style="display:flex; justify-content:center; align-items:center;">
+            <img src="baobao.jpg" alt="Us" style="max-width:100%; border-radius:4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
         </div>
     </div>
 
     <div id="win-terminal" class="window">
-        <div class="window-header" style="background: #333;">
-            <div class="traffic-lights">
-                <div class="light close" onclick="closeWindow('win-terminal')"></div>
-                <div class="light min"></div>
-                <div class="light max"></div>
-            </div>
-            <div class="window-title">Terminal — -zsh</div>
+        <div class="window-header" style="background: #2D2D2D; border-bottom: 1px solid #333;">
+            <div class="window-breadcrumb" style="color: #888;">📟 Terminal</div>
+            <button class="btn-close" onclick="closeWindow('win-terminal')" style="color: #888;">✕</button>
         </div>
         <div class="window-content">
             <div id="terminal-content"></div>
@@ -409,17 +396,13 @@ npm install chole-bhature --remote-wish</div>
 
     <div id="win-music" class="window" style="max-width: 400px;">
         <div class="window-header">
-            <div class="traffic-lights">
-                <div class="light close" onclick="closeWindow('win-music')"></div>
-                <div class="light min"></div>
-                <div class="light max"></div>
-            </div>
-            <div class="window-title">Voice Memo</div>
+            <div class="window-breadcrumb">🎵 Voice Note</div>
+            <button class="btn-close" onclick="closeWindow('win-music')">✕</button>
         </div>
-        <div class="window-content" style="text-align: center;">
+        <div class="window-content music-ui">
             <div style="font-size: 48px; margin-bottom: 20px;">🎙️</div>
-            <h3 style="margin:0; font-weight:600; color:#FFF;">Birthday Message</h3>
-            <p style="color:#888; margin-top:4px; font-size:14px;">Abi's Note.mp3</p>
+            <h3 style="margin:0; font-weight:600;">Birthday Message</h3>
+            <p style="color:var(--text-secondary); margin-top:4px; font-size:14px;">Abi's Note.mp3</p>
             <button class="play-btn" onclick="playAudio()">▶ Play Audio</button>
         </div>
     </div>
@@ -428,15 +411,14 @@ npm install chole-bhature --remote-wish</div>
         <div class="dock">
             <div class="dock-item" onclick="openWindow('win-readme')" title="Readme">📄</div>
             <div class="dock-item" onclick="openWindow('win-photo')" title="Photos">🖼️</div>
-            <div class="dock-item" onclick="openWindow('win-music')" title="Music">🎵</div>
-            <div style="width:1px; background:rgba(255,255,255,0.2); margin: 0 4px;"></div>
+            <div style="width:1px; background:#E0E0E0; margin: 0 4px;"></div>
             <div class="dock-item main" onclick="deploySystem()" title="DEPLOY">🚀</div>
         </div>
     </div>
 
     <div id="overlay" onclick="this.style.display='none'">
-        <h1 style="font-size: 2.5rem; color: #FFF; margin-bottom: 10px; font-weight: 300;">Happy 26th Birthday!</h1>
-        <p style="color: #BBB;">Baobao OS Update Complete.</p>
+        <h1 style="font-size: 2.5rem; color: var(--text-main); margin-bottom: 10px;">Happy 26th Birthday!</h1>
+        <p style="color: var(--text-secondary);">Baobao OS Update Complete.</p>
         <div style="margin-top: 30px; font-size: 4rem;">🎂</div>
     </div>
     <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:2000;"></canvas>
@@ -483,7 +465,7 @@ npm install chole-bhature --remote-wish</div>
         canvas.height = window.innerHeight;
         let confetti = [];
         let isConfettiSpawning = false;
-        const colors = ['#E83E8C', '#2383E2', '#F5A623', '#34C759', '#FFFFFF']; 
+        const colors = ['#E83E8C', '#2383E2', '#F5A623', '#34C759', '#37352F']; 
 
         function createConfetti() {
             confetti = [];
