@@ -15,10 +15,7 @@
 
       /* Liquid Glass tokens */
       --glass-bg: rgba(255, 255, 255, .55);
-      --glass-strong: rgba(255, 255, 255, .72);
       --glass-border: rgba(255, 255, 255, .42);
-      --glass-hairline: rgba(255, 255, 255, .65);
-
       --glass-shadow: 0 22px 60px rgba(0,0,0,.12);
       --glass-shadow-soft: 0 12px 30px rgba(0,0,0,.10);
 
@@ -27,23 +24,18 @@
       --glass-contrast: 108%;
       --noise-opacity: .06;
 
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --radius-sm: 10px;
-
       --tap: cubic-bezier(0.2, 0.8, 0.2, 1);
 
       /* iOS-ish typography */
       --ui-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
       --ui-font-rounded: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-      /* App icon tokens */
+      /* App icon */
       --app-icon-size: 52px;
       --app-icon-radius: 14px;
       --app-icon-shadow: 0 14px 30px rgba(0,0,0,.18);
-      --app-icon-border: rgba(255,255,255,.55);
 
-      /* Dock magnification */
+      /* Dock */
       --dock-icon-size: 44px;
       --dock-icon-radius: 14px;
     }
@@ -52,7 +44,6 @@
 
     body {
       margin: 0;
-      padding: 0;
       height: 100vh;
       width: 100vw;
       overflow: hidden;
@@ -85,7 +76,7 @@
       z-index:-1;
     }
 
-    /* Reusable glass surface */
+    /* Reusable glass */
     .glass{
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -128,7 +119,7 @@
       .glass:hover{ box-shadow: var(--glass-shadow-soft); }
     }
 
-    /* --- Desktop Layout --- */
+    /* Desktop */
     .desktop {
       padding: 48px;
       display: flex;
@@ -149,12 +140,11 @@
       opacity: 0.92;
     }
 
-    /* App rows as Finder-ish list items */
+    /* Finder-ish list items */
     .app-block {
       display: flex;
       align-items: center;
       gap: 14px;
-
       width: min(520px, 92vw);
       padding: 12px 14px;
       border-radius: 18px;
@@ -182,7 +172,7 @@
       line-height: 1;
 
       background: rgba(255,255,255,.38);
-      border: 1px solid var(--app-icon-border);
+      border: 1px solid rgba(255,255,255,.55);
       box-shadow: var(--app-icon-shadow);
       backdrop-filter: blur(18px) saturate(170%);
       -webkit-backdrop-filter: blur(18px) saturate(170%);
@@ -224,14 +214,14 @@
       letter-spacing: -0.01em;
     }
 
-    /* Sticky note widget */
+    /* Sticky widget */
     .sticky-note {
       position: absolute;
       top: 48px;
       right: 48px;
       width: 320px;
       border-radius: 22px;
-      padding: 16px 16px;
+      padding: 16px;
 
       background: rgba(255, 245, 212, .55);
       border: 1px solid rgba(255,255,255,.45);
@@ -265,7 +255,7 @@
     .sticky-content ul { padding-left: 18px; margin: 6px 0 0 0; }
     .sticky-content li { margin-bottom: 4px; color: rgba(31,35,40,0.92); }
 
-    /* --- Windows --- */
+    /* Windows */
     .window {
       position: absolute;
       top: 50%; left: 50%;
@@ -287,7 +277,6 @@
       opacity: 1;
       pointer-events: auto;
     }
-    .window.glass{ border-radius: 22px; }
 
     .window-header {
       display: flex;
@@ -323,7 +312,6 @@
       padding: 6px 10px;
       border-radius: 10px;
       transition: background .15s var(--tap), transform .15s var(--tap);
-      user-select:none;
     }
     .btn-close:hover { background: rgba(255, 90, 90, 0.14); color: #D63B3B; }
     .btn-close:active { transform: scale(.98); }
@@ -334,7 +322,7 @@
       max-height: calc(86vh - 52px);
     }
 
-    /* README typography */
+    /* README */
     .notion-style h1 { font-size: 30px; font-weight: 920; margin: 0 0 22px 0; letter-spacing: -0.02em; line-height: 1.15; font-family: var(--ui-font-rounded); }
     .notion-style h2 { font-size: 20px; font-weight: 880; margin-top: 28px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(31,35,40,0.10); letter-spacing: -0.01em; font-family: var(--ui-font-rounded); }
     .notion-style p { font-size: 16px; line-height: 1.7; margin: 0 0 10px 0; color: rgba(31,35,40,0.92); }
@@ -349,15 +337,14 @@
       color: rgba(31,35,40,0.68);
       font-style: italic;
     }
-
     .code-block {
       background: rgba(255,255,255,.42);
       border: 1px solid rgba(255,255,255,.40);
       backdrop-filter: blur(16px) saturate(160%);
       -webkit-backdrop-filter: blur(16px) saturate(160%);
-      color: rgba(31,35,40,0.88);
+      color: rgba(31,35,40,.88);
 
-      padding: 18px 18px;
+      padding: 18px;
       border-radius: 14px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 13px;
@@ -434,17 +421,6 @@
       background: rgba(16,18,20,.55);
       border-bottom: 1px solid rgba(255,255,255,.10);
     }
-    .cursor {
-      display: inline-block;
-      width: 8px;
-      height: 16px;
-      background: rgba(120,255,140,0.92);
-      animation: blink 1s infinite;
-      vertical-align: middle;
-      border-radius: 2px;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-
     .term-line { opacity: 0.92; }
     .term-muted { opacity: 0.70; }
     .term-err { color: rgba(255,110,110,0.92); }
@@ -477,7 +453,7 @@
       opacity: .70;
     }
 
-    /* Messages window */
+    /* Messages */
     #win-messages .window-content{
       padding: 18px 18px 16px;
       display:flex;
@@ -504,8 +480,6 @@
       box-shadow: 0 10px 22px rgba(0,0,0,.08);
       backdrop-filter: blur(14px) saturate(160%);
       -webkit-backdrop-filter: blur(14px) saturate(160%);
-      position: relative;
-      overflow:hidden;
     }
     .bubble.you{
       align-self: flex-end;
@@ -628,7 +602,7 @@
       border: 1px solid rgba(255,255,255,.28);
       box-shadow: 0 10px 22px rgba(0,0,0,.12);
 
-      transition: transform .18s var(--tap), filter .18s var(--tap), width .18s var(--tap), height .18s var(--tap), background .18s var(--tap);
+      transition: transform .18s var(--tap), filter .18s var(--tap);
       transform-origin: bottom center;
     }
     .dock-item.main{
@@ -636,16 +610,7 @@
       background: rgba(255,255,255,.30);
     }
 
-    .dock:hover .dock-item{ transform: scale(1.0); }
     .dock:hover .dock-item:hover{ transform: scale(1.35) translateY(-4px); }
-    .dock:hover .dock-item:hover + .dock-item,
-    .dock:hover .dock-item:has(+ .dock-item:hover){
-      transform: scale(1.15) translateY(-2px);
-    }
-    @supports not selector(.dock-item:has(+ .dock-item:hover)){
-      .dock:hover .dock-item:hover{ transform: scale(1.35) translateY(-4px); }
-    }
-
     .dock-sep{
       width:1px;
       background: rgba(31,35,40,0.10);
@@ -713,7 +678,6 @@
       .window-content { padding: 22px; }
     }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       * { animation: none !important; transition: none !important; }
     }
@@ -736,7 +700,6 @@
 
     <div class="workspace-title">Baobao Workspace /</div>
 
-    <!-- Apps -->
     <div class="app-block" onclick="openWindow('win-readme')">
       <span class="app-icon" style="background:
         linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.20)),
@@ -780,7 +743,7 @@
     </div>
   </div>
 
-  <!-- README window -->
+  <!-- README -->
   <div id="win-readme" class="window glass">
     <div class="window-header">
       <div class="window-breadcrumb">🏠 / workspace / README.md</div>
@@ -869,7 +832,7 @@ npm install chole-bhature --remote-wish</div>
     </div>
   </div>
 
-  <!-- Messages window -->
+  <!-- Messages -->
   <div id="win-messages" class="window glass" style="max-width: 560px;">
     <div class="window-header">
       <div class="window-breadcrumb">💬 Messages</div>
@@ -885,19 +848,18 @@ npm install chole-bhature --remote-wish</div>
     </div>
   </div>
 
-  <!-- Photo window -->
+  <!-- Photo -->
   <div id="win-photo" class="window glass">
     <div class="window-header">
       <div class="window-breadcrumb">🖼️ Us.jpg</div>
       <button class="btn-close" onclick="closeWindow('win-photo')">✕</button>
     </div>
     <div class="window-content">
-      <img src="baobao.jpg" alt="Us"
-           onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
+      <img src="baobao.jpg" alt="Us" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
     </div>
   </div>
 
-  <!-- Terminal window (interactive) -->
+  <!-- Terminal -->
   <div id="win-terminal" class="window glass">
     <div class="window-header">
       <div class="window-breadcrumb" style="color:rgba(255,255,255,.65)">📟 Terminal</div>
@@ -909,14 +871,16 @@ npm install chole-bhature --remote-wish</div>
       <div class="term-input-row">
         <span class="term-prompt">&gt;</span>
         <input id="term-input" type="text" autocomplete="off" spellcheck="false"
-               placeholder="try: help  |  love --status  |  hug --request  |  song --play" />
+               placeholder="try: help | love --status | hug --request | song --play" />
       </div>
 
-      <div class="term-hint term-muted">Tip: also try <b>open messages</b> or <b>open readme</b>. (And yes… there is a secret key combo.)</div>
+      <div class="term-hint term-muted">
+        Tip: try <b>open messages</b> / <b>open readme</b> / <b>open photo</b>. (Yes, there is a secret key combo.)
+      </div>
     </div>
   </div>
 
-  <!-- Music window -->
+  <!-- Music -->
   <div id="win-music" class="window glass" style="max-width: 420px;">
     <div class="window-header">
       <div class="window-breadcrumb">🎵 Voice Note</div>
@@ -955,9 +919,7 @@ npm install chole-bhature --remote-wish</div>
   <canvas id="confetti-canvas"></canvas>
 
   <script>
-    /* =========================
-       Window Management
-       ========================= */
+    /* ========= Window Management ========= */
     function openWindow(id) {
       document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
       const el = document.getElementById(id);
@@ -968,20 +930,17 @@ npm install chole-bhature --remote-wish</div>
       if (el) el.classList.remove('open');
     }
 
-    /* =========================
-       Audio
-       ========================= */
+    /* ========= Audio ========= */
     const audio = new Audio('voice-note.mp3');
     audio.preload = 'auto';
     function playAudio() {
       audio.play().catch(() => alert("Please upload 'voice-note.mp3' next to this HTML file!"));
     }
 
-    /* =========================
-       Confetti
-       ========================= */
+    /* ========= Confetti ========= */
     const canvas = document.getElementById('confetti-canvas');
     const ctx = canvas.getContext('2d');
+
     function resizeCanvas(){
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -1025,6 +984,7 @@ npm install chole-bhature --remote-wish</div>
       if (active > 0) requestAnimationFrame(updateConfetti);
     }
 
+    /* ========= Overlay ========= */
     function showOverlay({title, sub, emoji, easterText}){
       const overlay = document.getElementById('overlay');
       document.getElementById('overlay-title').textContent = title || "Happy 26th Birthday!";
@@ -1039,18 +999,15 @@ npm install chole-bhature --remote-wish</div>
         easter.style.display = 'none';
         easter.innerHTML = "";
       }
-
       overlay.style.display = 'flex';
     }
-
-    function hideOverlay(){
-      document.getElementById('overlay').style.display = 'none';
-    }
+    function hideOverlay(){ document.getElementById('overlay').style.display = 'none'; }
 
     function deploySystem() {
       showOverlay({ title: "Happy 26th Birthday!", sub: "Baobao OS Update Complete.", emoji: "🎂" });
 
-      audio.play().catch(() => { /* ignore */ });
+      // deploy is a gesture, usually OK to start audio
+      audio.play().catch(() => {});
 
       isConfettiSpawning = true;
       createConfetti();
@@ -1058,9 +1015,6 @@ npm install chole-bhature --remote-wish</div>
       setTimeout(() => { isConfettiSpawning = false; }, 2800);
     }
 
-    /* =========================
-       Distance (make it a window-ish alert)
-       ========================= */
     function openDistance(){
       showOverlay({
         title: "System Alert",
@@ -1070,9 +1024,14 @@ npm install chole-bhature --remote-wish</div>
       });
     }
 
-    /* =========================
-       Terminal (interactive commands)
-       ========================= */
+    /* ========= Helpers ========= */
+    function escapeHtml(str){
+      return (str || "").replace(/[&<>"']/g, (m) => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[m]));
+    }
+
+    /* ========= Terminal (interactive) ========= */
     const termContent = document.getElementById('terminal-content');
     const termInput = document.getElementById('term-input');
 
@@ -1091,10 +1050,10 @@ npm install chole-bhature --remote-wish</div>
     function runTerminal() {
       termContent.innerHTML = "";
       const bootLines = [
-        "<span class='term-muted'>> boot --profile=Naveen</span>",
-        "> Resolving heart... <span class='term-ok'>found</span>.",
-        "> Authentication: Girlfriend-Access-Token... <span class='term-ok'>Verified</span>.",
-        "> Type <b>help</b> to see commands."
+        "<span class='term-muted'>&gt; boot --profile=Naveen</span>",
+        "&gt; Resolving heart... <span class='term-ok'>found</span>.",
+        "&gt; Authentication: Girlfriend-Access-Token... <span class='term-ok'>Verified</span>.",
+        "&gt; Type <b>help</b> to see commands."
       ];
       let i = 0;
       function step(){
@@ -1113,10 +1072,9 @@ npm install chole-bhature --remote-wish</div>
 
     function handleCommand(raw){
       const cmd = normalizeCmd(raw);
-      if (!cmd)́) return;
+      if (!cmd) return;
 
       termPrint(`<span class="term-muted">&gt; ${escapeHtml(cmd)}</span>`);
-
       const lower = cmd.toLowerCase();
 
       if (lower === "help"){
@@ -1134,7 +1092,7 @@ npm install chole-bhature --remote-wish</div>
 
       if (lower === "clear"){
         termContent.innerHTML = "";
-        termPrint("<span class='term-muted'>> screen cleared.</span>", "term-muted");
+        termPrint("<span class='term-muted'>&gt; screen cleared.</span>", "term-muted");
         return;
       }
 
@@ -1163,33 +1121,28 @@ npm install chole-bhature --remote-wish</div>
         termPrint("Opening Messages.app… <span class='term-ok'>ok</span>", "term-ok");
         return;
       }
-      if (lower === "open readme" || lower === "open README"){
+
+      if (lower === "open readme" || lower === "open readme.md"){
         openWindow('win-readme');
         termPrint("Opening README.md… <span class='term-ok'>ok</span>", "term-ok");
         return;
       }
+
       if (lower === "open photo" || lower === "open us.jpg" || lower === "open us"){
         openWindow('win-photo');
         termPrint("Opening Us.jpg… <span class='term-ok'>ok</span>", "term-ok");
         return;
       }
 
-      // cute hidden command
       if (lower === "open abi"){
         termPrint("Found: <b>Abi</b>", "term-ok");
         termPrint("Status: <b>yours</b> (non-transferable).", "term-muted");
-        termPrint("Note: If you miss her, try <b>video-call --now</b> 😌", "term-muted");
+        termPrint("If you miss her, try: <b>video-call --now</b> 😌", "term-muted");
         return;
       }
 
       termPrint(`Unknown command: <span class="term-err">${escapeHtml(cmd)}</span>`, "term-err");
       termPrint("Try: <b>help</b>", "term-muted");
-    }
-
-    function escapeHtml(str){
-      return (str || "").replace(/[&<>"']/g, (m) => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-      }[m]));
     }
 
     termInput.addEventListener('keydown', (e) => {
@@ -1200,13 +1153,11 @@ npm install chole-bhature --remote-wish</div>
       }
     });
 
-    /* =========================
-       Messages (bubbles + typing + send)
-       ========================= */
+    /* ========= Messages ========= */
     const chatEl = document.getElementById('chat');
     const msgInput = document.getElementById('msg-input');
-
     let messagesPrimed = false;
+
     function addBubble(text, who, meta){
       const b = document.createElement('div');
       b.className = 'bubble ' + (who === 'you' ? 'you' : 'me');
@@ -1246,7 +1197,6 @@ npm install chole-bhature --remote-wish</div>
 
       addBubble(payload, "you", "Abi");
 
-      // typing then reply
       addTyping();
       setTimeout(() => {
         removeTyping();
@@ -1259,14 +1209,10 @@ npm install chole-bhature --remote-wish</div>
     }
 
     msgInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter'){
-        sendMessage();
-      }
+      if (e.key === 'Enter') sendMessage();
     });
 
-    /* =========================
-       Konami Code Easter Egg
-       ========================= */
+    /* ========= Konami Code Easter Egg ========= */
     const KONAMI = ["arrowup","arrowup","arrowdown","arrowdown","arrowleft","arrowright","arrowleft","arrowright","b","a"];
     let konamiIndex = 0;
     let konamiCooldown = false;
@@ -1289,13 +1235,12 @@ npm install chole-bhature --remote-wish</div>
     });
 
     function triggerEasterEgg(){
-      // confetti + special overlay + try to play audio
       isConfettiSpawning = true;
       createConfetti();
       updateConfetti();
       setTimeout(() => { isConfettiSpawning = false; }, 3200);
 
-      audio.play().catch(() => { /* ignore */ });
+      audio.play().catch(() => {});
 
       showOverlay({
         title: "Developer Mode Unlocked",
@@ -1308,7 +1253,6 @@ npm install chole-bhature --remote-wish</div>
           "3) Love service: <b>always-on</b> 🧠❤️"
       });
 
-      // also drop a little hint in terminal if it's open
       const termWin = document.getElementById('win-terminal');
       if (termWin && termWin.classList.contains('open')){
         termPrint("<span class='term-muted'>[easter]</span> Developer mode unlocked 🫧", "term-muted");
