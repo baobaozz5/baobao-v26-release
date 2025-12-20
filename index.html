@@ -875,7 +875,7 @@ npm install chole-bhature --remote-wish</div>
       </div>
 
       <div class="term-hint term-muted">
-        Tip: try <b>open messages</b> / <b>open readme</b> / <b>open photo</b>. (Yes, there is a secret key combo.)
+        Tip: try <b>open messages</b> / <b>open readme</b> / <b>open photo</b>.
       </div>
     </div>
   </div>
@@ -908,7 +908,7 @@ npm install chole-bhature --remote-wish</div>
   <!-- Overlay -->
   <div id="overlay" onclick="hideOverlay()">
     <div class="overlay-card glass">
-      <h1 id="overlay-title">Happy 26th Birthday!</h1>
+      <h1 id="overlay-title">Happy 26th Birthday, my favorite person Naveen!</h1>
       <p id="overlay-sub">Baobao OS Update Complete.</p>
       <div class="cake" id="overlay-emoji">🎂</div>
       <div class="easter" id="overlay-easter" style="display:none;"></div>
@@ -1004,7 +1004,7 @@ npm install chole-bhature --remote-wish</div>
     function hideOverlay(){ document.getElementById('overlay').style.display = 'none'; }
 
     function deploySystem() {
-      showOverlay({ title: "Happy 26th Birthday!", sub: "Baobao OS Update Complete.", emoji: "🎂" });
+      showOverlay({ title: "Happy 26th Birthday, my favorite person Naveen!", sub: "Baobao OS Update Complete.", emoji: "🎂" });
 
       // deploy is a gesture, usually OK to start audio
       audio.play().catch(() => {});
@@ -1080,12 +1080,11 @@ npm install chole-bhature --remote-wish</div>
       if (lower === "help"){
         termPrint(
           "Commands:<br>" +
-          "<span class='term-muted'>- love --status</span><br>" +
-          "<span class='term-muted'>- hug --request</span><br>" +
-          "<span class='term-muted'>- song --play</span><br>" +
+          "<span class='term-muted'>- love</span><br>" +
+          "<span class='term-muted'>- hug</span><br>" +
+          "<span class='term-muted'>- voice</span><br>" +
           "<span class='term-muted'>- open messages | open readme | open photo</span><br>" +
           "<span class='term-muted'>- clear</span><br>" +
-          "<span class='term-muted'>Bonus:</span> there is a secret key combo 😉"
         , "term-muted");
         return;
       }
@@ -1096,19 +1095,19 @@ npm install chole-bhature --remote-wish</div>
         return;
       }
 
-      if (lower === "love --status"){
+      if (lower === "love"){
         termPrint("Love service: <span class='term-ok'>running ✅</span>", "term-ok");
-        termPrint("Uptime: <span class='term-ok'>99.9%</span> (downtime only when you skip meals 😌)", "term-muted");
+        termPrint("Uptime: <span class='term-ok'>100% for you baby</span>", "term-muted");
         return;
       }
 
-      if (lower === "hug --request"){
+      if (lower === "hug"){
         termPrint("Request received: <span class='term-ok'>queued ✅</span>", "term-ok");
         termPrint("ETA: Feb 2026. Priority: <b>highest</b>.", "term-muted");
         return;
       }
 
-      if (lower === "song --play"){
+      if (lower === "voice"){
         openWindow('win-music');
         setTimeout(() => playAudio(), 120);
         termPrint("Launching Voice Note… <span class='term-ok'>ok</span>", "term-ok");
