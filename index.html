@@ -8,34 +8,38 @@
         :root {
             /* Palette: Clean & Minimal */
             --bg-color: #f2f2f7; /* iOS Light Gray Background */
-            --text-main: #1c1c1e;
-            --text-secondary: #8e8e93;
-            --icon-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #1d1d1f; /* Slightly deeper black for quality */
+            --text-secondary: #86868b;
+            --icon-bg: rgba(255, 255, 255, 0.95); /* More opaque for premium feel */
             --window-bg: #FFFFFF;
             --accent-blue: #007AFF;
             
             /* Glass Variables */
             --glass-border: rgba(255, 255, 255, 0.4);
-            --shadow-icon: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --shadow-window: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --shadow-icon: 0 8px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0,0,0,0.04);
+            --shadow-window: 0 25px 50px rgba(0, 0, 0, 0.12);
             
-            /* Sizes */
-            --app-size: 85px; /* Bigger Icons */
-            --grid-gap: 30px;
+            /* Sizes - SUPER SIZED */
+            --app-size: 120px; /* Significantly Larger Icons */
+            --grid-gap: 35px;
+
+            /* Fonts - Premium System Fonts */
+            --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            --font-mono: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
 
         body {
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
-            /* Elegant Abstract Wallpaper */
+            /* Cleaner, softer gradient wallpaper */
             background-image: 
-                radial-gradient(at 10% 10%, rgba(255, 255, 255, 0.8) 0px, transparent 50%),
-                radial-gradient(at 90% 90%, rgba(180, 200, 230, 0.3) 0px, transparent 50%),
-                linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+                radial-gradient(at 50% 0%, rgba(230, 240, 255, 0.7) 0px, transparent 60%),
+                radial-gradient(at 50% 100%, rgba(240, 230, 255, 0.6) 0px, transparent 60%),
+                linear-gradient(180deg, #f0f4f8 0%, #eef2f6 100%);
+            font-family: var(--font-main);
             color: var(--text-main);
             height: 100vh;
             width: 100vw;
@@ -45,17 +49,19 @@
 
         /* --- Desktop (iPad Grid Layout) --- */
         .desktop {
-            padding: 50px;
+            padding: 60px;
             display: grid;
-            /* Adaptive Grid: Auto-fit columns */
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            /* Adaptive Grid */
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             grid-auto-rows: min-content;
             gap: var(--grid-gap);
-            justify-items: center; /* Center items in their cells */
-            max-width: 1200px;
+            justify-items: center;
+            max-width: 1100px;
             margin: 0 auto;
             z-index: 1;
             position: relative;
+            align-content: center; /* Center grid vertically if space allows */
+            height: 100%;
         }
 
         /* App Item Structure */
@@ -65,52 +71,52 @@
             align-items: center;
             cursor: pointer;
             transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-            width: 100px; /* Fixed width for alignment */
+            width: var(--app-size);
         }
 
-        .app-item:active { transform: scale(0.92); }
+        .app-item:active { transform: scale(0.94); }
 
         /* The Big Icon Box */
         .app-icon {
             width: var(--app-size);
             height: var(--app-size);
             background: var(--icon-bg);
-            border-radius: 20px; /* Squircle */
+            /* iOS Superellipse-ish rounded corners */
+            border-radius: 26px; 
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px; /* Big Emoji */
+            font-size: 55px; /* Larger Emoji */
             box-shadow: var(--shadow-icon);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.6);
-            margin-bottom: 8px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.5);
+            margin-bottom: 10px;
         }
 
         .app-label {
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600; /* Premium weight */
             color: var(--text-main);
             text-align: center;
-            letter-spacing: 0.3px;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+            letter-spacing: 0.4px; /* More breathing room */
+            white-space: nowrap;
         }
 
         /* --- Windows (Centered Modal) --- */
         .window {
             position: absolute;
             top: 50%; left: 50%;
-            transform: translate(-50%, -48%) scale(0.95);
-            width: 92%; max-width: 700px; max-height: 85vh;
+            transform: translate(-50%, -48%) scale(0.96);
+            width: 92%; max-width: 700px; max-height: 88vh;
             
             background: var(--window-bg);
-            border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 16px;
+            border-radius: 18px;
             box-shadow: var(--shadow-window);
             
             display: flex; flex-direction: column;
             opacity: 0; pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 100;
         }
 
@@ -121,28 +127,29 @@
 
         .window-header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 14px 20px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            background: rgba(250,250,250,0.9);
-            border-radius: 16px 16px 0 0;
+            padding: 16px 24px;
+            background: rgba(250,250,250,0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            border-radius: 18px 18px 0 0;
         }
 
-        .window-title { font-size: 14px; font-weight: 600; color: var(--text-main); }
+        .window-title { font-size: 15px; font-weight: 600; color: var(--text-main); }
 
         .btn-close {
             background: #e5e5ea; border: none; cursor: pointer;
-            width: 28px; height: 28px; border-radius: 50%;
-            color: #8e8e93; font-size: 14px; font-weight: bold;
+            width: 30px; height: 30px; border-radius: 50%;
+            color: #8e8e93; font-size: 15px; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
             transition: 0.2s;
         }
         .btn-close:hover { background: #d1d1d6; color: #333; }
 
         .window-content {
-            padding: 40px;
+            padding: 40px 45px;
             overflow-y: auto;
             flex-grow: 1;
-            /* Clean Scrollbar */
             scrollbar-width: thin;
             scrollbar-color: #ccc transparent;
         }
@@ -150,18 +157,18 @@
         /* --- Custom Audio Player --- */
         .audio-player-ui {
             text-align: center;
-            padding: 20px 0;
+            padding: 25px 0;
             width: 100%;
-            max-width: 320px;
+            max-width: 340px;
             margin: 0 auto;
         }
         
         .progress-container {
             width: 100%;
-            margin: 20px 0 10px 0;
+            margin: 25px 0 15px 0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         
         /* Custom Range Slider */
@@ -172,83 +179,73 @@
         }
         input[type=range]:focus { outline: none; }
         
-        /* Webkit slider track */
         input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 6px;
-            cursor: pointer;
-            background: #E5E5EA;
-            border-radius: 10px;
+            width: 100%; height: 6px; cursor: pointer;
+            background: #E5E5EA; border-radius: 10px;
         }
-        /* Webkit slider thumb */
         input[type=range]::-webkit-slider-thumb {
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            background: var(--accent-blue);
-            cursor: pointer;
-            -webkit-appearance: none;
-            margin-top: -5px; /* Centers thumb */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            height: 18px; width: 18px; border-radius: 50%;
+            background: var(--accent-blue); cursor: pointer;
+            -webkit-appearance: none; margin-top: -6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
         .time-display {
-            font-size: 12px;
+            font-size: 13px; font-weight: 500;
             color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
-            width: 40px;
+            width: 42px;
         }
 
         .control-btn {
-            background: var(--text-main);
-            color: white;
-            border: none;
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            transition: transform 0.1s;
+            background: var(--text-main); color: white;
+            border: none; width: 56px; height: 56px;
+            border-radius: 50%; font-size: 22px;
+            cursor: pointer; display: inline-flex;
+            align-items: center; justify-content: center;
+            margin-top: 10px; transition: transform 0.1s, background 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .control-btn:active { transform: scale(0.95); }
+        .control-btn:active { transform: scale(0.96); background: #333; }
 
-        /* --- README Content (Strict Formatting) --- */
-        .readme-content h1 { font-size: 28px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.5px; }
-        .readme-content h2 { font-size: 20px; font-weight: 600; margin-top: 30px; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
-        .readme-content p, .readme-content li { font-size: 15px; line-height: 1.6; color: #333; margin-bottom: 6px; }
-        .readme-content ul { padding-left: 20px; }
+        /* --- README Content (Strict Formatting, Premium Font) --- */
+        .readme-content h1 { font-size: 32px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.5px; }
+        .readme-content h2 { font-size: 22px; font-weight: 600; margin-top: 35px; margin-bottom: 14px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .readme-content p, .readme-content li { font-size: 16px; line-height: 1.65; color: #333; margin-bottom: 8px; }
+        .readme-content ul { padding-left: 22px; }
         .readme-content code { 
-            background: #f2f2f7; color: #ff3b30; padding: 2px 6px; border-radius: 4px; 
-            font-family: "SF Mono", monospace; font-size: 0.9em;
+            background: #f2f2f7; color: #ff3b30; padding: 3px 6px; border-radius: 6px; 
+            font-family: var(--font-mono); font-size: 0.9em; border: 1px solid rgba(0,0,0,0.04);
         }
         .code-block {
-            background: #f2f2f7; color: #ff3b30; padding: 20px; border-radius: 12px;
-            font-family: "SF Mono", monospace; font-size: 13px; line-height: 1.5;
-            white-space: pre-wrap; margin: 15px 0; border: 1px solid #e5e5ea;
+            background: #f4f4f7; color: #ff3b30; padding: 24px; border-radius: 14px;
+            font-family: var(--font-mono); font-size: 14px; line-height: 1.6;
+            white-space: pre-wrap; margin: 20px 0; border: 1px solid rgba(0,0,0,0.06);
         }
 
         /* --- Terminal --- */
-        #win-terminal .window-content { background: #1e1e1e; color: #4af626; border-radius: 0 0 16px 16px; padding: 25px; font-family: "SF Mono", monospace; }
-        .cursor { display: inline-block; width: 8px; height: 16px; background: #4af626; animation: blink 1s infinite; vertical-align: middle; }
+        #win-terminal .window-content { background: #1c1c1e; color: #4af626; border-radius: 0 0 18px 18px; padding: 30px; font-family: var(--font-mono); }
+        .cursor { display: inline-block; width: 9px; height: 17px; background: #4af626; animation: blink 1s infinite; vertical-align: middle; }
         @keyframes blink { 50% { opacity: 0; } }
 
         /* --- Overlay --- */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.96); /* More opaque */
             display: none; align-items: center; justify-content: center;
             z-index: 2000; flex-direction: column; text-align: center;
         }
         #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2000; }
 
+        /* --- Mobile Adjustments --- */
         @media (max-width: 600px) {
-            .desktop { padding: 30px 20px; gap: 20px; grid-template-columns: repeat(3, 1fr); }
-            .app-item { width: auto; }
-            .app-icon { width: 65px; height: 65px; font-size: 32px; }
-            .window { width: 95%; max-height: 90vh; }
+            :root {
+                 --app-size: 90px; /* Slightly smaller on phone, but still big */
+                 --grid-gap: 25px;
+            }
+            .desktop { padding: 40px 25px; grid-template-columns: repeat(3, 1fr); align-content: start; }
+            .app-icon { font-size: 42px; border-radius: 22px;}
+            .window { width: 95%; max-height: 92vh; }
             .window-content { padding: 25px; }
         }
     </style>
@@ -288,7 +285,7 @@
         </div>
 
         <div class="app-item" onclick="deploySystem()">
-            <div class="app-icon" style="background: #E8F2FF; color: #007AFF;">🚀</div>
+            <div class="app-icon" style="background: #E8F2FF; color: #007AFF; border: 1px solid rgba(0,122,255,0.2);">🚀</div>
             <div class="app-label">Deploy</div>
         </div>
 
@@ -299,12 +296,13 @@
             <div class="window-title">📌 Notes</div>
             <button class="btn-close" onclick="closeWindow('win-sticky')">✕</button>
         </div>
-        <div class="window-content" style="background: #FBF3DB;">
-            <h3 style="margin-top:0;">Important Tasks</h3>
-            <ul style="line-height: 1.8; padding-left: 20px;">
+        <div class="window-content" style="background: #faf9f4;">
+            <h3 style="margin-top:0; font-weight: 700;">Important Tasks</h3>
+            <ul style="line-height: 2; padding-left: 20px; font-weight: 500;">
                 <li>Video Call <span style="color:#34C759">✔</span></li>
                 <li>Eat well <span style="color:#34C759">✔</span></li>
-                <li>Hug Abi (Pending...)</li>
+                <li>Hug Abi (Pending...)
+                <li>F___ Abi (sus!)</li> 
             </ul>
         </div>
     </div>
@@ -321,7 +319,7 @@
             <p><strong>Welcome to the official release page of Baobao OS v26.0!</strong></p>
             <p>This is an advanced bio-intelligent system based on the proprietary <strong>Naveen Architecture</strong>. After 26 years of continuous development, this major update brings enhanced stability, a wiser kernel, and an <strong>exclusive, encrypted connection</strong> to the lead developer (Abi).</p>
 
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
 
             <h2>🚀 New Features in v26.0</h2>
             <ul>
@@ -331,7 +329,7 @@
                 <li><strong>Security Update:</strong> Firewall updated to block all unauthorized users. Access is strictly limited to <strong>Admin: Abi</strong>.</li>
             </ul>
 
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
 
             <h2>🗓️ Future Roadmap (Important!)</h2>
             <ul>
@@ -345,39 +343,34 @@
                 </li>
             </ul>
 
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
 
             <h2>🛠 Installation & Usage (Daily Routine)</h2>
             <p>To ensure <strong>Baobao OS v26.0</strong> runs smoothly, please maintain the following dependencies:</p>
 
             <div class="code-block"># Critical System Requirements
-npm install unlimited-love --save-dev
+npm install unlimited-love 
 npm install video-call --frequency=daily
 npm install gym-workout  #WannaLickYou
-npm install good-night-kiss --essential
-
+npm install ling-yo-phone --10:53
+                
 # Optional but Recommended
 npm install blueberries --hehe
 npm install chole-bhature --remote-wish</div>
 
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
 
             <h2>⚠️ Known Issues</h2>
             <ul>
                 <li><strong>Latency Warning:</strong> Due to the <code>TPE <-> DEL</code> server distance, physical touch functions are currently disabled. <em>Fix scheduled for 2026.</em></li>
-                <li><strong>Grumpy Exception:</strong> System may throw <code>Error: Hangry</code> or <code>Error: Tired</code>.
-                    <ul>
-                        <li><em>Solution:</em> Inject <strong>Food</strong> or apply <strong>Virtual Cuddles</strong> immediately.</li>
-                    </ul>
-                </li>
-                <li><strong>Bug #143:</strong> System misses the Girlfriend too much.
+                <li><strong>Bug #0130:</strong> Developer misses the system too much.
                     <ul>
                         <li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li>
                     </ul>
                 </li>
             </ul>
 
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
 
             <h2>📜 License & Contributors</h2>
             <ul>
@@ -385,7 +378,7 @@ npm install chole-bhature --remote-wish</div>
                 <li><strong>Core System:</strong> Naveen 🇮🇳</li>
                 <li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong>
                     <ul>
-                        <li><em>Terms:</em> Non-transferable. No refunds. Valid for eternity.</li>
+                        <li><em>Terms:</em> I Love You Naveen. Non-transferable. No refunds. Valid for eternity.</li>
                     </ul>
                 </li>
             </ul>
@@ -400,8 +393,11 @@ npm install chole-bhature --remote-wish</div>
             <div class="window-title">🖼️ Us.jpg</div>
             <button class="btn-close" onclick="closeWindow('win-photo')">✕</button>
         </div>
-        <div class="window-content" style="display:flex; justify-content:center; align-items:center;">
-            <img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 60vh; border-radius:8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
+        <div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;">
+            <img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 55vh; border-radius:12px; box-shadow: 0 15px 35px rgba(0,0,0,0.12);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
+            <p style="margin-top: 25px; color: var(--text-secondary); font-size: 15px; font-weight: 500; text-align: center; line-height: 1.5; letter-spacing: 0.3px;">
+                October 13, 2025. Our first day together.<br>Let's keep walking together.
+            </p>
         </div>
     </div>
 
@@ -416,16 +412,16 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="win-music" class="window" style="max-width: 400px;">
+    <div id="win-music" class="window" style="max-width: 420px;">
         <div class="window-header">
             <div class="window-title">🎵 Voice Note</div>
             <button class="btn-close" onclick="closeWindow('win-music')">✕</button>
         </div>
         <div class="window-content">
             <div class="audio-player-ui">
-                <div style="font-size: 60px; margin-bottom: 15px;">🎙️</div>
-                <h3 style="margin:0; font-weight:600;">Birthday Message</h3>
-                <p style="color:#8e8e93; margin-top:5px; font-size:14px;">Abi's Note.mp3</p>
+                <div style="font-size: 65px; margin-bottom: 15px;">🎙️</div>
+                <h3 style="margin:0; font-weight:700; font-size: 20px;">Birthday Message</h3>
+                <p style="color:#8e8e93; margin-top:6px; font-size:15px; font-weight: 500;">Abi's Note</p>
                 
                 <div class="progress-container">
                     <span id="currTime" class="time-display">0:00</span>
@@ -440,9 +436,9 @@ npm install chole-bhature --remote-wish</div>
     </div>
 
     <div id="overlay" onclick="this.style.display='none'">
-        <h1 style="font-size: 2.5rem; color: #1E1E1E; margin-bottom: 10px;">Happy 26th Birthday!</h1>
-        <p style="color: #666;">Baobao OS Update Complete.</p>
-        <div style="margin-top: 30px; font-size: 4rem;">🎂</div>
+        <h1 style="font-size: 2.8rem; color: #1E1E1E; margin-bottom: 10px; font-weight: 800; letter-spacing: -1px;">Happy 26th Birthday, baobao!</h1>
+        <p style="color: #666; font-size: 1.3rem; font-weight: 500;">Baobao OS Update Complete.</p>
+        <div style="margin-top: 35px; font-size: 5rem;">🎂</div>
     </div>
     <canvas id="confetti-canvas"></canvas>
 
