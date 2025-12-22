@@ -32,9 +32,9 @@ To ensure **Baobao OS v26.0** runs smoothly, please maintain the following depen
 
 ```bash
 # Critical System Requirements
-npm install unlimited-love --save-dev
+npm install unlimited-love 
 npm install video-call --frequency=daily
-npm install gym-workout  #WannaLickYou
+npm install gym-workout  --wannalickyoou
 npm install good-night-kiss --essential
 
 # Optional but Recommended
@@ -45,9 +45,7 @@ npm install chole-bhature --remote-wish
 ## ⚠️ Known Issues
 
 * **Latency Warning:** Due to the `TPE <-> DEL` server distance, physical touch functions are currently disabled. *Fix scheduled for 2026.*
-* **Grumpy Exception:** System may throw `Error: Hangry` or `Error: Tired`.
-    * *Solution:* Inject **Food** or apply **Virtual Cuddles** immediately.
-* **Bug #143:** System misses the Girlfriend too much.
+* **Bug #0130:** Developer misses this system too much.
     * *Status:* **Won't Fix.** This is a feature, not a bug.
 
 ---
@@ -57,12 +55,13 @@ npm install chole-bhature --remote-wish
 * **Lead Developer & Owner:** Abi (Yi-Yun) 🇹🇼
 * **Core System:** Naveen 🇮🇳
 * **License:** **Lifetime Proprietary License.**
-    * *Terms:* Non-transferable. No refunds. Valid for eternity.
+    * *Terms:*I Love You Naveen. Non-transferable. No refunds. Valid for eternity.
 
 
 <br>
 
 > © 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.
+
 
 
 
