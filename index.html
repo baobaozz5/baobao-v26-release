@@ -4,235 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Baobao OS v26.0</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
     <style>
         :root {
-            /* Palette: Premium iOS */
-            --bg-color: #F5F5F7;
-            --text-main: #1D1D1F;
-            --text-secondary: #86868B;
-            --window-bg: #FFFFFF;
-            --accent-blue: #007AFF;
+            /* Palette: Ultra Minimalist "Titanium White" */
+            --bg-color: #eef0f2;
+            --text-main: #1a1a1a;
+            --text-muted: #8e8e93;
+            --window-bg: rgba(255, 255, 255, 0.94);
             
-            /* Glass Variables */
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --shadow-icon: 0 10px 20px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0,0,0,0.05);
-            --shadow-window: 0 25px 60px rgba(0, 0, 0, 0.2);
+            /* Shadows for Depth (Soft Neumorphism) */
+            --shadow-icon: 
+                12px 12px 24px #d1d9e6, 
+                -12px -12px 24px #ffffff;
+            --shadow-window: 0 40px 100px rgba(0,0,0,0.18);
             
-            /* Sizes - ULTRA LARGE */
+            /* Sizing */
             --app-size: 135px; 
-            --grid-gap: 40px;
+            --grid-gap: 45px;
 
             /* Fonts */
             --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
-            --font-mono: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
+            --font-mono: "SF Mono", "Menlo", monospace;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--bg-color);
-            /* Premium Abstract Wallpaper */
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(216, 241, 255, 0.8) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 230, 240, 0.8) 0%, transparent 40%),
-                linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: var(--font-main);
             color: var(--text-main);
-            height: 100vh;
-            width: 100vw;
+            font-family: var(--font-main);
+            height: 100vh; width: 100vw;
             overflow: hidden;
             user-select: none;
         }
 
-        /* --- Desktop (iPad Grid Layout) --- */
+        /* --- Status Bar --- */
+        .status-bar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 44px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 25px;
+            font-size: 13px; font-weight: 500;
+            color: var(--text-main);
+            z-index: 1000;
+            background: rgba(238, 240, 242, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .status-left { font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-size: 12px; color: var(--text-muted); }
+        .clock-group { display: flex; gap: 25px; }
+        .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
+
+        /* --- Desktop Grid --- */
         .desktop {
-            padding: 60px;
+            padding: 100px 60px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             grid-auto-rows: min-content;
             gap: var(--grid-gap);
             justify-items: center;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             z-index: 1;
             position: relative;
-            align-content: center;
             height: 100%;
+            align-content: start;
         }
 
-        /* App Item */
+        /* --- Premium App Icons --- */
         .app-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex; flex-direction: column; align-items: center; cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             width: var(--app-size);
         }
+        .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
 
-        .app-item:active { transform: scale(0.92); filter: brightness(0.9); }
-
-        /* --- Premium Icons (SVG Containers) --- */
         .app-icon {
-            width: var(--app-size);
-            height: var(--app-size);
-            border-radius: 32px; /* Smooth superellipse */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: var(--app-size); height: var(--app-size);
+            border-radius: 32px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 62px;
+            background: #eef0f2;
+            /* Neumorphism Effect */
             box-shadow: var(--shadow-icon);
-            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.6);
+            margin-bottom: 16px;
+            color: #333;
             position: relative;
-            overflow: hidden;
-            background: white; /* Default fallback */
         }
-
-        /* Icon Specific Styles */
-        .icon-notes { background: linear-gradient(135deg, #FFD500, #FFB700); }
-        .icon-readme { background: linear-gradient(135deg, #FFFFFF, #F2F2F2); border: 1px solid rgba(0,0,0,0.05); }
-        .icon-photos { background: white; } /* Handled by SVG content */
-        .icon-music { background: linear-gradient(135deg, #FA2D48, #FF2D55); }
-        .icon-terminal { background: #1C1C1E; }
-        .icon-trash { background: linear-gradient(135deg, #8E8E93, #636366); }
-        .icon-deploy { background: linear-gradient(135deg, #007AFF, #0056D2); }
-
-        .app-icon svg {
-            width: 60%;
-            height: 60%;
-            display: block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
+        
+        /* Subtle Color Accents for Icons */
+        .icon-youtube { color: #FF0000; }
+        .icon-map { color: #34C759; }
+        .icon-weather { color: #5AC8FA; }
+        .icon-timeline { color: #FF9500; }
+        .icon-deploy { font-size: 68px; color: #007AFF; }
 
         .app-label {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--text-main);
-            text-align: center;
+            font-size: 15px; font-weight: 500; color: var(--text-main);
             letter-spacing: 0.3px;
-            text-shadow: 0 1px 1px rgba(255,255,255,0.8);
         }
 
         /* --- Windows --- */
         .window {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -48%) scale(0.96);
-            width: 90%; max-width: 720px; max-height: 88vh;
-            
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -45%) scale(0.95);
+            width: 90%; max-width: 850px; max-height: 85vh;
             background: var(--window-bg);
-            border-radius: 20px;
+            border-radius: 24px;
             box-shadow: var(--shadow-window);
-            
             display: flex; flex-direction: column;
             opacity: 0; pointer-events: none;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             z-index: 100;
+            border: 1px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
         }
-
-        .window.open {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1; pointer-events: auto;
-        }
+        .window.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
 
         .window-header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 24px;
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            padding: 18px 25px;
             border-bottom: 1px solid rgba(0,0,0,0.05);
-            border-radius: 20px 20px 0 0;
         }
-
-        .window-title { font-size: 16px; font-weight: 600; color: var(--text-main); }
-
+        .window-title { font-size: 16px; font-weight: 600; letter-spacing: -0.2px; }
         .btn-close {
-            background: #E5E5EA; border: none; cursor: pointer;
-            width: 32px; height: 32px; border-radius: 50%;
-            color: #8E8E93; font-size: 14px; font-weight: 700;
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.2s;
+            background: #e5e5ea; border: none; width: 30px; height: 30px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            font-size: 14px; color: #8e8e93; transition: 0.2s;
         }
-        .btn-close:hover { background: #D1D1D6; color: #1D1D1F; }
+        .btn-close:hover { background: #d1d1d6; color: #000; }
 
-        .window-content {
-            padding: 40px 50px;
-            overflow-y: auto;
-            flex-grow: 1;
-            /* Hide Scrollbar */
-            scrollbar-width: none; 
-            -ms-overflow-style: none; 
-        }
-        .window-content::-webkit-scrollbar { display: none; }
+        .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; }
 
-        /* --- Audio Player UI --- */
-        .audio-player-ui {
-            text-align: center;
-            padding: 30px 0;
-            width: 100%;
-            max-width: 360px;
-            margin: 0 auto;
+        /* --- Map Styles --- */
+        #map-container { width: 100%; height: 450px; border-radius: 16px; z-index: 1; border: 1px solid rgba(0,0,0,0.1); }
+        .map-info {
+            display: flex; justify-content: space-between; margin-top: 25px;
+            padding: 20px; background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
-        
-        .progress-container {
-            width: 100%;
-            margin: 30px 0 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .map-stat h4 { margin: 0; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;}
+        .map-stat p { margin: 5px 0 0 0; font-size: 18px; font-weight: 700; }
+
+        /* --- Weather Widget --- */
+        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .weather-card { 
+            background: white; padding: 25px; border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); text-align: center;
         }
-        
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
+        .weather-temp { font-size: 48px; font-weight: 200; margin: 10px 0; letter-spacing: -2px; }
+        .weather-city { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        .weather-desc { font-size: 16px; color: #1a1a1a; }
+
+        /* --- Timeline Widget --- */
+        .timeline-container { text-align: center; display: flex; flex-direction: column; gap: 30px; }
+        .time-block h3 { margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        .time-block .big-number { font-size: 60px; font-weight: 800; line-height: 1; margin: 10px 0; letter-spacing: -2px; }
+        .time-block .sub-text { font-size: 16px; color: #555; }
+
+        /* --- YouTube Responsive --- */
+        .video-wrapper {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* --- Code Editor --- */
+        .code-editor {
+            background: #1e1e1e; border-radius: 12px; padding: 25px;
+            font-family: var(--font-mono); font-size: 14px; line-height: 1.6;
+            color: #d4d4d4; overflow-x: auto;
+        }
+        .kw { color: #569cd6; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; }
+
+        /* --- Audio Player --- */
+        .audio-player-ui { text-align: center; padding: 20px 0; max-width: 350px; margin: 0 auto; }
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
         input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 6px; cursor: pointer;
-            background: #E5E5EA; border-radius: 10px;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            height: 20px; width: 20px; border-radius: 50%;
-            background: var(--accent-blue); cursor: pointer;
-            -webkit-appearance: none; margin-top: -7px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .time-display { font-size: 13px; font-weight: 500; color: var(--text-secondary); width: 45px; font-variant-numeric: tabular-nums;}
-
-        .control-btn {
-            background: var(--text-main); color: white;
-            border: none; width: 64px; height: 64px;
-            border-radius: 50%; font-size: 24px;
-            cursor: pointer; display: inline-flex;
-            align-items: center; justify-content: center;
-            margin-top: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            transition: transform 0.1s;
-        }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: #e0e0e0; border-radius: 10px; }
+        input[type=range]::-webkit-slider-thumb { height: 18px; width: 18px; border-radius: 50%; background: #333; margin-top: -6px; -webkit-appearance: none; cursor: pointer; }
+        .control-btn { background: #1a1a1a; color: white; width: 64px; height: 64px; border-radius: 50%; font-size: 26px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); transition: transform 0.1s;}
         .control-btn:active { transform: scale(0.95); }
 
-        /* --- Typography & README --- */
-        .readme-content h1 { font-size: 34px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.8px; }
-        .readme-content h2 { font-size: 24px; font-weight: 600; margin-top: 40px; margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; letter-spacing: -0.3px; }
-        .readme-content p, .readme-content li { font-size: 17px; line-height: 1.6; color: #1d1d1f; margin-bottom: 10px; }
-        .readme-content ul { padding-left: 20px; }
-        .readme-content code { 
-            background: #f2f2f7; color: #E02020; padding: 4px 8px; border-radius: 6px; 
-            font-family: var(--font-mono); font-size: 0.9em; border: 1px solid rgba(0,0,0,0.04);
-        }
-        .code-block {
-            background: #f5f5f7; color: #E02020; padding: 26px; border-radius: 16px;
-            font-family: var(--font-mono); font-size: 14px; line-height: 1.6;
-            white-space: pre-wrap; margin: 24px 0; border: 1px solid rgba(0,0,0,0.06);
-        }
-
-        /* --- Terminal --- */
-        #win-terminal .window-content { background: #151515; color: #33d17a; border-radius: 0 0 18px 18px; padding: 35px; font-family: var(--font-mono); }
-        .cursor { display: inline-block; width: 10px; height: 19px; background: #33d17a; animation: blink 1s infinite; vertical-align: middle; }
-        @keyframes blink { 50% { opacity: 0; } }
+        /* --- README --- */
+        .readme-content h1 { font-size: 32px; font-weight: 800; margin-bottom: 25px; letter-spacing: -1px; }
+        .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .readme-content p, li { font-size: 16px; line-height: 1.7; color: #333; }
+        .code-block { background: #f9f9f9; padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border: 1px solid #eee; }
 
         /* --- Overlay --- */
         #overlay {
@@ -243,138 +207,122 @@
         }
         #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2000; }
 
-        /* --- Mobile Adjustments --- */
         @media (max-width: 600px) {
-            :root { --app-size: 95px; --grid-gap: 25px; }
-            .desktop { padding: 40px 20px; grid-template-columns: repeat(3, 1fr); align-content: start; }
-            .window { width: 95%; max-height: 92vh; }
-            .window-content { padding: 30px 25px; }
+            .desktop { padding: 80px 20px; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .window { width: 95%; max-height: 90vh; }
+            .status-bar { font-size: 11px; padding: 0 15px; }
+            .app-icon { font-size: 50px; }
         }
     </style>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
+
+    <div class="status-bar">
+        <div class="status-left">Baobao OS v26.0</div>
+        <div class="clock-group">
+            <div class="clock-item" id="clock-tpe"><span>TPE</span> --:--</div>
+            <div class="clock-item" id="clock-del"><span>DEL</span> --:--</div>
+        </div>
+    </div>
 
     <div class="desktop">
         
         <div class="app-item" onclick="openWindow('win-sticky')">
-            <div class="app-icon icon-notes">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <line x1="10" y1="9" x2="8" y2="9"></line>
-                </svg>
-            </div>
+            <div class="app-icon">📌</div>
             <div class="app-label">Notes</div>
         </div>
 
         <div class="app-item" onclick="openWindow('win-readme')">
-            <div class="app-icon icon-readme">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <line x1="10" y1="9" x2="8" y2="9"></line>
-                </svg>
-            </div>
+            <div class="app-icon">📄</div>
             <div class="app-label">README</div>
         </div>
 
         <div class="app-item" onclick="openWindow('win-photo')">
-            <div class="app-icon icon-photos">
-                <svg viewBox="0 0 100 100" fill="none">
-                    <path d="M50 50 L50 10 A40 40 0 0 1 90 50 Z" fill="#FFCF00" opacity="0.9"/>
-                    <path d="M50 50 L90 50 A40 40 0 0 1 50 90 Z" fill="#FF2D55" opacity="0.9"/>
-                    <path d="M50 50 L50 90 A40 40 0 0 1 10 50 Z" fill="#AF52DE" opacity="0.9"/>
-                    <path d="M50 50 L10 50 A40 40 0 0 1 50 10 Z" fill="#007AFF" opacity="0.9"/>
-                </svg>
-            </div>
+            <div class="app-icon">🖼️</div>
             <div class="app-label">Photos</div>
         </div>
 
         <div class="app-item" onclick="openWindow('win-music')">
-            <div class="app-icon icon-music">
-                <svg viewBox="0 0 24 24" fill="#FFFFFF" stroke="none">
-                    <path d="M9 18V5l12-2v13"></path>
-                    <circle cx="6" cy="18" r="3"></circle>
-                    <circle cx="18" cy="16" r="3"></circle>
-                    <path d="M9 18C9 16.3431 7.65685 15 6 15C4.34315 15 3 16.3431 3 18C3 19.6569 4.34315 21 6 21C7.65685 21 9 19.6569 9 18Z" fill="white"/>
-                    <path d="M21 16C21 14.3431 19.6569 13 18 13C16.3431 13 15 14.3431 15 16C15 17.6569 16.3431 19 18 19C19.6569 19 21 17.6569 21 16Z" fill="white"/>
-                    <path d="M9 5L21 3V6L9 8V5Z" fill="white"/>
-                    <line x1="9" y1="5" x2="9" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="21" y1="3" x2="21" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </div>
+            <div class="app-icon">🎵</div>
             <div class="app-label">Voice Note</div>
         </div>
 
+        <div class="app-item" onclick="openWindow('win-youtube')">
+            <div class="app-icon icon-youtube">📺</div>
+            <div class="app-label">Anthem</div>
+        </div>
+
+        <div class="app-item" onclick="openWindow('win-map'); initMap();">
+            <div class="app-icon icon-map">📍</div>
+            <div class="app-label">Find My</div>
+        </div>
+
         <div class="app-item" onclick="openWindow('win-terminal'); runTerminal();">
-            <div class="app-icon icon-terminal">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="4 17 10 11 4 5"></polyline>
-                    <line x1="12" y1="19" x2="20" y2="19"></line>
-                </svg>
-            </div>
+            <div class="app-icon">📟</div>
             <div class="app-label">Terminal</div>
         </div>
 
-        <div class="app-item" onclick="alert('⚠️ System Alert: \n\nCannot delete \'Distance\'. \nReason: Fix pending for Feb 2026.')">
-            <div class="app-icon icon-trash">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                </svg>
-            </div>
-            <div class="app-label">Distance</div>
+        <div class="app-item" onclick="openWindow('win-settings')">
+            <div class="app-icon">⚙️</div>
+            <div class="app-label">Settings</div>
+        </div>
+
+        <div class="app-item" onclick="openWindow('win-code')">
+            <div class="app-icon">💻</div>
+            <div class="app-label">Source</div>
+        </div>
+
+        <div class="app-item" onclick="openWindow('win-weather')">
+            <div class="app-icon icon-weather">🌤️</div>
+            <div class="app-label">Atmosphere</div>
+        </div>
+
+        <div class="app-item" onclick="openWindow('win-timeline'); updateTimeline();">
+            <div class="app-icon icon-timeline">⏳</div>
+            <div class="app-label">Timeline</div>
         </div>
 
         <div class="app-item" onclick="deploySystem()">
-            <div class="app-icon icon-deploy">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
-                    <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
-                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
-                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
-                </svg>
-            </div>
+            <div class="app-icon icon-deploy">🚀</div>
             <div class="app-label">Deploy</div>
         </div>
 
     </div>
 
     <div id="win-sticky" class="window">
-        <div class="window-header">
-            <div class="window-title">📌 Notes</div>
-            <button class="btn-close" onclick="closeWindow('win-sticky')">✕</button>
-        </div>
-        <div class="window-content" style="background: #FFF8DC;">
-            <h3 style="margin-top:0; font-weight: 700; color: #4A4A4A;">Important Tasks</h3>
-            <ul style="line-height: 2; padding-left: 20px; font-weight: 500; font-size: 16px;">
-                <li>Video Call <span style="color:#34C759">✔</span></li>
-                <li>Eat well <span style="color:#34C759">✔</span></li>
+        <div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')">✕</button></div>
+        <div class="window-content" style="background: #fffdf5;">
+            <h3 style="margin-top:0;">Important Tasks</h3>
+            <ul style="line-height: 2.2; padding-left: 20px;">
+                <li>Video Call <span style="color:green">✔</span></li>
+                <li>Eat well <span style="color:green">✔</span></li>
                 <li>Hug Abi (Pending...)</li>
             </ul>
         </div>
     </div>
 
-    <div id="win-readme" class="window">
-        <div class="window-header">
-            <div class="window-title">📄 README.md</div>
-            <button class="btn-close" onclick="closeWindow('win-readme')">✕</button>
+    <div id="win-youtube" class="window" style="max-width: 800px; background: black;">
+        <div class="window-header" style="background: rgba(255,255,255,0.1); border-bottom: none;">
+            <div class="window-title" style="color: white;">YouTube</div>
+            <button class="btn-close" onclick="closeWindow('win-youtube')">✕</button>
         </div>
+        <div class="window-content" style="padding: 0; display: flex; align-items: center; justify-content: center; height: 100%;">
+            <div class="video-wrapper" style="width: 100%;">
+                <iframe id="rickroll-frame" width="560" height="315" src="https://www.youtube.com/embed/1S4xFl4CD34?si=b2FTRvxMCCOMwx5L&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="win-readme" class="window">
+        <div class="window-header"><div class="window-title">README</div><button class="btn-close" onclick="closeWindow('win-readme')">✕</button></div>
         <div class="window-content readme-content">
             <h1>👨‍💻 Project: Baobao OS (Version 26.0)</h1>
-
             <h2>📖 Introduction</h2>
             <p><strong>Welcome to the official release page of Baobao OS v26.0!</strong></p>
             <p>This is an advanced bio-intelligent system based on the proprietary <strong>Naveen Architecture</strong>. After 26 years of continuous development, this major update brings enhanced stability, a wiser kernel, and an <strong>exclusive, encrypted connection</strong> to the lead developer (Abi).</p>
-
-            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-
+            <hr style="margin:20px 0; border:0; border-top:1px solid #eee;">
             <h2>🚀 New Features in v26.0</h2>
             <ul>
                 <li><strong>Kernel Upgrade:</strong> Wisdom Level upgraded to <strong>26</strong>. Problem-solving algorithms are now faster, and patience modules have been expanded.</li>
@@ -382,9 +330,7 @@
                 <li><strong>Language Pack:</strong> <code>Hindi-Mandarin</code> translation layer is improving. (<em>Note: "Wo Ai Ni" is now a hard-coded constant.</em>)</li>
                 <li><strong>Security Update:</strong> Firewall updated to block all unauthorized users. Access is strictly limited to <strong>Admin: Abi</strong>.</li>
             </ul>
-
-            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-
+            <hr style="margin:20px 0; border:0; border-top:1px solid #eee;">
             <h2>🗓️ Future Roadmap (Important!)</h2>
             <ul>
                 <li><strong>2025 Q4:</strong> Continue remote data synchronization via <strong>Video Call API</strong>.</li>
@@ -396,14 +342,11 @@
                     </ul>
                 </li>
             </ul>
-
-            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-
+            <hr style="margin:20px 0; border:0; border-top:1px solid #eee;">
             <h2>🛠 Installation & Usage (Daily Routine)</h2>
             <p>To ensure <strong>Baobao OS v26.0</strong> runs smoothly, please maintain the following dependencies:</p>
-
             <div class="code-block"># Critical System Requirements
-npm install unlimited-love --save-dev
+npm install unlimited-love 
 npm install video-call --frequency=daily
 npm install gym-workout  #WannaLickYou
 npm install good-night-kiss --essential
@@ -411,228 +354,267 @@ npm install good-night-kiss --essential
 # Optional but Recommended
 npm install blueberries --hehe
 npm install chole-bhature --remote-wish</div>
-
-            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-
+            <hr style="margin:20px 0; border:0; border-top:1px solid #eee;">
             <h2>⚠️ Known Issues</h2>
             <ul>
                 <li><strong>Latency Warning:</strong> Due to the <code>TPE <-> DEL</code> server distance, physical touch functions are currently disabled. <em>Fix scheduled for 2026.</em></li>
-                <li><strong>Grumpy Exception:</strong> System may throw <code>Error: Hangry</code> or <code>Error: Tired</code>.
-                    <ul>
-                        <li><em>Solution:</em> Inject <strong>Food</strong> or apply <strong>Virtual Cuddles</strong> immediately.</li>
-                    </ul>
-                </li>
-                <li><strong>Bug #143:</strong> System misses the Girlfriend too much.
-                    <ul>
-                        <li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li>
-                    </ul>
+                <li><strong>Bug #0130:</strong> Developer misses the system too much.
+                    <ul><li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li></ul>
                 </li>
             </ul>
-
-            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-
+            <hr style="margin:20px 0; border:0; border-top:1px solid #eee;">
             <h2>📜 License & Contributors</h2>
             <ul>
                 <li><strong>Lead Developer & Owner:</strong> Abi (Yi-Yun) 🇹🇼</li>
                 <li><strong>Core System:</strong> Naveen 🇮🇳</li>
-                <li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong>
-                    <ul>
-                        <li><em>Terms:</em> Non-transferable. No refunds. Valid for eternity.</li>
-                    </ul>
-                </li>
+                <li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong></li>
             </ul>
-
-            <br>
-            <blockquote>© 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.</blockquote>
+            <br><blockquote>© 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.</blockquote>
         </div>
     </div>
 
     <div id="win-photo" class="window">
-        <div class="window-header">
-            <div class="window-title">🖼️ Us.jpg</div>
-            <button class="btn-close" onclick="closeWindow('win-photo')">✕</button>
-        </div>
+        <div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')">✕</button></div>
         <div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;">
-            <img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 55vh; border-radius:12px; box-shadow: 0 15px 40px rgba(0,0,0,0.15);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
-            <div style="margin-top: 25px; text-align: center;">
-                <p style="color: var(--text-main); font-size: 17px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.3px;">
-                    October 13, 2025. Our first day together.
-                </p>
-                <p style="color: var(--text-secondary); font-size: 15px; font-weight: 400;">
-                    Let's keep walking together.
-                </p>
-            </div>
+            <img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 50vh; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
+            <p style="margin-top: 30px; color: var(--text-muted); font-size: 15px; font-weight: 500; text-align: center; letter-spacing: 0.5px;">
+                OCT 13, 2025. FIRST DAY.<br>LET'S KEEP WALKING TOGETHER.
+            </p>
         </div>
     </div>
 
     <div id="win-terminal" class="window">
-        <div class="window-header" style="background: #2D2D2D; border-bottom: 1px solid #333;">
-            <div class="window-title" style="color: #bbb;">📟 Terminal</div>
-            <button class="btn-close" onclick="closeWindow('win-terminal')" style="color: #bbb;">✕</button>
-        </div>
-        <div class="window-content">
-            <div id="terminal-content"></div>
-            <span class="cursor"></span>
+        <div class="window-header" style="background:#1e1e1e; border:none;"><div class="window-title" style="color:#888;">Terminal</div><button class="btn-close" onclick="closeWindow('win-terminal')">✕</button></div>
+        <div class="window-content" style="background:#1e1e1e; color:#6dff6d; border-radius:0 0 24px 24px; font-family:var(--font-mono);">
+            <div id="terminal-content"></div><span class="cursor"></span>
         </div>
     </div>
 
-    <div id="win-music" class="window" style="max-width: 420px;">
-        <div class="window-header">
-            <div class="window-title">🎵 Voice Note</div>
-            <button class="btn-close" onclick="closeWindow('win-music')">✕</button>
-        </div>
+    <div id="win-music" class="window" style="max-width: 400px;">
+        <div class="window-header"><div class="window-title">Voice Note</div><button class="btn-close" onclick="closeWindow('win-music')">✕</button></div>
         <div class="window-content">
             <div class="audio-player-ui">
-                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #FA2D48, #FF2D55); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; box-shadow: 0 10px 20px rgba(250, 45, 72, 0.3);">
-                    <svg viewBox="0 0 24 24" fill="white" width="40" height="40"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-                </div>
-
-                <h3 style="margin:0; font-weight:700; font-size: 22px; letter-spacing: -0.5px;">Birthday Message</h3>
-                <p style="color:#86868b; margin-top:6px; font-size:16px;">Abi's Note.mp3</p>
-                
-                <div class="progress-container">
-                    <span id="currTime" class="time-display">0:00</span>
+                <div style="font-size: 60px; margin-bottom: 20px;">🎙️</div>
+                <h3 style="margin:0;">Birthday Message</h3>
+                <p style="color:#8e8e93; font-size:14px; margin-top:5px;">Abi's Note.mp3</p>
+                <div style="margin: 25px 0 15px 0;">
                     <input type="range" id="seek-slider" max="100" value="0">
-                    <span id="durTime" class="time-display">0:00</span>
                 </div>
-
-                <button id="play-btn" class="control-btn" onclick="togglePlay()">▶</button>
+                <button class="control-btn" id="play-btn" onclick="togglePlay()">▶</button>
             </div>
             <audio id="audio-file" src="voice-note.mp3"></audio>
         </div>
     </div>
 
+    <div id="win-map" class="window" style="max-width: 600px;">
+        <div class="window-header"><div class="window-title">Find My</div><button class="btn-close" onclick="closeWindow('win-map')">✕</button></div>
+        <div class="window-content" style="padding:0;">
+            <div id="map-container"></div>
+            <div class="map-info" style="margin: 0 20px 20px 20px;">
+                <div class="map-stat"><h4>You</h4><p>Gurgaon 🇮🇳</p></div>
+                <div class="map-stat" style="text-align:center;"><h4>Status</h4><p style="color:#007AFF;">Connected</p></div>
+                <div class="map-stat" style="text-align:right;"><h4>Me</h4><p>Hsinchu 🇹🇼</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="win-settings" class="window" style="max-width: 400px;">
+        <div class="window-header"><div class="window-title">Settings</div><button class="btn-close" onclick="closeWindow('win-settings')">✕</button></div>
+        <div class="window-content">
+            <div style="display:flex; justify-content:space-between; padding: 15px 0; border-bottom:1px solid #eee;">
+                <span>Love for Abi</span>
+                <span style="color:#ccc; font-size:12px;">LOCKED (ON) 🔒</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding: 15px 0; border-bottom:1px solid #eee;">
+                <span>Sync Frequency</span>
+                <span style="font-weight:bold;">Always</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding: 15px 0; border-bottom:1px solid #eee;">
+                <span>Next Meeting</span>
+                <span style="color:#007AFF; font-weight:bold;">Feb 2026</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="win-code" class="window" style="max-width: 550px;">
+        <div class="window-header"><div class="window-title">kernel_love.py</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div>
+        <div class="window-content" style="background:#1e1e1e; padding:0;">
+            <div class="code-editor">
+<span class="kw">class</span> Relationship:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, him, her):
+        self.him = <span class="str">"Naveen"</span>
+        self.her = <span class="str">"Abi"</span>
+        self.distance = 4300
+        
+    <span class="kw">def</span> <span class="fn">run_forever</span>(self):
+        <span class="cmt"># Main loop</span>
+        <span class="kw">while</span> <span class="kw">True</span>:
+            self.love_level += 1
+            <span class="kw">if</span> self.distance > 0:
+                self.video_call()
+            <span class="kw">else</span>:
+                self.hug()
+
+<span class="cmt"># Executing...</span>
+baobao = Relationship()
+baobao.run_forever()
+            </div>
+        </div>
+    </div>
+
+    <div id="win-weather" class="window" style="max-width: 500px;">
+        <div class="window-header"><div class="window-title">Atmosphere</div><button class="btn-close" onclick="closeWindow('win-weather')">✕</button></div>
+        <div class="window-content">
+            <div class="weather-grid">
+                <div class="weather-card">
+                    <div class="weather-city">Taipei</div>
+                    <div class="weather-temp">22°</div>
+                    <div class="weather-desc">Cloudy</div>
+                </div>
+                <div class="weather-card">
+                    <div class="weather-city">Delhi</div>
+                    <div class="weather-temp">18°</div>
+                    <div class="weather-desc">Hazy</div>
+                </div>
+            </div>
+            <p style="text-align:center; color:#8e8e93; font-size:14px; margin-top:25px; letter-spacing:0.5px;">"Same sky, different timezone."</p>
+        </div>
+    </div>
+
+    <div id="win-timeline" class="window" style="max-width: 450px;">
+        <div class="window-header"><div class="window-title">Timeline</div><button class="btn-close" onclick="closeWindow('win-timeline')">✕</button></div>
+        <div class="window-content">
+            <div class="timeline-container">
+                <div class="time-block">
+                    <h3>We have been together for</h3>
+                    <div class="big-number" id="days-together">0</div>
+                    <div class="sub-text">Days</div>
+                </div>
+                <hr style="border:0; border-top:1px solid #eee; width:50%; margin:0 auto;">
+                <div class="time-block">
+                    <h3>Countdown to Reunion</h3>
+                    <div class="big-number" id="days-until" style="color:#007AFF;">0</div>
+                    <div class="sub-text">Days (Feb 13, 2026)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="overlay" onclick="this.style.display='none'">
-        <h1 style="font-size: 3rem; color: #1d1d1f; margin-bottom: 15px; font-weight: 800; letter-spacing: -1px;">Happy 26th Birthday!</h1>
-        <p style="color: #86868b; font-size: 1.4rem; font-weight: 500;">Baobao OS Update Complete.</p>
-        <div style="margin-top: 40px; font-size: 6rem;">🎂</div>
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Happy 26th Birthday!</h1>
+        <p style="color: #666;">Baobao OS Update Complete.</p>
+        <div style="margin-top: 30px; font-size: 5rem;">🎂</div>
     </div>
     <canvas id="confetti-canvas"></canvas>
 
     <script>
-        /* --- Window Management --- */
+        /* --- Clock --- */
+        function updateClock() {
+            const now = new Date();
+            const tpe = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hour12: false});
+            document.getElementById('clock-tpe').innerHTML = `<span>TPE</span> ${tpe}`;
+            const del = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false});
+            document.getElementById('clock-del').innerHTML = `<span>DEL</span> ${del}`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        /* --- Window & Media --- */
         function openWindow(id) {
             document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
             document.getElementById(id).classList.add('open');
         }
-
+        
         function closeWindow(id) { 
             document.getElementById(id).classList.remove('open');
-            // Stop audio if music window closed
-            if (id === 'win-music') {
-                const audio = document.getElementById('audio-file');
-                audio.pause();
+            if(id === 'win-music') {
+                const a = document.getElementById('audio-file'); a.pause();
                 document.getElementById('play-btn').textContent = '▶';
             }
+            if(id === 'win-youtube') {
+                const iframe = document.getElementById('rickroll-frame');
+                const src = iframe.src;
+                iframe.src = ''; iframe.src = src;
+            }
         }
 
-        /* --- Audio Player Logic --- */
         const audio = document.getElementById('audio-file');
         const playBtn = document.getElementById('play-btn');
-        const seekSlider = document.getElementById('seek-slider');
-        const currTime = document.getElementById('currTime');
-        const durTime = document.getElementById('durTime');
-
+        const slider = document.getElementById('seek-slider');
+        
         function togglePlay() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    playBtn.textContent = '⏸';
-                }).catch(e => alert("Please upload 'voice-note.mp3'!"));
-            } else {
-                audio.pause();
-                playBtn.textContent = '▶';
-            }
+            if(audio.paused) { audio.play().then(()=>playBtn.textContent='⏸').catch(()=>alert("Upload voice-note.mp3!")); }
+            else { audio.pause(); playBtn.textContent='▶'; }
+        }
+        audio.addEventListener('timeupdate', () => { slider.value = (audio.currentTime/audio.duration)*100; });
+        slider.addEventListener('input', () => { audio.currentTime = (slider.value/100)*audio.duration; });
+
+        /* --- Map Logic (Leaflet) --- */
+        let map;
+        function initMap() {
+            if(map) return; 
+            setTimeout(() => {
+                const gurgaon = [28.4595, 77.0266];
+                const hsinchu = [24.8138, 120.9675];
+                map = L.map('map-container').setView([26, 99], 3);
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; CARTO', subdomains: 'abcd', maxZoom: 19
+                }).addTo(map);
+                const redIcon = L.divIcon({className: 'custom-icon', html: '<div style="background:#FF3B30; width:14px; height:14px; border-radius:50%; border:2px solid white; box-shadow:0 2px 5px rgba(0,0,0,0.2);"></div>'});
+                const blueIcon = L.divIcon({className: 'custom-icon', html: '<div style="background:#007AFF; width:14px; height:14px; border-radius:50%; border:2px solid white; box-shadow:0 2px 5px rgba(0,0,0,0.2);"></div>'});
+                L.marker(gurgaon, {icon: blueIcon}).addTo(map).bindPopup("Naveen (Gurgaon)").openPopup();
+                L.marker(hsinchu, {icon: redIcon}).addTo(map).bindPopup("Abi (Hsinchu)");
+                L.polyline([gurgaon, hsinchu], {color: '#888', dashArray: '5, 10', weight: 2}).addTo(map);
+            }, 300);
         }
 
-        audio.addEventListener('timeupdate', () => {
-            const val = (audio.currentTime / audio.duration) * 100;
-            seekSlider.value = val || 0;
-            currTime.textContent = formatTime(audio.currentTime);
-        });
+        /* --- Timeline Logic --- */
+        function updateTimeline() {
+            const start = new Date("2025-10-13");
+            const meet = new Date("2026-02-13");
+            const now = new Date();
+            
+            const diffTime = Math.abs(now - start);
+            const daysTogether = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            
+            const diffMeet = meet - now;
+            const daysUntil = Math.ceil(diffMeet / (1000 * 60 * 60 * 24));
 
-        audio.addEventListener('loadedmetadata', () => {
-            durTime.textContent = formatTime(audio.duration);
-        });
-
-        seekSlider.addEventListener('input', () => {
-            const time = (seekSlider.value / 100) * audio.duration;
-            audio.currentTime = time;
-        });
-
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
+            document.getElementById('days-together').innerText = daysTogether;
+            document.getElementById('days-until').innerText = daysUntil > 0 ? daysUntil : 0;
         }
 
-        /* --- Terminal Logic --- */
+        /* --- Terminal --- */
         function runTerminal() {
-            const termContent = document.getElementById('terminal-content');
-            termContent.innerHTML = ""; 
-            const lines = [
-                "> connect --target=Naveen",
-                "> Resolving heart... found.",
-                "> Authentication: Girlfriend-Access-Token... Verified.",
-                "> Downloading love packages...",
-                ".......................... 100%",
-                "> Happy Birthday, Baobao! ❤️"
-            ];
-            let lineIndex = 0;
-            function typeLine() {
-                if (lineIndex < lines.length) {
-                    termContent.innerHTML += lines[lineIndex] + "<br>";
-                    lineIndex++;
-                    setTimeout(typeLine, 800);
-                }
-            }
-            setTimeout(typeLine, 500);
+            const c = document.getElementById('terminal-content'); c.innerHTML = "";
+            const l = ["> connect --target=Naveen", "> Resolving heart... found.", "> Auth: Access-Token-Verified.", "> Downloading love packages...", "................... 100%", "> Happy Birthday, Baobao! ❤️"];
+            let i=0; 
+            function t(){ if(i<l.length){ c.innerHTML+=l[i]+"<br>"; i++; setTimeout(t,600); } }
+            setTimeout(t,500);
         }
 
-        /* --- Confetti Logic (Deploy) --- */
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let confetti = [];
-        let isConfettiSpawning = false;
-        const colors = ['#007AFF', '#FF2D55', '#FFCC00', '#4CD964', '#5856D6']; 
-
-        function createConfetti() {
-            confetti = [];
-            for (let i = 0; i < 150; i++) {
-                confetti.push({
-                    x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 6 + 4, speed: Math.random() * 6 + 3, angle: Math.random() * 6.28
-                });
-            }
-        }
-        function updateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let active = 0;
-            confetti.forEach((p) => {
-                p.y += p.speed; p.x += Math.sin(p.angle) * 2;
-                if (p.y < canvas.height) {
-                    ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.size, p.size);
-                    active++;
-                } else if (isConfettiSpawning) {
-                    p.y = -10; p.x = Math.random() * canvas.width;
-                    active++;
-                }
+        /* --- Confetti --- */
+        const cvs = document.getElementById('confetti-canvas');
+        const ctx = cvs.getContext('2d');
+        cvs.width = window.innerWidth; cvs.height = window.innerHeight;
+        let conf = []; let spawning = false;
+        const cols = ['#007AFF','#FF2D55','#5856D6','#FF9500'];
+        function spawn() { for(let i=0;i<150;i++) conf.push({x:Math.random()*cvs.width, y:Math.random()*cvs.height-cvs.height, c:cols[Math.floor(Math.random()*cols.length)], s:Math.random()*8+5, v:Math.random()*6+3, a:Math.random()*6}); }
+        function draw() {
+            ctx.clearRect(0,0,cvs.width,cvs.height);
+            let act=0;
+            conf.forEach(p=>{
+                p.y+=p.v; p.x+=Math.sin(p.a)*2;
+                if(p.y<cvs.height) { ctx.fillStyle=p.c; ctx.fillRect(p.x,p.y,p.s,p.s); act++; }
+                else if(spawning) { p.y=-10; p.x=Math.random()*cvs.width; act++; }
             });
-            if (active > 0) requestAnimationFrame(updateConfetti);
+            if(act>0) requestAnimationFrame(draw);
         }
-
         function deploySystem() {
-            document.getElementById('overlay').style.display = 'flex';
-            // Audio NOT played here automatically
-            isConfettiSpawning = true;
-            createConfetti();
-            updateConfetti();
-            setTimeout(() => { isConfettiSpawning = false; }, 3000);
+            document.getElementById('overlay').style.display='flex';
+            spawning=true; spawn(); draw();
+            setTimeout(()=>{spawning=false;},3000);
         }
-
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+        window.addEventListener('resize', ()=>{cvs.width=window.innerWidth; cvs.height=window.innerHeight;});
     </script>
 </body>
 </html>
