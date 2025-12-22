@@ -4,28 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Baobao OS v26.0</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            /* Palette: Clean & Minimal */
-            --bg-color: #f2f2f7; /* iOS Light Gray Background */
-            --text-main: #1d1d1f; /* Slightly deeper black for quality */
-            --text-secondary: #86868b;
-            --icon-bg: rgba(255, 255, 255, 0.95); /* More opaque for premium feel */
-            --window-bg: #FFFFFF;
-            --accent-blue: #007AFF;
+            /* Palette: High-End Tech Aesthetics */
+            --bg-base: #eef2f6; 
+            --text-main: #111827; /* Darker, richer black */
+            --text-secondary: #6b7280;
+            --accent-blue: #0070f3; /* International Klein Blue style */
             
-            /* Glass Variables */
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --shadow-icon: 0 8px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0,0,0,0.04);
-            --shadow-window: 0 25px 50px rgba(0, 0, 0, 0.12);
+            /* Glass & Surface Variables */
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --window-bg: rgba(255, 255, 255, 0.92);
             
-            /* Sizes - SUPER SIZED */
-            --app-size: 120px; /* Significantly Larger Icons */
-            --grid-gap: 35px;
+            /* Shadows - The key to "Premium" feel */
+            --shadow-icon: 
+                0 1px 2px rgba(0,0,0,0.04), 
+                0 4px 16px rgba(0,0,0,0.06);
+            --shadow-window: 
+                0 0 0 1px rgba(0,0,0,0.03),
+                0 20px 50px -10px rgba(0,0,0,0.12),
+                0 10px 20px -10px rgba(0,0,0,0.08);
+            
+            /* Sizes */
+            --app-size: 110px;
+            --grid-gap: 40px;
 
-            /* Fonts - Premium System Fonts */
-            --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
-            --font-mono: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
+            /* Font */
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
@@ -33,12 +45,16 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color);
-            /* Cleaner, softer gradient wallpaper */
+            background-color: var(--bg-base);
+            /* Abstract Mesh Gradient - Feels like modern macOS */
             background-image: 
-                radial-gradient(at 50% 0%, rgba(230, 240, 255, 0.7) 0px, transparent 60%),
-                radial-gradient(at 50% 100%, rgba(240, 230, 255, 0.6) 0px, transparent 60%),
-                linear-gradient(180deg, #f0f4f8 0%, #eef2f6 100%);
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop'); /* High quality abstract BG */
+            background-size: cover;
+            background-position: center;
+            
             font-family: var(--font-main);
             color: var(--text-main);
             height: 100vh;
@@ -47,76 +63,99 @@
             user-select: none;
         }
 
-        /* --- Desktop (iPad Grid Layout) --- */
+        /* --- Desktop Grid --- */
         .desktop {
             padding: 60px;
             display: grid;
-            /* Adaptive Grid */
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             grid-auto-rows: min-content;
             gap: var(--grid-gap);
             justify-items: center;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             z-index: 1;
             position: relative;
-            align-content: center; /* Center grid vertically if space allows */
+            align-content: center;
             height: 100%;
         }
 
-        /* App Item Structure */
+        /* App Item */
         .app-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             width: var(--app-size);
         }
 
-        .app-item:active { transform: scale(0.94); }
+        .app-item:hover { transform: translateY(-5px); }
+        .app-item:active { transform: scale(0.95); }
 
-        /* The Big Icon Box */
+        /* Premium Icon Design */
         .app-icon {
             width: var(--app-size);
             height: var(--app-size);
-            background: var(--icon-bg);
-            /* iOS Superellipse-ish rounded corners */
-            border-radius: 26px; 
+            /* Ceramic / Soft Matte Look */
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 28px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 55px; /* Larger Emoji */
-            box-shadow: var(--shadow-icon);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.5);
-            margin-bottom: 10px;
+            font-size: 52px;
+            
+            /* Sophisticated Borders & Shadows */
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.8),
+                inset 0 -1px 0 rgba(0,0,0,0.05),
+                var(--shadow-icon);
+            border: 1px solid rgba(255,255,255,0.4);
+            
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle shine on icon */
+        .app-icon::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
+            pointer-events: none;
         }
 
         .app-label {
-            font-size: 15px;
-            font-weight: 600; /* Premium weight */
-            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.95); /* White text on dark BG looks better */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Subtle shadow for readability */
             text-align: center;
-            letter-spacing: 0.4px; /* More breathing room */
+            letter-spacing: 0.01em;
             white-space: nowrap;
         }
 
-        /* --- Windows (Centered Modal) --- */
+        /* --- Windows (Vision Pro Style) --- */
         .window {
             position: absolute;
             top: 50%; left: 50%;
-            transform: translate(-50%, -48%) scale(0.96);
-            width: 92%; max-width: 700px; max-height: 88vh;
+            transform: translate(-50%, -48%) scale(0.94);
+            opacity: 0;
+            pointer-events: none;
             
+            width: 92%; max-width: 720px; max-height: 85vh;
+            
+            /* The "Acrylic" Material */
             background: var(--window-bg);
-            border-radius: 18px;
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            
+            border-radius: 20px;
             box-shadow: var(--shadow-window);
+            border: 1px solid rgba(255,255,255,0.5);
             
             display: flex; flex-direction: column;
-            opacity: 0; pointer-events: none;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             z-index: 100;
         }
 
@@ -127,126 +166,142 @@
 
         .window-header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 16px 24px;
-            background: rgba(250,250,250,0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            border-radius: 18px 18px 0 0;
+            padding: 18px 24px;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
         }
 
-        .window-title { font-size: 15px; font-weight: 600; color: var(--text-main); }
+        .window-title { 
+            font-size: 15px; 
+            font-weight: 600; 
+            color: var(--text-main); 
+            letter-spacing: -0.01em;
+        }
 
         .btn-close {
-            background: #e5e5ea; border: none; cursor: pointer;
-            width: 30px; height: 30px; border-radius: 50%;
-            color: #8e8e93; font-size: 15px; font-weight: 700;
+            background: #f3f4f6; border: none; cursor: pointer;
+            width: 32px; height: 32px; border-radius: 50%;
+            color: #4b5563; font-size: 16px; font-weight: 600;
             display: flex; align-items: center; justify-content: center;
             transition: 0.2s;
         }
-        .btn-close:hover { background: #d1d1d6; color: #333; }
+        .btn-close:hover { background: #e5e7eb; color: #111; transform: scale(1.05); }
 
         .window-content {
-            padding: 40px 45px;
+            padding: 40px 48px;
             overflow-y: auto;
             flex-grow: 1;
-            scrollbar-width: thin;
-            scrollbar-color: #ccc transparent;
+            /* Hide scrollbar but keep functionality */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
         }
+        .window-content::-webkit-scrollbar { display: none; }
 
-        /* --- Custom Audio Player --- */
+        /* --- Audio Player UI --- */
         .audio-player-ui {
             text-align: center;
-            padding: 25px 0;
-            width: 100%;
-            max-width: 340px;
-            margin: 0 auto;
+            padding: 30px 0;
+            width: 100%; max-width: 360px; margin: 0 auto;
         }
         
         .progress-container {
             width: 100%;
-            margin: 25px 0 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            margin: 30px 0 20px 0;
+            display: flex; align-items: center; gap: 15px;
         }
         
-        /* Custom Range Slider */
+        /* Modern Slider */
         input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
+            -webkit-appearance: none; width: 100%; background: transparent;
         }
         input[type=range]:focus { outline: none; }
         
         input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 6px; cursor: pointer;
-            background: #E5E5EA; border-radius: 10px;
+            width: 100%; height: 4px; cursor: pointer;
+            background: #e5e7eb; border-radius: 99px;
         }
         input[type=range]::-webkit-slider-thumb {
-            height: 18px; width: 18px; border-radius: 50%;
-            background: var(--accent-blue); cursor: pointer;
-            -webkit-appearance: none; margin-top: -6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            height: 20px; width: 20px; border-radius: 50%;
+            background: var(--text-main); cursor: pointer;
+            -webkit-appearance: none; margin-top: -8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            border: 2px solid white;
+            transition: transform 0.1s;
         }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); }
 
         .time-display {
             font-size: 13px; font-weight: 500;
             color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
-            width: 42px;
+            width: 45px;
         }
 
         .control-btn {
             background: var(--text-main); color: white;
-            border: none; width: 56px; height: 56px;
-            border-radius: 50%; font-size: 22px;
+            border: none; width: 64px; height: 64px;
+            border-radius: 50%; font-size: 24px;
             cursor: pointer; display: inline-flex;
             align-items: center; justify-content: center;
-            margin-top: 10px; transition: transform 0.1s, background 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-top: 10px; transition: 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
-        .control-btn:active { transform: scale(0.96); background: #333; }
+        .control-btn:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .control-btn:active { transform: scale(0.95); }
 
-        /* --- README Content (Strict Formatting, Premium Font) --- */
-        .readme-content h1 { font-size: 32px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.5px; }
-        .readme-content h2 { font-size: 22px; font-weight: 600; margin-top: 35px; margin-bottom: 14px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
-        .readme-content p, .readme-content li { font-size: 16px; line-height: 1.65; color: #333; margin-bottom: 8px; }
-        .readme-content ul { padding-left: 22px; }
+        /* --- README Typography (Inter Font) --- */
+        .readme-content h1 { 
+            font-size: 34px; font-weight: 800; margin-bottom: 24px; 
+            letter-spacing: -0.03em; color: #111; line-height: 1.1;
+        }
+        .readme-content h2 { 
+            font-size: 20px; font-weight: 600; margin-top: 40px; margin-bottom: 12px; 
+            border-bottom: 1px solid #eaeaea; padding-bottom: 8px; letter-spacing: -0.01em;
+        }
+        .readme-content p, .readme-content li { 
+            font-size: 16px; line-height: 1.7; color: #374151; margin-bottom: 8px; font-weight: 400;
+        }
+        .readme-content ul { padding-left: 20px; }
         .readme-content code { 
-            background: #f2f2f7; color: #ff3b30; padding: 3px 6px; border-radius: 6px; 
-            font-family: var(--font-mono); font-size: 0.9em; border: 1px solid rgba(0,0,0,0.04);
+            background: #f3f4f6; color: #ef4444; padding: 4px 8px; border-radius: 6px; 
+            font-family: var(--font-mono); font-size: 0.85em; font-weight: 500;
         }
         .code-block {
-            background: #f4f4f7; color: #ff3b30; padding: 24px; border-radius: 14px;
-            font-family: var(--font-mono); font-size: 14px; line-height: 1.6;
-            white-space: pre-wrap; margin: 20px 0; border: 1px solid rgba(0,0,0,0.06);
+            background: #f9fafb; color: #ef4444; padding: 24px; border-radius: 12px;
+            font-family: var(--font-mono); font-size: 13px; line-height: 1.6;
+            white-space: pre-wrap; margin: 24px 0; border: 1px solid #e5e7eb;
         }
 
         /* --- Terminal --- */
-        #win-terminal .window-content { background: #1c1c1e; color: #4af626; border-radius: 0 0 18px 18px; padding: 30px; font-family: var(--font-mono); }
-        .cursor { display: inline-block; width: 9px; height: 17px; background: #4af626; animation: blink 1s infinite; vertical-align: middle; }
+        #win-terminal .window-content { 
+            background: #0d0d0d; color: #22c55e; 
+            border-radius: 0 0 18px 18px; padding: 32px; 
+            font-family: var(--font-mono); 
+        }
+        .cursor { display: inline-block; width: 10px; height: 18px; background: #22c55e; animation: blink 1s infinite; vertical-align: middle; }
         @keyframes blink { 50% { opacity: 0; } }
 
         /* --- Overlay --- */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.96); /* More opaque */
+            background: rgba(255,255,255,0.95);
             display: none; align-items: center; justify-content: center;
             z-index: 2000; flex-direction: column; text-align: center;
         }
+        #overlay h1 { font-weight: 800; letter-spacing: -0.03em; color: #111; }
         #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2000; }
 
         /* --- Mobile Adjustments --- */
         @media (max-width: 600px) {
             :root {
-                 --app-size: 90px; /* Slightly smaller on phone, but still big */
-                 --grid-gap: 25px;
+                 --app-size: 85px; 
+                 --grid-gap: 20px;
             }
-            .desktop { padding: 40px 25px; grid-template-columns: repeat(3, 1fr); align-content: start; }
-            .app-icon { font-size: 42px; border-radius: 22px;}
+            .desktop { padding: 40px 20px; grid-template-columns: repeat(3, 1fr); align-content: start; }
+            .app-icon { font-size: 38px; border-radius: 20px;}
             .window { width: 95%; max-height: 92vh; }
-            .window-content { padding: 25px; }
+            .window-content { padding: 24px; }
+            /* Mobile Text Adjustment */
+            .readme-content h1 { font-size: 28px; }
         }
     </style>
 </head>
@@ -285,7 +340,7 @@
         </div>
 
         <div class="app-item" onclick="deploySystem()">
-            <div class="app-icon" style="background: #E8F2FF; color: #007AFF; border: 1px solid rgba(0,122,255,0.2);">🚀</div>
+            <div class="app-icon" style="background: linear-gradient(135deg, #007AFF, #0055ff); color: white; border: none; box-shadow: 0 8px 20px rgba(0,122,255,0.4);">🚀</div>
             <div class="app-label">Deploy</div>
         </div>
 
@@ -296,13 +351,12 @@
             <div class="window-title">📌 Notes</div>
             <button class="btn-close" onclick="closeWindow('win-sticky')">✕</button>
         </div>
-        <div class="window-content" style="background: #faf9f4;">
-            <h3 style="margin-top:0; font-weight: 700;">Important Tasks</h3>
-            <ul style="line-height: 2; padding-left: 20px; font-weight: 500;">
-                <li>Video Call <span style="color:#34C759">✔</span></li>
-                <li>Eat well <span style="color:#34C759">✔</span></li>
-                <li>Hug Abi (Pending...)
-                <li>F___ Abi (sus!)</li> 
+        <div class="window-content" style="background: #fffbeb;">
+            <h3 style="margin-top:0; font-weight: 700; color: #92400e;">Important Tasks</h3>
+            <ul style="line-height: 2.2; padding-left: 20px; font-weight: 500; color: #4b5563;">
+                <li>Video Call <span style="color:#10b981">✔</span></li>
+                <li>Eat well <span style="color:#10b981">✔</span></li>
+                <li>Hug Abi (Pending...)</li>
             </ul>
         </div>
     </div>
@@ -319,258 +373,10 @@
             <p><strong>Welcome to the official release page of Baobao OS v26.0!</strong></p>
             <p>This is an advanced bio-intelligent system based on the proprietary <strong>Naveen Architecture</strong>. After 26 years of continuous development, this major update brings enhanced stability, a wiser kernel, and an <strong>exclusive, encrypted connection</strong> to the lead developer (Abi).</p>
 
-            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
+            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #f0f0f0;">
 
             <h2>🚀 New Features in v26.0</h2>
             <ul>
                 <li><strong>Kernel Upgrade:</strong> Wisdom Level upgraded to <strong>26</strong>. Problem-solving algorithms are now faster, and patience modules have been expanded.</li>
                 <li><strong>Visual Patch:</strong> Beard rendering is ultra-realistic. <code>Smile.css</code> has been updated to melt the Developer's heart instantly.</li>
-                <li><strong>Language Pack:</strong> <code>Hindi-Mandarin</code> translation layer is improving. (<em>Note: "Wo Ai Ni" is now a hard-coded constant.</em>)</li>
-                <li><strong>Security Update:</strong> Firewall updated to block all unauthorized users. Access is strictly limited to <strong>Admin: Abi</strong>.</li>
-            </ul>
-
-            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
-
-            <h2>🗓️ Future Roadmap (Important!)</h2>
-            <ul>
-                <li><strong>2025 Q4:</strong> Continue remote data synchronization via <strong>Video Call API</strong>.</li>
-                <li><strong>2026 Q1 (February Release):  Project: "The Reunion"</strong>
-                    <ul>
-                        <li><strong>Status:</strong> Confirmed.</li>
-                        <li><strong>Description:</strong> The Lead Developer (Abi) will deploy herself to the Delhi production environment for a physical merge.</li>
-                        <li><strong>Expected Outcome:</strong> Infinite hugs and real-time hand-holding.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
-
-            <h2>🛠 Installation & Usage (Daily Routine)</h2>
-            <p>To ensure <strong>Baobao OS v26.0</strong> runs smoothly, please maintain the following dependencies:</p>
-
-            <div class="code-block"># Critical System Requirements
-npm install unlimited-love 
-npm install video-call --frequency=daily
-npm install gym-workout  #WannaLickYou
-npm install ling-yo-phone --10:53
-                
-# Optional but Recommended
-npm install blueberries --hehe
-npm install chole-bhature --remote-wish</div>
-
-            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
-
-            <h2>⚠️ Known Issues</h2>
-            <ul>
-                <li><strong>Latency Warning:</strong> Due to the <code>TPE <-> DEL</code> server distance, physical touch functions are currently disabled. <em>Fix scheduled for 2026.</em></li>
-                <li><strong>Bug #0130:</strong> Developer misses the system too much.
-                    <ul>
-                        <li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
-
-            <h2>📜 License & Contributors</h2>
-            <ul>
-                <li><strong>Lead Developer & Owner:</strong> Abi (Yi-Yun) 🇹🇼</li>
-                <li><strong>Core System:</strong> Naveen 🇮🇳</li>
-                <li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong>
-                    <ul>
-                        <li><em>Terms:</em> I Love You Naveen. Non-transferable. No refunds. Valid for eternity.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <br>
-            <blockquote>© 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.</blockquote>
-        </div>
-    </div>
-
-    <div id="win-photo" class="window">
-        <div class="window-header">
-            <div class="window-title">🖼️ Us.jpg</div>
-            <button class="btn-close" onclick="closeWindow('win-photo')">✕</button>
-        </div>
-        <div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;">
-            <img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 55vh; border-radius:12px; box-shadow: 0 15px 35px rgba(0,0,0,0.12);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
-            <p style="margin-top: 25px; color: var(--text-secondary); font-size: 15px; font-weight: 500; text-align: center; line-height: 1.5; letter-spacing: 0.3px;">
-                October 13, 2025. Our first day together.<br>Let's keep walking together.
-            </p>
-        </div>
-    </div>
-
-    <div id="win-terminal" class="window">
-        <div class="window-header" style="background: #2D2D2D; border-bottom: 1px solid #333;">
-            <div class="window-title" style="color: #999;">📟 Terminal</div>
-            <button class="btn-close" onclick="closeWindow('win-terminal')" style="color: #999;">✕</button>
-        </div>
-        <div class="window-content">
-            <div id="terminal-content"></div>
-            <span class="cursor"></span>
-        </div>
-    </div>
-
-    <div id="win-music" class="window" style="max-width: 420px;">
-        <div class="window-header">
-            <div class="window-title">🎵 Voice Note</div>
-            <button class="btn-close" onclick="closeWindow('win-music')">✕</button>
-        </div>
-        <div class="window-content">
-            <div class="audio-player-ui">
-                <div style="font-size: 65px; margin-bottom: 15px;">🎙️</div>
-                <h3 style="margin:0; font-weight:700; font-size: 20px;">Birthday Message</h3>
-                <p style="color:#8e8e93; margin-top:6px; font-size:15px; font-weight: 500;">Abi's Note</p>
-                
-                <div class="progress-container">
-                    <span id="currTime" class="time-display">0:00</span>
-                    <input type="range" id="seek-slider" max="100" value="0">
-                    <span id="durTime" class="time-display">0:00</span>
-                </div>
-
-                <button id="play-btn" class="control-btn" onclick="togglePlay()">▶</button>
-            </div>
-            <audio id="audio-file" src="voice-note.mp3"></audio>
-        </div>
-    </div>
-
-    <div id="overlay" onclick="this.style.display='none'">
-        <h1 style="font-size: 2.8rem; color: #1E1E1E; margin-bottom: 10px; font-weight: 800; letter-spacing: -1px;">Happy 26th Birthday, baobao!</h1>
-        <p style="color: #666; font-size: 1.3rem; font-weight: 500;">Baobao OS Update Complete.</p>
-        <div style="margin-top: 35px; font-size: 5rem;">🎂</div>
-    </div>
-    <canvas id="confetti-canvas"></canvas>
-
-    <script>
-        /* --- Window Management --- */
-        function openWindow(id) {
-            document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
-            document.getElementById(id).classList.add('open');
-        }
-
-        function closeWindow(id) { 
-            document.getElementById(id).classList.remove('open');
-            // If Music window is closed, PAUSE audio
-            if (id === 'win-music') {
-                const audio = document.getElementById('audio-file');
-                audio.pause();
-                document.getElementById('play-btn').textContent = '▶';
-            }
-        }
-
-        /* --- Audio Player Logic --- */
-        const audio = document.getElementById('audio-file');
-        const playBtn = document.getElementById('play-btn');
-        const seekSlider = document.getElementById('seek-slider');
-        const currTime = document.getElementById('currTime');
-        const durTime = document.getElementById('durTime');
-        let isPlaying = false;
-
-        function togglePlay() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    playBtn.textContent = '⏸';
-                }).catch(e => alert("Please upload 'voice-note.mp3'!"));
-            } else {
-                audio.pause();
-                playBtn.textContent = '▶';
-            }
-        }
-
-        // Update progress bar
-        audio.addEventListener('timeupdate', () => {
-            const val = (audio.currentTime / audio.duration) * 100;
-            seekSlider.value = val || 0;
-            currTime.textContent = formatTime(audio.currentTime);
-        });
-
-        // Set Duration when metadata loads
-        audio.addEventListener('loadedmetadata', () => {
-            durTime.textContent = formatTime(audio.duration);
-        });
-
-        // Seek functionality
-        seekSlider.addEventListener('input', () => {
-            const time = (seekSlider.value / 100) * audio.duration;
-            audio.currentTime = time;
-        });
-
-        // Format time (0:00)
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
-
-        /* --- Terminal Logic --- */
-        function runTerminal() {
-            const termContent = document.getElementById('terminal-content');
-            termContent.innerHTML = ""; 
-            const lines = [
-                "> connect --target=Naveen",
-                "> Resolving heart... found.",
-                "> Authentication: Girlfriend-Access-Token... Verified.",
-                "> Downloading love packages...",
-                ".......................... 100%",
-                "> Happy Birthday, Baobao! ❤️"
-            ];
-            let lineIndex = 0;
-            function typeLine() {
-                if (lineIndex < lines.length) {
-                    termContent.innerHTML += lines[lineIndex] + "<br>";
-                    lineIndex++;
-                    setTimeout(typeLine, 800);
-                }
-            }
-            setTimeout(typeLine, 500);
-        }
-
-        /* --- Confetti Logic (Deploy) --- */
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let confetti = [];
-        let isConfettiSpawning = false;
-        const colors = ['#E83E8C', '#2383E2', '#F5A623', '#34C759', '#1F2328']; 
-
-        function createConfetti() {
-            confetti = [];
-            for (let i = 0; i < 150; i++) {
-                confetti.push({
-                    x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 6 + 4, speed: Math.random() * 6 + 3, angle: Math.random() * 6.28
-                });
-            }
-        }
-        function updateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let active = 0;
-            confetti.forEach((p) => {
-                p.y += p.speed; p.x += Math.sin(p.angle) * 2;
-                if (p.y < canvas.height) {
-                    ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.size, p.size);
-                    active++;
-                } else if (isConfettiSpawning) {
-                    p.y = -10; p.x = Math.random() * canvas.width;
-                    active++;
-                }
-            });
-            if (active > 0) requestAnimationFrame(updateConfetti);
-        }
-
-        function deploySystem() {
-            document.getElementById('overlay').style.display = 'flex';
-            // NOTE: Removed audio.play() here as requested
-            isConfettiSpawning = true;
-            createConfetti();
-            updateConfetti();
-            setTimeout(() => { isConfettiSpawning = false; }, 3000);
-        }
-
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-    </script>
-</body>
-</html>
+                <li><strong>Language Pack:</strong> <code>Hindi-Mandarin</code> translation layer is
