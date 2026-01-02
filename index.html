@@ -9,24 +9,19 @@
     
     <style>
         :root {
-            /* Palette: Ultra Minimalist "Titanium White" */
-            --bg-color: #eef0f2;
-            --text-main: #1a1a1a;
+            --bg-color: #f2f2f7;
+            --text-main: #1d1d1f;
             --text-muted: #8e8e93;
-            --window-bg: rgba(255, 255, 255, 0.94);
+            --window-bg: rgba(255, 255, 255, 0.95);
             
-            /* Shadows for Depth (Soft Neumorphism) */
+            /* Shadows */
             --shadow-icon: 
-                12px 12px 24px #d1d9e6, 
-                -12px -12px 24px #ffffff;
-            --shadow-window: 0 40px 100px rgba(0,0,0,0.18);
+                10px 10px 20px #d1d9e6, 
+                -10px -10px 20px #ffffff;
+            --shadow-window: 0 40px 100px rgba(0,0,0,0.2);
             
-            /* Sizing */
-            --app-size: 135px; 
-            --grid-gap: 45px;
-
             /* Fonts */
-            --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
             --font-mono: "SF Mono", "Menlo", monospace;
         }
 
@@ -37,8 +32,9 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-main);
-            height: 100vh; width: 100vw;
-            overflow: hidden;
+            min-height: 100vh; /* Allow scrolling */
+            width: 100vw;
+            overflow-x: hidden; /* Prevent horizontal scroll only */
             user-select: none;
         }
 
@@ -47,81 +43,80 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 44px;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 25px;
-            font-size: 13px; font-weight: 500;
+            font-size: 13px; font-weight: 600;
             color: var(--text-main);
             z-index: 1000;
-            background: rgba(238, 240, 242, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(242, 242, 247, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         
-        .status-left { font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-size: 12px; color: var(--text-muted); }
-        .clock-group { display: flex; gap: 25px; }
-        .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
+        .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 12px; color: var(--text-muted); }
+        .clock-group { display: flex; gap: 20px; }
+        .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 500; font-size: 11px; }
 
-        /* --- Desktop Grid --- */
+        /* --- Desktop Grid (Flexible) --- */
         .desktop {
-            padding: 100px 60px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            grid-auto-rows: min-content;
-            gap: var(--grid-gap);
-            justify-items: center;
-            max-width: 1400px;
+            padding: 100px 20px 60px 20px; /* Top padding for status bar */
+            max-width: 1000px;
             margin: 0 auto;
+            
+            /* GRID SYSTEM: 4 Columns on Desktop */
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 40px;
+            justify-items: center;
+            
             z-index: 1;
             position: relative;
-            height: 100%;
-            align-content: start;
         }
 
         /* --- Premium App Icons --- */
         .app-item {
             display: flex; flex-direction: column; align-items: center; cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: var(--app-size);
+            transition: transform 0.2s; width: 100%;
         }
         .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
 
         .app-icon {
-            width: var(--app-size); height: var(--app-size);
-            border-radius: 32px;
+            width: 125px; height: 125px; /* Fixed Desktop Size */
+            border-radius: 28px;
             display: flex; justify-content: center; align-items: center;
-            font-size: 62px;
+            font-size: 60px;
             background: #eef0f2;
-            /* Neumorphism Effect */
             box-shadow: var(--shadow-icon);
             border: 1px solid rgba(255,255,255,0.6);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             color: #333;
             position: relative;
         }
         
-        /* Subtle Color Accents for Icons */
+        /* Icon Colors */
         .icon-youtube { color: #FF0000; }
         .icon-map { color: #34C759; }
         .icon-weather { color: #5AC8FA; }
-        .icon-timeline { color: #FF9500; }
-        .icon-deploy { font-size: 68px; color: #007AFF; }
+        .icon-contract { color: #5856D6; }
+        .icon-quiz { color: #FF9500; }
+        .icon-deploy { font-size: 65px; color: #007AFF; }
 
         .app-label {
-            font-size: 15px; font-weight: 500; color: var(--text-main);
-            letter-spacing: 0.3px;
+            font-size: 14px; font-weight: 500; color: var(--text-main);
+            letter-spacing: 0.3px; text-align: center;
         }
 
         /* --- Windows --- */
         .window {
-            position: absolute; top: 50%; left: 50%;
+            position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -45%) scale(0.95);
-            width: 90%; max-width: 850px; max-height: 85vh;
+            width: 90%; max-width: 800px; max-height: 85vh;
             background: var(--window-bg);
             border-radius: 24px;
             box-shadow: var(--shadow-window);
             display: flex; flex-direction: column;
             opacity: 0; pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 2000; /* High z-index to sit above everything */
             border: 1px solid rgba(255,255,255,0.8);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
@@ -130,10 +125,10 @@
 
         .window-header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 25px;
+            padding: 16px 24px;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .window-title { font-size: 16px; font-weight: 600; letter-spacing: -0.2px; }
+        .window-title { font-size: 16px; font-weight: 600; }
         .btn-close {
             background: #e5e5ea; border: none; width: 30px; height: 30px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; cursor: pointer;
@@ -141,77 +136,93 @@
         }
         .btn-close:hover { background: #d1d1d6; color: #000; }
 
-        .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; }
+        .window-content { padding: 30px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch;}
 
-        /* --- Map Styles --- */
-        #map-container { width: 100%; height: 450px; border-radius: 16px; z-index: 1; border: 1px solid rgba(0,0,0,0.1); }
-        .map-info {
-            display: flex; justify-content: space-between; margin-top: 25px;
-            padding: 20px; background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
-        .map-stat h4 { margin: 0; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;}
-        .map-stat p { margin: 5px 0 0 0; font-size: 18px; font-weight: 700; }
-
-        /* --- Weather Widget --- */
-        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .weather-card { 
-            background: white; padding: 25px; border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03); text-align: center;
-        }
-        .weather-temp { font-size: 48px; font-weight: 200; margin: 10px 0; letter-spacing: -2px; }
-        .weather-city { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
-        .weather-desc { font-size: 16px; color: #1a1a1a; }
-
-        /* --- Timeline Widget --- */
-        .timeline-container { text-align: center; display: flex; flex-direction: column; gap: 30px; }
-        .time-block h3 { margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
-        .time-block .big-number { font-size: 60px; font-weight: 800; line-height: 1; margin: 10px 0; letter-spacing: -2px; }
-        .time-block .sub-text { font-size: 16px; color: #555; }
-
-        /* --- YouTube Responsive --- */
+        /* --- Specific App Styles --- */
+        
+        /* Map */
+        #map-container { width: 100%; height: 400px; border-radius: 16px; z-index: 1; border: 1px solid rgba(0,0,0,0.1); }
+        
+        /* YouTube */
         .video-wrapper {
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
             border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* --- Code Editor --- */
+        /* Code Editor */
         .code-editor {
-            background: #1e1e1e; border-radius: 12px; padding: 25px;
-            font-family: var(--font-mono); font-size: 14px; line-height: 1.6;
+            background: #1e1e1e; border-radius: 12px; padding: 20px;
+            font-family: var(--font-mono); font-size: 13px; line-height: 1.6;
             color: #d4d4d4; overflow-x: auto;
         }
         .kw { color: #569cd6; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; }
 
-        /* --- Audio Player --- */
-        .audio-player-ui { text-align: center; padding: 20px 0; max-width: 350px; margin: 0 auto; }
+        /* Weather */
+        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .weather-card { 
+            background: white; padding: 20px; border-radius: 16px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03); text-align: center;
+        }
+        .weather-temp { font-size: 36px; font-weight: 200; margin: 5px 0; }
+        .weather-city { font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
+
+        /* Contract */
+        .contract-paper {
+            background: #fff; padding: 20px; border: 1px solid #eee; border-radius: 8px;
+            height: 250px; overflow-y: auto; margin-bottom: 20px; font-size: 14px; line-height: 1.6;
+        }
+
+        /* Quiz */
+        .quiz-btn {
+            width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #eee;
+            background: white; border-radius: 12px; font-size: 16px; cursor: pointer; text-align: left;
+            transition: 0.2s;
+        }
+        .quiz-btn:hover { background: #f9f9f9; }
+
+        /* Audio Player */
+        .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; }
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
         input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: #e0e0e0; border-radius: 10px; }
-        input[type=range]::-webkit-slider-thumb { height: 18px; width: 18px; border-radius: 50%; background: #333; margin-top: -6px; -webkit-appearance: none; cursor: pointer; }
-        .control-btn { background: #1a1a1a; color: white; width: 64px; height: 64px; border-radius: 50%; font-size: 26px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); transition: transform 0.1s;}
-        .control-btn:active { transform: scale(0.95); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: #e0e0e0; border-radius: 10px; }
+        input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: #333; margin-top: -5px; -webkit-appearance: none; }
+        .control-btn { background: #1a1a1a; color: white; width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 20px; }
 
-        /* --- README --- */
-        .readme-content h1 { font-size: 32px; font-weight: 800; margin-bottom: 25px; letter-spacing: -1px; }
-        .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
-        .readme-content p, li { font-size: 16px; line-height: 1.7; color: #333; }
-        .code-block { background: #f9f9f9; padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border: 1px solid #eee; }
+        /* README */
+        .readme-content h1 { font-size: 26px; font-weight: 800; margin-bottom: 20px; }
+        .readme-content h2 { font-size: 18px; font-weight: 700; margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .code-block { background: #f9f9f9; padding: 20px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 15px 0; }
 
-        /* --- Overlay --- */
+        /* Overlay */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.98);
             display: none; align-items: center; justify-content: center;
-            z-index: 2000; flex-direction: column; text-align: center;
+            z-index: 3000; flex-direction: column; text-align: center;
         }
-        #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2000; }
+        #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
 
-        @media (max-width: 600px) {
-            .desktop { padding: 80px 20px; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+            .desktop {
+                padding: 80px 20px; /* Less padding */
+                grid-template-columns: repeat(3, 1fr); /* 3 Columns on Mobile */
+                gap: 25px; /* Smaller gap */
+            }
+            
+            .app-icon {
+                width: 90px; height: 90px; /* Smaller Icons for Mobile */
+                font-size: 45px;
+                border-radius: 22px;
+            }
+            
+            .app-label { font-size: 12px; }
+            
             .window { width: 95%; max-height: 90vh; }
+            .window-content { padding: 20px; }
+            
             .status-bar { font-size: 11px; padding: 0 15px; }
-            .app-icon { font-size: 50px; }
         }
     </style>
     
@@ -220,7 +231,7 @@
 <body>
 
     <div class="status-bar">
-        <div class="status-left">Baobao OS v26.0</div>
+        <div class="status-left">Baobao OS</div>
         <div class="clock-group">
             <div class="clock-item" id="clock-tpe"><span>TPE</span> --:--</div>
             <div class="clock-item" id="clock-del"><span>DEL</span> --:--</div>
@@ -279,11 +290,18 @@
             <div class="app-label">Atmosphere</div>
         </div>
 
-        <div class="app-item" onclick="openWindow('win-timeline'); updateTimeline();">
-            <div class="app-icon icon-timeline">⏳</div>
-            <div class="app-label">Timeline</div>
+        <div class="app-item" onclick="openWindow('win-contract')">
+            <div class="app-icon icon-contract">📜</div>
+            <div class="app-label">Agreement</div>
         </div>
 
+        <div class="app-item" onclick="openWindow('win-quiz')">
+            <div class="app-icon icon-quiz">🎓</div>
+            <div class="app-label">Quiz</div>
+        </div>
+
+        <style> .app-item:last-child { display: none; } /* Hiding the Quiz item above */ </style>
+        
         <div class="app-item" onclick="deploySystem()">
             <div class="app-icon icon-deploy">🚀</div>
             <div class="app-label">Deploy</div>
@@ -410,10 +428,19 @@ npm install chole-bhature --remote-wish</div>
         <div class="window-header"><div class="window-title">Find My</div><button class="btn-close" onclick="closeWindow('win-map')">✕</button></div>
         <div class="window-content" style="padding:0;">
             <div id="map-container"></div>
-            <div class="map-info" style="margin: 0 20px 20px 20px;">
-                <div class="map-stat"><h4>You</h4><p>Gurgaon 🇮🇳</p></div>
-                <div class="map-stat" style="text-align:center;"><h4>Status</h4><p style="color:#007AFF;">Connected</p></div>
-                <div class="map-stat" style="text-align:right;"><h4>Me</h4><p>Hsinchu 🇹🇼</p></div>
+            <div class="map-info" style="margin: 0 20px 20px 20px; padding:20px; background:white; border-radius:12px; display:flex; justify-content:space-between; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                <div style="text-align:left;">
+                    <div style="font-size:11px; color:#888; text-transform:uppercase;">You</div>
+                    <div style="font-size:18px; font-weight:700;">Gurgaon 🇮🇳</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:11px; color:#888; text-transform:uppercase;">Distance</div>
+                    <div style="font-size:18px; font-weight:700; color:#007AFF;">4,300 km</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:11px; color:#888; text-transform:uppercase;">Me</div>
+                    <div style="font-size:18px; font-weight:700;">Hsinchu 🇹🇼</div>
+                </div>
             </div>
         </div>
     </div>
@@ -469,34 +496,30 @@ baobao.run_forever()
                 <div class="weather-card">
                     <div class="weather-city">Taipei</div>
                     <div class="weather-temp">22°</div>
-                    <div class="weather-desc">Cloudy</div>
+                    <div style="color:#888;">Cloudy</div>
                 </div>
                 <div class="weather-card">
                     <div class="weather-city">Delhi</div>
                     <div class="weather-temp">18°</div>
-                    <div class="weather-desc">Hazy</div>
+                    <div style="color:#888;">Hazy</div>
                 </div>
             </div>
-            <p style="text-align:center; color:#8e8e93; font-size:14px; margin-top:25px; letter-spacing:0.5px;">"Same sky, different timezone."</p>
+            <p style="text-align:center; color:#8e8e93; font-size:14px; margin-top:25px;">Same sky, different timezone.</p>
         </div>
     </div>
 
-    <div id="win-timeline" class="window" style="max-width: 450px;">
-        <div class="window-header"><div class="window-title">Timeline</div><button class="btn-close" onclick="closeWindow('win-timeline')">✕</button></div>
+    <div id="win-contract" class="window" style="max-width: 500px;">
+        <div class="window-header"><div class="window-title">Agreement</div><button class="btn-close" onclick="closeWindow('win-contract')">✕</button></div>
         <div class="window-content">
-            <div class="timeline-container">
-                <div class="time-block">
-                    <h3>We have been together for</h3>
-                    <div class="big-number" id="days-together">0</div>
-                    <div class="sub-text">Days</div>
-                </div>
-                <hr style="border:0; border-top:1px solid #eee; width:50%; margin:0 auto;">
-                <div class="time-block">
-                    <h3>Countdown to Reunion</h3>
-                    <div class="big-number" id="days-until" style="color:#007AFF;">0</div>
-                    <div class="sub-text">Days (Feb 13, 2026)</div>
-                </div>
+            <h2 style="margin-top:0; font-size:20px;">Relationship Contract</h2>
+            <div class="contract-paper">
+                <p><strong>1. Parties</strong><br>Made between <strong>Abi</strong> (The Boss) and <strong>Naveen</strong> (The Cutie).</p>
+                <p><strong>2. Hugs Policy</strong><br>The User agrees to provide unlimited hugs upon reunion in Feb 2026. Non-negotiable.</p>
+                <p><strong>3. Food Sharing</strong><br>The User agrees to share all Chole Bhature with The Boss.</p>
+                <p><strong>4. Exclusivity</strong><br>The User's heart is strictly reserved for Abi. No unauthorized access.</p>
+                <p><strong>5. Term</strong><br>Valid for eternity. ❤️</p>
             </div>
+            <button class="control-btn" style="width:100%; border-radius:12px; height:50px; font-size:16px; margin:0;" onclick="this.innerHTML='Signed ✅'; this.style.background='#34C759';">I Agree & Sign</button>
         </div>
     </div>
 
@@ -565,22 +588,6 @@ baobao.run_forever()
                 L.marker(hsinchu, {icon: redIcon}).addTo(map).bindPopup("Abi (Hsinchu)");
                 L.polyline([gurgaon, hsinchu], {color: '#888', dashArray: '5, 10', weight: 2}).addTo(map);
             }, 300);
-        }
-
-        /* --- Timeline Logic --- */
-        function updateTimeline() {
-            const start = new Date("2025-10-13");
-            const meet = new Date("2026-02-13");
-            const now = new Date();
-            
-            const diffTime = Math.abs(now - start);
-            const daysTogether = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-            
-            const diffMeet = meet - now;
-            const daysUntil = Math.ceil(diffMeet / (1000 * 60 * 60 * 24));
-
-            document.getElementById('days-together').innerText = daysTogether;
-            document.getElementById('days-until').innerText = daysUntil > 0 ? daysUntil : 0;
         }
 
         /* --- Terminal --- */
