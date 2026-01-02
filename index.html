@@ -30,7 +30,7 @@
             
             /* Fonts */
             --font-main: 'Open Sans', sans-serif;
-            --font-mono: "SF Mono", "Menlo", monospace;
+            --font-mono: "SF Mono", "Menlo", "Consolas", monospace;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -69,17 +69,17 @@
             max-width: 1200px;
             margin: 0 auto;
             
-            /* Flexbox Layout */
+            /* Flexbox Layout for Center Alignment */
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Centers the grid and the last row */
-            gap: 50px; /* Space between icons */
+            justify-content: center; 
+            gap: 50px; 
             
             z-index: 1;
             position: relative;
             height: 100%;
             align-content: start;
-            overflow-y: auto; /* Allow scrolling if height exceeds */
+            overflow-y: auto; 
         }
 
         /* --- App Icons --- */
@@ -95,7 +95,7 @@
             border-radius: 30px;
             display: flex; justify-content: center; align-items: center;
             font-size: 58px;
-            background: #f2f4f6; /* Match BG */
+            background: #f2f4f6; 
             /* Neumorphism Effect */
             box-shadow: var(--shadow-icon);
             border: 1px solid rgba(255,255,255,0.4);
@@ -161,13 +161,19 @@
         }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* Code Editor */
+        /* Code Editor (C Language Theme) */
         .code-editor {
             background: #1e1e1e; border-radius: 12px; padding: 25px;
             font-family: var(--font-mono); font-size: 14px; line-height: 1.6;
             color: #d4d4d4; overflow-x: auto;
         }
-        .kw { color: #569cd6; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; }
+        /* C Syntax Highlighting Colors */
+        .kw { color: #569cd6; font-weight:bold; } /* Keywords (int, while) */
+        .type { color: #4ec9b0; } /* Types (Relationship) */
+        .str { color: #ce9178; } /* Strings */
+        .fn { color: #dcdcaa; } /* Functions */
+        .cmt { color: #6a9955; font-style: italic; } /* Comments */
+        .num { color: #b5cea8; } /* Numbers */
 
         /* Weather */
         .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -216,7 +222,7 @@
 <body>
 
     <div class="status-bar">
-        <div class="status-left">Baobao OS</div>
+        <div class="status-left">Baobao OS v26.0</div>
         <div class="clock-group">
             <div class="clock-item" id="clock-tpe"><span>TPE</span> --:--</div>
             <div class="clock-item" id="clock-del"><span>DEL</span> --:--</div>
@@ -437,27 +443,37 @@ npm install chole-bhature --remote-wish</div>
     </div>
 
     <div id="win-code" class="window" style="max-width: 550px;">
-        <div class="window-header"><div class="window-title">kernel_love.py</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div>
+        <div class="window-header"><div class="window-title">kernel_love.c</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div>
         <div class="window-content" style="background:#1e1e1e; padding:0;">
             <div class="code-editor">
-<span class="kw">class</span> Relationship:
-    <span class="kw">def</span> <span class="fn">__init__</span>(self, him, her):
-        self.him = <span class="str">"Naveen"</span>
-        self.her = <span class="str">"Abi"</span>
-        self.distance = 4300
-        
-    <span class="kw">def</span> <span class="fn">run_forever</span>(self):
-        <span class="cmt"># Main loop</span>
-        <span class="kw">while</span> <span class="kw">True</span>:
-            self.love_level += 1
-            <span class="kw">if</span> self.distance > 0:
-                self.video_call()
-            <span class="kw">else</span>:
-                self.hug()
+<span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;stdbool.h&gt;</span>
 
-<span class="cmt"># Executing...</span>
-baobao = Relationship()
-baobao.run_forever()
+<span class="cmt">// Defining our structure</span>
+<span class="kw">typedef struct</span> {
+    <span class="kw">char</span>* him;
+    <span class="kw">char</span>* her;
+    <span class="kw">int</span> distance_km;
+} <span class="type">Relationship</span>;
+
+<span class="kw">void</span> <span class="fn">maintain_connection</span>(<span class="type">Relationship</span> *r) {
+    <span class="kw">while</span> (<span class="kw">true</span>) { <span class="cmt">// Infinite loop</span>
+        <span class="kw">if</span> (r->distance_km > <span class="num">0</span>) {
+            <span class="fn">video_call</span>(); 
+            <span class="cmt">// TODO: Physical merge in Feb 2026</span>
+        } <span class="kw">else</span> {
+            <span class="fn">hug</span>();
+        }
+    }
+}
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="type">Relationship</span> baobao;
+    baobao.him = <span class="str">"Naveen"</span>;
+    baobao.her = <span class="str">"Abi"</span>;
+    <span class="fn">maintain_connection</span>(&baobao);
+    <span class="kw">return</span> <span class="num">0</span>;
+}
             </div>
         </div>
     </div>
