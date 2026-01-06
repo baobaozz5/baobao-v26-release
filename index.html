@@ -95,8 +95,18 @@
             padding: 100px 40px 40px 40px;
             max-width: 1200px;
             margin: 0 auto;
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 50px;
-            z-index: 1; position: relative; height: 100%; align-content: start; overflow-y: auto; 
+            
+            /* Flexbox Layout for Center Alignment */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; 
+            gap: 50px; 
+            
+            z-index: 1;
+            position: relative;
+            height: 100%;
+            align-content: start;
+            overflow-y: auto; 
         }
 
         /* --- App Icons --- */
@@ -112,7 +122,8 @@
             border-radius: 30px;
             display: flex; justify-content: center; align-items: center;
             font-size: 58px;
-            background: var(--icon-bg);
+            background: var(--icon-bg); 
+            /* Neumorphism Effect */
             box-shadow: var(--shadow-icon);
             border: 1px solid var(--border-color);
             margin-bottom: 15px;
@@ -164,7 +175,7 @@
 
         .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch;}
 
-        /* --- Specific App Styles --- */
+        /* --- Content Styles --- */
         
         /* Map */
         #map-container { width: 100%; height: 400px; border-radius: 16px; z-index: 1; border: 4px solid var(--window-bg); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
@@ -178,7 +189,7 @@
         }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* Code Editor */
+        /* Code Editor (C++ Theme) */
         .code-editor {
             background: #1e1e1e; border-radius: 12px; padding: 25px;
             font-family: var(--font-mono); font-size: 14px; line-height: 1.6;
@@ -239,6 +250,8 @@
             .status-bar { font-size: 11px; padding: 0 15px; }
         }
     </style>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
 
@@ -472,35 +485,41 @@ npm install chole-bhature --remote-wish</div>
     </div>
 
     <div id="win-code" class="window" style="max-width: 550px;">
-        <div class="window-header"><div class="window-title">kernel_love.c</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div>
+        <div class="window-header"><div class="window-title">kernel_love.cpp</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div>
         <div class="window-content" style="background:#1e1e1e; padding:0;">
             <div class="code-editor">
-<span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
-<span class="kw">#include</span> <span class="str">&lt;stdbool.h&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;string&gt;</span>
 
-<span class="cmt">// Defining our structure</span>
-<span class="kw">typedef struct</span> {
-    <span class="kw">char</span>* him;
-    <span class="kw">char</span>* her;
+<span class="kw">using namespace</span> std;
+
+<span class="kw">class</span> <span class="type">Relationship</span> {
+<span class="kw">public</span>:
+    string him;
+    string her;
     <span class="kw">int</span> distance_km;
-} <span class="type">Relationship</span>;
 
-<span class="kw">void</span> <span class="fn">maintain_connection</span>(<span class="type">Relationship</span> *r) {
-    <span class="kw">while</span> (<span class="kw">true</span>) { <span class="cmt">// Infinite loop</span>
-        <span class="kw">if</span> (r->distance_km > <span class="num">0</span>) {
-            <span class="fn">video_call</span>(); 
-            <span class="cmt">// TODO: Physical merge in Feb 2026</span>
-        } <span class="kw">else</span> {
-            <span class="fn">hug</span>();
+    <span class="fn">Relationship</span>(string h, string w) {
+        him = h;
+        her = w;
+        distance_km = <span class="num">4300</span>;
+    }
+
+    <span class="kw">void</span> <span class="fn">maintain_connection</span>() {
+        <span class="kw">while</span> (<span class="kw">true</span>) { <span class="cmt">// Forever loop</span>
+            <span class="kw">if</span> (distance_km > <span class="num">0</span>) {
+                <span class="fn">video_call</span>();
+                <span class="cmt">// TODO: Merge in Feb 2026</span>
+            } <span class="kw">else</span> {
+                <span class="fn">hug</span>();
+            }
         }
     }
-}
+};
 
 <span class="kw">int</span> <span class="fn">main</span>() {
-    <span class="type">Relationship</span> baobao;
-    baobao.him = <span class="str">"Naveen"</span>;
-    baobao.her = <span class="str">"Abi"</span>;
-    <span class="fn">maintain_connection</span>(&baobao);
+    <span class="type">Relationship</span> baobao(<span class="str">"Naveen"</span>, <span class="str">"Abi"</span>);
+    baobao.<span class="fn">maintain_connection</span>();
     <span class="kw">return</span> <span class="num">0</span>;
 }
             </div>
