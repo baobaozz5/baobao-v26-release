@@ -6,7 +6,6 @@
     <title>Baobao OS v26.0</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
-
     <meta property="og:title" content="Baobao OS v26.0 🎂">
     <meta property="og:description" content="Happy 26th Birthday, Naveen! Access Granted.">
     <meta property="og:image" content="baobao.jpg">
@@ -17,111 +16,83 @@
     
     <style>
         :root {
-            /* Palette */
-            --bg-color: #f2f4f6;
-            --text-main: #2c3e50;
-            --text-muted: #95a5a6;
-            --window-bg: rgba(255, 255, 255, 0.96);
-            --icon-bg: #f2f4f6;
-            --border-color: rgba(255,255,255,0.4);
-            
-            /* Shadows */
+            --bg-color: #f2f4f6; --text-main: #2c3e50; --text-muted: #95a5a6;
+            --window-bg: rgba(255, 255, 255, 0.96); --icon-bg: #f2f4f6; --border-color: rgba(255,255,255,0.4);
             --shadow-icon: 12px 12px 24px rgba(163, 177, 198, 0.5), -12px -12px 24px rgba(255, 255, 255, 0.9);
             --shadow-window: 0 40px 100px rgba(0,0,0,0.15);
-            
             --status-bar-bg: rgba(242, 244, 246, 0.85);
             --accent-color: #007AFF;
             --app-size: 125px; 
-            
-            /* Fonts */
-            --font-main: 'Open Sans', sans-serif;
-            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+            --font-main: 'Open Sans', sans-serif; --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+            /* Tinder Colors */
+            --tinder-grad: linear-gradient(to right, #fd297b, #ff655b);
+            --tinder-green: #2ee681;
+            --tinder-red: #ec4768;
         }
-
-        /* Dark Mode */
         [data-theme="dark"] {
-            --bg-color: #1a1a1a;
-            --text-main: #f0f0f0;
-            --text-muted: #888;
-            --window-bg: rgba(40, 40, 40, 0.96);
-            --icon-bg: #2a2a2a;
-            --border-color: rgba(255,255,255,0.05);
+            --bg-color: #1a1a1a; --text-main: #f0f0f0; --text-muted: #888;
+            --window-bg: rgba(40, 40, 40, 0.96); --icon-bg: #2a2a2a; --border-color: rgba(255,255,255,0.05);
             --shadow-icon: 8px 8px 16px rgba(0,0,0,0.4), -4px -4px 12px rgba(255,255,255,0.05);
             --shadow-window: 0 40px 100px rgba(0,0,0,0.5);
-            --status-bar-bg: rgba(26, 26, 26, 0.85);
-            --accent-color: #0A84FF;
+            --status-bar-bg: rgba(26, 26, 26, 0.85); --accent-color: #0A84FF;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s ease, color 0.3s ease; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-main); height: 100vh; width: 100vw; overflow: hidden; user-select: none; }
 
-        /* Status Bar */
+        /* Basic UI Elements */
         .status-bar { position: fixed; top: 0; left: 0; width: 100%; height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 13px; font-weight: 600; color: var(--text-main); z-index: 1000; background: var(--status-bar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.03); }
         .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 12px; color: var(--text-muted); font-weight: 700; }
-        .clock-group { display: flex; gap: 25px; }
-        .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
-
-        /* Desktop */
+        .clock-group { display: flex; gap: 25px; } .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
         .desktop { padding: 100px 40px 40px 40px; max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 50px; z-index: 1; position: relative; height: 100%; align-content: start; overflow-y: auto; }
-
-        /* App Icons */
-        .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); width: var(--app-size); }
-        .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
+        .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); width: var(--app-size); } .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
         .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-shadow: var(--shadow-icon); border: 1px solid var(--border-color); margin-bottom: 15px; color: var(--text-main); position: relative; }
-        
-        .icon-youtube { color: #e74c3c; } .icon-sys { color: #2ecc71; } .icon-weather { color: #3498db; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { color: #FF2D55; }
+        .icon-youtube { color: #e74c3c; } .icon-sys { color: #2ecc71; } .icon-weather { color: #3498db; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
         .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
-
-        /* Windows */
-        .window { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 800px; max-height: 85vh; background: var(--window-bg); border-radius: 24px; box-shadow: var(--shadow-window); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1); z-index: 2000; border: 1px solid var(--border-color); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
+        .window { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 800px; max-height: 85vh; background: var(--window-bg); border-radius: 24px; box-shadow: var(--shadow-window); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1); z-index: 2000; border: 1px solid var(--border-color); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); overflow: hidden;}
         .window.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
-        .window-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 25px; border-bottom: 1px solid var(--border-color); }
+        .window-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 25px; border-bottom: 1px solid var(--border-color); flex-shrink: 0;}
         .window-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--text-main); }
-        .btn-close { background: rgba(0,0,0,0.05); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: var(--text-muted); transition: 0.2s; }
-        .btn-close:hover { background: rgba(0,0,0,0.1); color: var(--text-main); }
-        .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch;}
-
-        /* System Monitor Styles */
-        .monitor-row { margin-bottom: 25px; }
-        .monitor-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-main); }
-        .monitor-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; }
-        .monitor-bar-fill { height: 100%; background: var(--accent-color); border-radius: 10px; width: 0%; transition: width 0.5s ease; }
-        .monitor-val { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+        .btn-close { background: rgba(0,0,0,0.05); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: var(--text-muted); transition: 0.2s; } .btn-close:hover { background: rgba(0,0,0,0.1); color: var(--text-main); }
+        .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch; position: relative;}
 
         /* Other Styles */
-        .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        
-        /* C++ Code Editor Style (Fixed) */
-        .code-container { background: #1e1e1e; border-radius: 12px; overflow: hidden; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6; display: flex; }
-        .line-numbers { background: #252526; color: #858585; padding: 20px 10px; text-align: right; user-select: none; border-right: 1px solid #333; min-width: 40px; }
-        .code-editor { color: #d4d4d4; padding: 20px; overflow-x: auto; white-space: pre; flex-grow: 1; }
-        .kw { color: #569cd6; font-weight:bold; } .type { color: #4ec9b0; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; } .num { color: #b5cea8; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); } .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .code-container { background: #1e1e1e; border-radius: 12px; overflow: hidden; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6; display: flex; } .line-numbers { background: #252526; color: #858585; padding: 20px 10px; text-align: right; user-select: none; border-right: 1px solid #333; min-width: 40px; } .code-editor { color: #d4d4d4; padding: 20px; overflow-x: auto; white-space: pre; flex-grow: 1; } .kw { color: #569cd6; font-weight:bold; } .type { color: #4ec9b0; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; } .num { color: #b5cea8; }
+        .monitor-row { margin-bottom: 25px; } .monitor-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-main); } .monitor-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; } .monitor-bar-fill { height: 100%; background: var(--accent-color); border-radius: 10px; width: 0%; transition: width 0.5s ease; } .monitor-val { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } .weather-card { background: var(--icon-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); text-align: center; color: var(--text-main); } .weather-temp { font-size: 42px; font-weight: 300; margin: 10px 0; } .weather-city { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing:1px; }
+        .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); } input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; } input[type=range]:focus { outline: none; } input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: var(--text-muted); opacity: 0.3; border-radius: 10px; } input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: var(--text-main); margin-top: -5px; -webkit-appearance: none; cursor: pointer; } .control-btn { background: var(--text-main); color: var(--bg-color); width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.1s;} .control-btn:active { transform: scale(0.95); }
+        .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; } .toggle-knob { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); } .toggle-switch.active { background: var(--accent-color); } .toggle-switch.active .toggle-knob { left: 24px; } .toggle-switch.locked { opacity: 0.6; cursor: not-allowed; background: var(--accent-color); } .toggle-switch.locked .toggle-knob { left: 24px; }
+        .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); } .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--text-main); } .code-block { background: var(--icon-bg); padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border:1px solid var(--border-color); color: var(--text-main); }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; } #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
 
-        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .weather-card { background: var(--icon-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); text-align: center; color: var(--text-main); }
-        .weather-temp { font-size: 42px; font-weight: 300; margin: 10px 0; }
-        .weather-city { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing:1px; }
+        /* --- TINDER STYLES (New) --- */
+        .tinder-container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding-bottom: 20px; }
+        .tinder-card-wrap { flex-grow: 1; width: 100%; max-width: 400px; position: relative; perspective: 1000px; }
+        .tinder-card { width: 100%; height: 100%; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: absolute; top: 0; left: 0; transition: transform 0.8s ease, opacity 0.8s ease; background-size: cover; background-position: center; }
+        .tinder-card.swipe-right { transform: translateX(400px) rotate(30deg); opacity: 0; }
+        .tinder-actions { display: flex; gap: 30px; margin-top: 20px; }
+        .tinder-btn { width: 60px; height: 60px; border-radius: 50%; border: none; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-size: 28px; cursor: pointer; transition: 0.2s; display:flex; align-items:center; justify-content:center;}
+        .tinder-btn.nope { color: var(--tinder-red); } .tinder-btn.like { color: var(--tinder-green); font-size: 32px; }
+        .tinder-btn:active { transform: scale(0.9); }
+
+        /* Tinder Match Screen */
+        .tinder-match { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; text-align: center; color: white; }
+        .tinder-match.active { opacity: 1; pointer-events: auto; }
+        .match-title { font-family: 'Brush Script MT', cursive; font-size: 60px; margin-bottom: 40px; background: var(--tinder-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        .match-photos { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; }
+        .match-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         
-        .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); }
-        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; } input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: var(--text-muted); opacity: 0.3; border-radius: 10px; }
-        input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: var(--text-main); margin-top: -5px; -webkit-appearance: none; cursor: pointer; }
-        .control-btn { background: var(--text-main); color: var(--bg-color); width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.1s;}
-        .control-btn:active { transform: scale(0.95); }
-        
-        .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; }
-        .toggle-knob { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .toggle-switch.active { background: var(--accent-color); } .toggle-switch.active .toggle-knob { left: 24px; }
-        .toggle-switch.locked { opacity: 0.6; cursor: not-allowed; background: var(--accent-color); } .toggle-switch.locked .toggle-knob { left: 24px; }
-        
-        .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); }
-        .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--text-main); }
-        .code-block { background: var(--icon-bg); padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border:1px solid var(--border-color); color: var(--text-main); }
-        
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; }
-        #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
+        /* Tinder Chat Screen */
+        .tinder-chat { position: absolute; top:0; left:0; width:100%; height:100%; background: var(--window-bg); z-index: 20; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; transform: translateY(20px); }
+        .tinder-chat.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .chat-header { padding: 15px; border-bottom: 1px solid var(--border-color); font-weight: 700; text-align: center; color: var(--text-main); }
+        .chat-body { flex-grow: 1; padding: 20px; overflow-y: auto; }
+        .chat-bubble { background: #e0e0e0; padding: 10px 15px; border-radius: 18px; max-width: 80%; margin-bottom: 10px; font-size: 14px; color: black; align-self: flex-start; clear: both; float: left;}
+        .chat-system { text-align: center; color: var(--text-muted); font-size: 12px; margin: 20px 0; clear: both; }
+        .chat-input-area { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; }
+        .chat-input { flex-grow: 1; border: 1px solid var(--border-color); border-radius: 20px; padding: 10px 15px; outline: none; background: var(--icon-bg); color: var(--text-main); }
+        .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; }
 
         @media (max-width: 768px) {
             .desktop { padding: 80px 20px; gap: 30px; }
@@ -130,6 +101,7 @@
             .window { width: 95%; max-height: 90vh; }
             .window-content { padding: 25px; }
             .status-bar { font-size: 11px; padding: 0 15px; }
+            .match-title { font-size: 40px; } .match-img { width: 90px; height: 90px; }
         }
     </style>
 </head>
@@ -144,67 +116,56 @@
     </div>
 
     <div class="desktop">
-        
         <div class="app-item" onclick="openWindow('win-sticky')">
             <div class="app-icon">📌</div>
             <div class="app-label">Notes</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-readme')">
             <div class="app-icon">📄</div>
             <div class="app-label">README</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-photo')">
             <div class="app-icon">🖼️</div>
             <div class="app-label">Photos</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-music')">
             <div class="app-icon">🎵</div>
             <div class="app-label">Voice Note</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-youtube')">
             <div class="app-icon icon-youtube">📺</div>
             <div class="app-label">Anthem</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();">
             <div class="app-icon icon-sys">📊</div>
             <div class="app-label">Activity</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-terminal'); focusTerminal();">
             <div class="app-icon">📟</div>
             <div class="app-label">Terminal</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-settings')">
             <div class="app-icon">⚙️</div>
             <div class="app-label">Settings</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-code')">
             <div class="app-icon">💻</div>
             <div class="app-label">Source</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-weather')">
             <div class="app-icon icon-weather">🌤️</div>
             <div class="app-label">Atmosphere</div>
         </div>
 
-        <div class="app-item" onclick="openWindow('win-letter')">
-            <div class="app-icon icon-letter">📮</div>
-            <div class="app-label">Letter Box</div>
+        <div class="app-item" onclick="openWindow('win-tinder'); startTinder();">
+            <div class="app-icon icon-letter">🔥</div>
+            <div class="app-label">Matches</div>
         </div>
 
         <div class="app-item" onclick="deploySystem()">
             <div class="app-icon icon-deploy">🚀</div>
             <div class="app-label">Deploy</div>
         </div>
-
     </div>
 
     <div id="win-sticky" class="window">
@@ -432,16 +393,42 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="win-letter" class="window" style="max-width: 500px;">
-        <div class="window-header"><div class="window-title">Letter Box</div><button class="btn-close" onclick="closeWindow('win-letter')">✕</button></div>
-        <div class="window-content">
-            <div style="text-align:center; margin-bottom:20px; color:var(--text-muted);">
-                Send a secret message to Abi. <br>She will receive it immediately.
+    <div id="win-tinder" class="window" style="max-width: 450px; height: 700px; max-height: 80vh;">
+        <div class="window-header"><div class="window-title">Matches</div><button class="btn-close" onclick="closeWindow('win-tinder')">✕</button></div>
+        <div class="window-content" style="padding: 20px; display:flex; flex-direction:column; height:100%; overflow:hidden; position:relative;">
+            
+            <div id="tinder-swipe-interface" class="tinder-container">
+                <div class="tinder-card-wrap">
+                    <div id="tinder-card" class="tinder-card" style="background-image: url('tinder-profile.jpg');"></div>
+                </div>
+                <div class="tinder-actions">
+                    <button class="tinder-btn nope" onclick="alert('Oops! Only one way to swipe 😉')">✕</button>
+                    <button class="tinder-btn like" onclick="handleSwipeRight()">♥</button>
+                </div>
             </div>
-            <form id="letter-form" class="letter-form" onsubmit="sendLetter(event)">
-                <textarea id="message-text" name="message" placeholder="Type your message here..."></textarea>
-                <button type="submit" class="control-btn" style="width:100%; border-radius:12px; height:50px; font-size:16px; margin-top:15px;">Send Letter ✉️</button>
-            </form>
+
+            <div id="tinder-match-screen" class="tinder-match">
+                <div class="match-title">It's a Match!</div>
+                <div class="match-photos">
+                    <img src="baobao.jpg" class="match-img" style="z-index:2;">
+                    <img src="him.jpg" class="match-img" style="z-index:1;">
+                </div>
+                <p style="font-size:14px; margin-bottom: 30px;">You and Naveen have liked each other.</p>
+                <button class="chat-send" onclick="showChat()" style="width: 80%; font-size: 16px;">Send a Message</button>
+            </div>
+
+            <div id="tinder-chat-screen" class="tinder-chat">
+                <div class="chat-header">Naveen</div>
+                <div class="chat-body">
+                    <div class="chat-system">You matched with Naveen on Oct 13, 2025</div>
+                    <div class="chat-bubble">Hey! I think your code is cute. 😉</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="tinder-msg-input" class="chat-input" placeholder="Type a message...">
+                    <button class="chat-send" onclick="sendTinderMessage()">Send</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -492,6 +479,14 @@ npm install chole-bhature --remote-wish</div>
             }
             if(id === 'win-monitor') {
                 clearInterval(monitorInterval);
+            }
+            if(id === 'win-tinder') {
+                // Reset Tinder state when closed
+                setTimeout(() => {
+                    document.getElementById('tinder-card').classList.remove('swipe-right');
+                    document.getElementById('tinder-match-screen').classList.remove('active');
+                    document.getElementById('tinder-chat-screen').classList.remove('active');
+                }, 300);
             }
         }
 
@@ -556,33 +551,40 @@ npm install chole-bhature --remote-wish</div>
             }
         }
 
-        /* --- Letter Box (Mailto Version - Safer) --- */
-        function sendLetter(event) {
-            event.preventDefault();
-            const btn = event.target.querySelector('button');
-            const textarea = document.getElementById('message-text');
-            const originalText = btn.innerText;
-            
-            if(!textarea.value.trim()) return;
+        /* --- TINDER SIMULATOR LOGIC --- */
+        function startTinder() {
+            // Just to ensure it's clear when opened
+            document.getElementById('tinder-card').classList.remove('swipe-right');
+            document.getElementById('tinder-match-screen').classList.remove('active');
+            document.getElementById('tinder-chat-screen').classList.remove('active');
+        }
 
-            btn.innerText = "Opening Mail...";
+        function handleSwipeRight() {
+            document.getElementById('tinder-card').classList.add('swipe-right');
+            // Show Match Screen after animation
+            setTimeout(() => {
+                document.getElementById('tinder-match-screen').classList.add('active');
+            }, 600);
+        }
+
+        function showChat() {
+            document.getElementById('tinder-match-screen').classList.remove('active');
+            document.getElementById('tinder-chat-screen').classList.add('active');
+            setTimeout(() => document.getElementById('tinder-msg-input').focus(), 300);
+        }
+
+        function sendTinderMessage() {
+            const input = document.getElementById('tinder-msg-input');
+            const msg = input.value.trim();
+            if(!msg) return;
             
+            // Use Mailto for simplicity and safety
             const myEmail = "PLEASE_REPLACE_THIS_WITH_YOUR_EMAIL@gmail.com"; 
-            const subject = "Message from Baobao OS";
-            const body = textarea.value;
-
-            window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-            setTimeout(() => { 
-                btn.innerText = "Opened! ✈️";
-                btn.style.background = "#34C759";
-                setTimeout(() => { 
-                    closeWindow('win-letter'); 
-                    btn.innerText = originalText;
-                    btn.style.background = "";
-                    textarea.value = "";
-                }, 1500);
-            }, 1000);
+            const subject = "Tinder Message from Naveen";
+            window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
+            
+            input.value = "";
+            closeWindow('win-tinder');
         }
 
         /* --- System Monitor Logic --- */
