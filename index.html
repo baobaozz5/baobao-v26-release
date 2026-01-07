@@ -146,15 +146,26 @@
             transform: rotate(-5deg);
         }
         .match-photos { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; }
-        /* 修正：兩個圓圈頭像，確保圖片填滿 */
         .match-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); background: #eee;}
         
-        /* Chat Screen */
+        /* Chat Screen (UPDATED FOR BUBBLES) */
         .tinder-chat { position: absolute; top:0; left:0; width:100%; height:100%; background: var(--window-bg); z-index: 20; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; transform: translateY(20px); }
         .tinder-chat.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
         .chat-header { padding: 15px; border-bottom: 1px solid var(--border-color); font-weight: 700; text-align: center; color: var(--text-main); font-size: 16px; background: rgba(255,255,255,0.5); backdrop-filter: blur(10px); }
-        .chat-body { flex-grow: 1; padding: 20px; overflow-y: auto; }
-        .chat-bubble { background: #e0e0e0; padding: 12px 18px; border-radius: 20px; border-bottom-left-radius: 4px; max-width: 80%; margin-bottom: 10px; font-size: 15px; color: black; align-self: flex-start; clear: both; float: left; line-height: 1.4;}
+        
+        .chat-body { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        
+        .chat-bubble { background: #e5e5ea; padding: 12px 18px; border-radius: 20px; border-bottom-left-radius: 4px; max-width: 80%; font-size: 15px; color: black; align-self: flex-start; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        
+        /* Sent Message Bubble (Blue, Right aligned) */
+        .chat-bubble.me {
+            background: var(--accent-color);
+            color: white;
+            align-self: flex-end;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 4px;
+        }
+
         .chat-system { text-align: center; color: var(--text-muted); font-size: 12px; margin: 20px 0; clear: both; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
         .chat-input-area { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; background: var(--window-bg);}
         .chat-input { flex-grow: 1; border: 1px solid var(--border-color); border-radius: 25px; padding: 12px 20px; outline: none; background: var(--icon-bg); color: var(--text-main); font-size: 15px;}
@@ -509,9 +520,9 @@ npm install chole-bhature --remote-wish</div>
 
             <div id="tinder-chat-screen" class="tinder-chat">
                 <div class="chat-header">Naveen</div>
-                <div class="chat-body">
+                <div class="chat-body" id="chat-body-content">
                     <div class="chat-system">You matched with Naveen on Oct 13, 2025</div>
-                    <div class="chat-bubble">Hey! I think your code is cute. 😉</div>
+                    <div class="chat-bubble">hello, how are you? i am under the water. please help me.</div>
                 </div>
                 <div class="chat-input-area">
                     <input type="text" id="tinder-msg-input" class="chat-input" placeholder="Type a message...">
@@ -569,7 +580,6 @@ npm install chole-bhature --remote-wish</div>
             }
             if(id === 'win-monitor') { clearInterval(monitorInterval); }
             if(id === 'win-tinder') {
-                // Reset Tinder on close
                 setTimeout(() => {
                     const card = document.getElementById('tinder-card');
                     card.style.transform = '';
@@ -608,7 +618,7 @@ npm install chole-bhature --remote-wish</div>
                     case 'date': response = "Start: 2025-10-13.<br>Status: Going strong. Next update: Feb 2026."; break;
                     case 'love': response = "<span style='color:#00ff00'>[SUCCESS]</span> Sending infinite love packets to Abi... Done."; break;
                     case 'blanket': response = "Deploying virtual blanket... 🛌 warmth level: 100%. Snuggle mode: ON."; break;
-                    case 'chai': response = "Brewing Chai... ☕ Spice level: Perfect. Sipping together in spirit."; break;
+                    case 'chai': response = "Brewing Masala Chai... ☕ Spice level: Perfect. Sipping together in spirit."; break;
                     case 'chopsticks': response = "Skill check: Expert. 🥢 Ready for dumpling date in Taiwan?"; break;
                     case 'clear': output.innerHTML = ""; input.value = ""; return;
                     default: response = `Command not found: ${cmd}. Try 'help'.`;
@@ -618,37 +628,25 @@ npm install chole-bhature --remote-wish</div>
             }
         }
 
-        /* --- TINDER SIMULATOR LOGIC --- */
+        /* --- TINDER LOGIC --- */
         const cardWrap = document.getElementById('card-wrap');
         const card = document.getElementById('tinder-card');
         let isDragging = false;
         let startX, currentX;
 
-        // Mouse Events
-        cardWrap.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            card.style.transition = 'none';
-        });
+        cardWrap.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; card.style.transition = 'none'; });
         document.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             currentX = e.clientX - startX;
-            const rotate = currentX * 0.1;
-            card.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
+            card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
         });
         document.addEventListener('mouseup', endDrag);
 
-        // Touch Events
-        cardWrap.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startX = e.touches[0].clientX;
-            card.style.transition = 'none';
-        });
+        cardWrap.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; card.style.transition = 'none'; });
         document.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             currentX = e.touches[0].clientX - startX;
-            const rotate = currentX * 0.1;
-            card.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
+            card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
         });
         document.addEventListener('touchend', endDrag);
 
@@ -656,15 +654,9 @@ npm install chole-bhature --remote-wish</div>
             if (!isDragging) return;
             isDragging = false;
             card.style.transition = 'transform 0.5s ease';
-            
-            if (currentX > 100) {
-                handleSwipeRight();
-            } else if (currentX < -100) {
-                card.style.transform = 'translateX(0) rotate(0)';
-                alert("Only Right Swipe allowed! 😉");
-            } else {
-                card.style.transform = 'translateX(0) rotate(0)';
-            }
+            if (currentX > 100) { handleSwipeRight(); } 
+            else if (currentX < -100) { card.style.transform = 'translateX(0) rotate(0)'; alert("Only Right Swipe allowed! 😉"); } 
+            else { card.style.transform = 'translateX(0) rotate(0)'; }
         }
 
         function startTinder() {
@@ -681,9 +673,7 @@ npm install chole-bhature --remote-wish</div>
             c.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
             c.style.transform = 'translateX(500px) rotate(45deg)';
             c.style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('tinder-match-screen').classList.add('active');
-            }, 600);
+            setTimeout(() => { document.getElementById('tinder-match-screen').classList.add('active'); }, 600);
         }
 
         function showChat() {
@@ -692,17 +682,27 @@ npm install chole-bhature --remote-wish</div>
             setTimeout(() => document.getElementById('tinder-msg-input').focus(), 300);
         }
 
-        // FORMSPREE LOGIC
+        /* --- SEND TINDER MESSAGE (UPDATED) --- */
         async function sendTinderMessage() {
             const input = document.getElementById('tinder-msg-input');
             const btn = document.querySelector('.chat-send');
+            const chatBody = document.getElementById('chat-body-content');
             const msg = input.value.trim();
+
             if(!msg) return;
 
-            // ⚠️ REPLACE THIS WITH YOUR FORMSPREE ID
-            const formId = "mqeavvar"; 
+            // 1. VISUAL FEEDBACK (Bubble)
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-bubble me'; // Apply the 'Sent by Me' style
+            bubble.innerText = msg;
+            chatBody.appendChild(bubble);
+            chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
 
+            input.value = ""; // Clear input immediately
             btn.innerText = "Sending...";
+
+            // 2. FORMSPREE LOGIC
+            const formId = "mqeavvar"; // ⚠️ PASTE ID HERE
 
             try {
                 await fetch(`https://formspree.io/f/${formId}`, {
@@ -711,18 +711,14 @@ npm install chole-bhature --remote-wish</div>
                     body: JSON.stringify({ message: "Tinder Chat: " + msg })
                 });
                 btn.innerText = "Sent! 💘";
-                setTimeout(() => {
-                    input.value = "";
-                    closeWindow('win-tinder');
-                    btn.innerText = "Send";
-                }, 1500);
+                setTimeout(() => btn.innerText = "Send", 2000);
             } catch (error) {
                 btn.innerText = "Error";
-                alert("Formspree Error: Check ID in code.");
+                alert("Please replace 'YOUR_FORMSPREE_ID_HERE' in the code with your actual Formspree ID.");
             }
         }
 
-        /* --- System Monitor Logic --- */
+        /* --- System Monitor --- */
         let monitorInterval;
         function startMonitor() {
             const cpu = document.getElementById('bar-cpu');
