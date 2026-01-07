@@ -8,12 +8,12 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
 
     <meta property="og:title" content="Baobao OS v26.0 🎂">
-    <meta property="og:description" content="Happy 26th Birthday, Naveen! System Ready.">
+    <meta property="og:description" content="Happy 26th Birthday, Naveen! Access Granted.">
     <meta property="og:image" content="baobao.jpg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
@@ -39,7 +39,6 @@
             --font-main: 'Open Sans', sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
             --font-script: 'Pacifico', cursive;
-            --font-digital: 'Orbitron', sans-serif; /* For Countdown */
             
             /* Tinder Colors */
             --tinder-grad: linear-gradient(to right, #fd297b, #ff655b);
@@ -74,11 +73,11 @@
             user-select: none;
         }
 
-        /* --- Status Bar (UPDATED FONT SIZE) --- */
+        /* --- Status Bar --- */
         .status-bar { position: fixed; top: 0; left: 0; width: 100%; height: 48px; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 14px; font-weight: 600; color: var(--text-main); z-index: 1000; background: var(--status-bar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.03); }
         .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 13px; color: var(--text-muted); font-weight: 700; }
         .clock-group { display: flex; gap: 30px; }
-        .clock-item { font-size: 15px; font-weight: 700; } /* Bigger Font */
+        .clock-item { font-size: 15px; font-weight: 700; }
         .clock-item span { color: var(--text-muted); margin-right: 8px; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
 
         /* --- Desktop Container --- */
@@ -96,7 +95,7 @@
         .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-shadow: var(--shadow-icon); border: 1px solid var(--border-color); margin-bottom: 15px; color: var(--text-main); position: relative; }
         
         .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } 
-        .icon-ticket { color: #FF9500; } /* Ticket Color */
+        .icon-permit { color: #5856D6; } /* Visa/Permit Color */
         .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
         .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
 
@@ -137,27 +136,17 @@
         .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
         .chat-send:hover { opacity: 0.9; }
 
-        /* --- TICKET STYLES (NEW) --- */
-        .ticket-wrap { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee; }
-        .ticket-header { background: #E74C3C; padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
-        .ticket-logo { font-weight: 800; font-size: 20px; letter-spacing: -1px; display: flex; align-items: center; gap: 5px; }
-        .ticket-body { padding: 30px; }
-        .flight-route { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .city-code { font-size: 48px; font-weight: 800; color: #333; }
-        .city-name { font-size: 14px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-        .flight-icon { font-size: 30px; color: #E74C3C; transform: rotate(90deg); }
-        .flight-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-        .detail-label { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; }
-        .detail-val { font-size: 18px; font-weight: 700; color: #333; }
-        .ticket-footer { background: #f9f9f9; padding: 20px; border-top: 2px dashed #ddd; text-align: center; color: #007AFF; font-weight: 600; letter-spacing: 1px; font-size: 14px; }
-
-        /* --- DEPLOY ANIMATION --- */
-        .rocket-launch-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; color: #00ff00; font-family: var(--font-digital); }
-        .rocket-emoji { font-size: 100px; transition: transform 0.1s; }
-        .countdown-text { font-size: 80px; margin-top: 20px; }
-        .shake { animation: shake 0.5s infinite; }
-        .fly-away { transition: transform 1s ease-in; transform: translateY(-150vh); }
-        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+        /* --- ENTRY PERMIT STYLE (NEW) --- */
+        .permit-wrap { background: #fff; border: 2px solid #ddd; padding: 20px; border-radius: 12px; position: relative; color: #333; }
+        .permit-header { border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 15px; text-align: center; }
+        .permit-title { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: #2c3e50; }
+        .permit-subtitle { font-size: 12px; text-transform: uppercase; color: #888; margin-top: 5px; }
+        .permit-body { display: grid; grid-template-columns: 1fr; gap: 15px; font-family: var(--font-mono); }
+        .permit-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
+        .permit-label { color: #888; font-size: 12px; text-transform: uppercase; }
+        .permit-val { font-weight: 700; color: #000; }
+        .permit-stamp { position: absolute; bottom: 20px; right: 20px; width: 100px; height: 100px; border: 3px solid #E74C3C; border-radius: 50%; color: #E74C3C; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; transform: rotate(-15deg); opacity: 0.8; font-size: 14px; text-transform: uppercase; }
+        .permit-flag { font-size: 40px; text-align: center; margin-top: 10px; }
 
         /* Other Styles */
         .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
@@ -231,9 +220,9 @@
             <div class="app-label">Source</div>
         </div>
         
-        <div class="app-item" onclick="openWindow('win-ticket')">
-            <div class="app-icon icon-ticket">🎫</div>
-            <div class="app-label">Boarding Pass</div>
+        <div class="app-item" onclick="openWindow('win-permit')">
+            <div class="app-icon icon-permit">🛂</div>
+            <div class="app-label">Entry Permit</div>
         </div>
 
         <div class="app-item" onclick="openWindow('win-tinder'); startTinder();">
@@ -241,7 +230,7 @@
             <div class="app-label">Matches</div>
         </div>
 
-        <div class="app-item" onclick="startRocketLaunch()">
+        <div class="app-item" onclick="deploySystem()">
             <div class="app-icon icon-deploy">🚀</div>
             <div class="app-label">Deploy</div>
         </div>
@@ -453,48 +442,34 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="win-ticket" class="window" style="max-width: 500px;">
-        <div class="window-header"><div class="window-title">Boarding Pass</div><button class="btn-close" onclick="closeWindow('win-ticket')">✕</button></div>
-        <div class="window-content" style="background: #eee;">
-            <div class="ticket-wrap">
-                <div class="ticket-header">
-                    <div class="ticket-logo">✈️ ixigo approved</div>
-                    <div>CLASS: <span style="font-weight:700">BOYFRIEND</span></div>
+    <div id="win-permit" class="window" style="max-width: 400px;">
+        <div class="window-header"><div class="window-title">Entry Permit</div><button class="btn-close" onclick="closeWindow('win-permit')">✕</button></div>
+        <div class="window-content" style="padding: 30px;">
+            <div class="permit-wrap">
+                <div class="permit-header">
+                    <div class="permit-title">REPUBLIC OF ABI</div>
+                    <div class="permit-subtitle">SPECIAL ENTRY PERMIT</div>
                 </div>
-                <div class="ticket-body">
-                    <div class="flight-route">
-                        <div style="text-align:left;">
-                            <div class="city-code">DEL</div>
-                            <div class="city-name">New Delhi</div>
-                        </div>
-                        <div class="flight-icon">✈</div>
-                        <div style="text-align:right;">
-                            <div class="city-code">TPE</div>
-                            <div class="city-name">Taipei</div>
-                        </div>
+                <div class="permit-body">
+                    <div class="permit-row">
+                        <div class="permit-label">VISITOR NAME</div>
+                        <div class="permit-val">NAVEEN</div>
                     </div>
-                    <div class="flight-details">
-                        <div>
-                            <div class="detail-label">PASSENGER</div>
-                            <div class="detail-val">NAVEEN</div>
-                        </div>
-                        <div>
-                            <div class="detail-label">DATE</div>
-                            <div class="detail-val">13 FEB 2026</div>
-                        </div>
-                        <div>
-                            <div class="detail-label">GATE</div>
-                            <div class="detail-val">A13</div>
-                        </div>
-                        <div>
-                            <div class="detail-label">SEAT</div>
-                            <div class="detail-val">1A (VIP)</div>
-                        </div>
+                    <div class="permit-row">
+                        <div class="permit-label">DESTINATION</div>
+                        <div class="permit-val">TAIWAN 🇹🇼</div>
+                    </div>
+                    <div class="permit-row">
+                        <div class="permit-label">VALID FROM</div>
+                        <div class="permit-val">13 FEB 2026</div>
+                    </div>
+                    <div class="permit-row" style="border:none;">
+                        <div class="permit-label">NOTES</div>
+                        <div class="permit-val">UNLIMITED BOBA & HUGS INCLUDED</div>
                     </div>
                 </div>
-                <div class="ticket-footer">
-                    CONFIRMED • NON-REFUNDABLE • SEE YOU SOON
-                </div>
+                <div class="permit-flag">🧋</div>
+                <div class="permit-stamp">APPROVED<br>BY ABI</div>
             </div>
         </div>
     </div>
@@ -540,11 +515,6 @@ npm install chole-bhature --remote-wish</div>
             </div>
 
         </div>
-    </div>
-
-    <div id="rocket-container" class="rocket-launch-container">
-        <div id="countdown" class="countdown-text">3</div>
-        <div id="rocket" class="rocket-emoji">🚀</div>
     </div>
 
     <div id="overlay">
@@ -718,6 +688,7 @@ npm install chole-bhature --remote-wish</div>
 
             // 2. SEND TO FORMSPREE
             const formId = "mqeavvar"; // 
+
             try {
                 await fetch(`https://formspree.io/f/${formId}`, {
                     method: 'POST',
@@ -751,36 +722,6 @@ npm install chole-bhature --remote-wish</div>
                 let h = Math.floor(Math.random() * 20) + 110;
                 hr.style.width = (h/2) + "%"; valHr.innerText = h + " BPM";
             }, 800);
-        }
-
-        /* --- Rocket Launch Sequence --- */
-        function startRocketLaunch() {
-            const container = document.getElementById('rocket-container');
-            const countdown = document.getElementById('countdown');
-            const rocket = document.getElementById('rocket');
-            
-            container.style.display = 'flex';
-            
-            let count = 3;
-            countdown.innerText = count;
-            
-            const timer = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    countdown.innerText = count;
-                } else if (count === 0) {
-                    countdown.innerText = "LIFTOFF!";
-                    rocket.classList.add('shake');
-                } else {
-                    clearInterval(timer);
-                    rocket.classList.remove('shake');
-                    rocket.classList.add('fly-away');
-                    setTimeout(() => {
-                        container.style.display = 'none';
-                        deploySystem(); // Confetti
-                    }, 1000);
-                }
-            }, 1000);
         }
 
         /* --- Confetti Logic --- */
