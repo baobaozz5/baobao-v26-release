@@ -8,7 +8,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
 
     <meta property="og:title" content="Baobao OS v26.0 🎂">
-    <meta property="og:description" content="Happy 26th Birthday, Naveen! Access Granted.">
+    <meta property="og:description" content="Happy 26th Birthday, Naveen Sir! Access Granted.">
     <meta property="og:image" content="baobao.jpg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -95,7 +95,7 @@
         .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-shadow: var(--shadow-icon); border: 1px solid var(--border-color); margin-bottom: 15px; color: var(--text-main); position: relative; }
         
         .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } 
-        .icon-permit { color: #5856D6; } /* Visa/Permit Color */
+        .icon-bug { color: #FF3B30; } /* Bug Tracker Color */
         .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
         .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
 
@@ -136,17 +136,15 @@
         .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
         .chat-send:hover { opacity: 0.9; }
 
-        /* --- ENTRY PERMIT STYLE (NEW) --- */
-        .permit-wrap { background: #fff; border: 2px solid #ddd; padding: 20px; border-radius: 12px; position: relative; color: #333; }
-        .permit-header { border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 15px; text-align: center; }
-        .permit-title { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: #2c3e50; }
-        .permit-subtitle { font-size: 12px; text-transform: uppercase; color: #888; margin-top: 5px; }
-        .permit-body { display: grid; grid-template-columns: 1fr; gap: 15px; font-family: var(--font-mono); }
-        .permit-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
-        .permit-label { color: #888; font-size: 12px; text-transform: uppercase; }
-        .permit-val { font-weight: 700; color: #000; }
-        .permit-stamp { position: absolute; bottom: 20px; right: 20px; width: 100px; height: 100px; border: 3px solid #E74C3C; border-radius: 50%; color: #E74C3C; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; transform: rotate(-15deg); opacity: 0.8; font-size: 14px; text-transform: uppercase; }
-        .permit-flag { font-size: 40px; text-align: center; margin-top: 10px; }
+        /* --- ISSUE TRACKER STYLE (NEW) --- */
+        .issue-list { display: flex; flex-direction: column; gap: 15px; }
+        .issue-item { background: var(--icon-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .issue-info h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--text-main); }
+        .issue-info p { margin: 0; font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); }
+        .issue-status { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .status-critical { background: #FF3B30; color: white; }
+        .status-warning { background: #FF9500; color: white; }
+        .status-fix { background: #34C759; color: white; }
 
         /* Other Styles */
         .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
@@ -157,6 +155,7 @@
         .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); } input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; } input[type=range]:focus { outline: none; } input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: var(--text-muted); opacity: 0.3; border-radius: 10px; } input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: var(--text-main); margin-top: -5px; -webkit-appearance: none; cursor: pointer; } .control-btn { background: var(--text-main); color: var(--bg-color); width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.1s;} .control-btn:active { transform: scale(0.95); }
         .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; } .toggle-knob { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); } .toggle-switch.active { background: var(--accent-color); } .toggle-switch.active .toggle-knob { left: 24px; } .toggle-switch.locked { opacity: 0.6; cursor: not-allowed; background: var(--accent-color); } .toggle-switch.locked .toggle-knob { left: 24px; }
         .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); } .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--text-main); } .code-block { background: var(--icon-bg); padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border:1px solid var(--border-color); color: var(--text-main); }
+        
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; opacity: 0; pointer-events: none; transition: opacity 1s;}
         #overlay.show { opacity: 1; pointer-events: auto; }
         #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
@@ -220,9 +219,9 @@
             <div class="app-label">Source</div>
         </div>
         
-        <div class="app-item" onclick="openWindow('win-permit')">
-            <div class="app-icon icon-permit">🛂</div>
-            <div class="app-label">Entry Permit</div>
+        <div class="app-item" onclick="openWindow('win-issues')">
+            <div class="app-icon icon-bug">🐞</div>
+            <div class="app-label">Issues</div>
         </div>
 
         <div class="app-item" onclick="openWindow('win-tinder'); startTinder();">
@@ -442,35 +441,33 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="win-permit" class="window" style="max-width: 400px;">
-        <div class="window-header"><div class="window-title">Entry Permit</div><button class="btn-close" onclick="closeWindow('win-permit')">✕</button></div>
-        <div class="window-content" style="padding: 30px;">
-            <div class="permit-wrap">
-                <div class="permit-header">
-                    <div class="permit-title">REPUBLIC OF ABI</div>
-                    <div class="permit-subtitle">SPECIAL ENTRY PERMIT</div>
+    <div id="win-issues" class="window" style="max-width: 500px;">
+        <div class="window-header"><div class="window-title">Issue Tracker</div><button class="btn-close" onclick="closeWindow('win-issues')">✕</button></div>
+        <div class="window-content" style="padding: 25px;">
+            <div class="issue-list">
+                <div class="issue-item">
+                    <div class="issue-info">
+                        <h3>Bug #404: Boyfriend Not Found</h3>
+                        <p>Location: Taiwan Server (TPE)</p>
+                    </div>
+                    <div class="issue-status status-critical">CRITICAL</div>
                 </div>
-                <div class="permit-body">
-                    <div class="permit-row">
-                        <div class="permit-label">VISITOR NAME</div>
-                        <div class="permit-val">NAVEEN</div>
+                <div class="issue-item">
+                    <div class="issue-info">
+                        <h3>Error: High Latency</h3>
+                        <p>Distance > 4300km. Ping > 999ms.</p>
                     </div>
-                    <div class="permit-row">
-                        <div class="permit-label">DESTINATION</div>
-                        <div class="permit-val">TAIWAN 🇹🇼</div>
-                    </div>
-                    <div class="permit-row">
-                        <div class="permit-label">VALID FROM</div>
-                        <div class="permit-val">13 FEB 2026</div>
-                    </div>
-                    <div class="permit-row" style="border:none;">
-                        <div class="permit-label">NOTES</div>
-                        <div class="permit-val">UNLIMITED BOBA & HUGS INCLUDED</div>
-                    </div>
+                    <div class="issue-status status-warning">WARNING</div>
                 </div>
-                <div class="permit-flag">🧋</div>
-                <div class="permit-stamp">APPROVED<br>BY ABI</div>
+                <div class="issue-item">
+                    <div class="issue-info">
+                        <h3>Patch: Deploy Naveen to TPE</h3>
+                        <p>Scheduled: 13 Feb 2026</p>
+                    </div>
+                    <div class="issue-status status-fix">IN PROGRESS</div>
+                </div>
             </div>
+            <p style="margin-top:20px; text-align:center; font-size:13px; color:var(--text-muted);">* Assigned to: Naveen Sir</p>
         </div>
     </div>
 
@@ -518,7 +515,7 @@ npm install chole-bhature --remote-wish</div>
     </div>
 
     <div id="overlay">
-        <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: var(--text-main);">Happy 26th Birthday!</h1>
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: var(--text-main);">Happy Birthday Naveen Sir!</h1>
         <p style="color: var(--text-muted);">Baobao OS Update Complete.</p>
         <div style="margin-top: 30px; font-size: 5rem;">🎂</div>
     </div>
