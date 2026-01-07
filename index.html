@@ -6,93 +6,181 @@
     <title>Baobao OS v26.0</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+
     <meta property="og:title" content="Baobao OS v26.0 🎂">
     <meta property="og:description" content="Happy 26th Birthday, Naveen! Access Granted.">
     <meta property="og:image" content="baobao.jpg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <style>
         :root {
-            --bg-color: #f2f4f6; --text-main: #2c3e50; --text-muted: #95a5a6;
-            --window-bg: rgba(255, 255, 255, 0.96); --icon-bg: #f2f4f6; --border-color: rgba(255,255,255,0.4);
+            --bg-color: #f2f4f6;
+            --text-main: #2c3e50;
+            --text-muted: #95a5a6;
+            --window-bg: rgba(255, 255, 255, 0.96);
+            --icon-bg: #f2f4f6;
+            --border-color: rgba(255,255,255,0.4);
+            
+            /* High Quality Shadows */
             --shadow-icon: 12px 12px 24px rgba(163, 177, 198, 0.5), -12px -12px 24px rgba(255, 255, 255, 0.9);
             --shadow-window: 0 40px 100px rgba(0,0,0,0.15);
+            
             --status-bar-bg: rgba(242, 244, 246, 0.85);
             --accent-color: #007AFF;
+            --map-filter: none;
+            
             --app-size: 125px; 
-            --font-main: 'Open Sans', sans-serif; --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+            
+            --font-main: 'Open Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+            --font-script: 'Pacifico', cursive; /* New Font */
+            
             /* Tinder Colors */
             --tinder-grad: linear-gradient(to right, #fd297b, #ff655b);
             --tinder-green: #2ee681;
             --tinder-red: #ec4768;
         }
+
+        /* DARK MODE Variables */
         [data-theme="dark"] {
-            --bg-color: #1a1a1a; --text-main: #f0f0f0; --text-muted: #888;
-            --window-bg: rgba(40, 40, 40, 0.96); --icon-bg: #2a2a2a; --border-color: rgba(255,255,255,0.05);
+            --bg-color: #1a1a1a;
+            --text-main: #f0f0f0;
+            --text-muted: #888;
+            --window-bg: rgba(40, 40, 40, 0.96);
+            --icon-bg: #2a2a2a;
+            --border-color: rgba(255,255,255,0.05);
             --shadow-icon: 8px 8px 16px rgba(0,0,0,0.4), -4px -4px 12px rgba(255,255,255,0.05);
             --shadow-window: 0 40px 100px rgba(0,0,0,0.5);
-            --status-bar-bg: rgba(26, 26, 26, 0.85); --accent-color: #0A84FF;
+            --status-bar-bg: rgba(26, 26, 26, 0.85);
+            --accent-color: #0A84FF;
+            --map-filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-main); height: 100vh; width: 100vw; overflow: hidden; user-select: none; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s ease, color 0.3s ease; }
 
-        /* Basic UI Elements */
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            height: 100vh; width: 100vw;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* --- Status Bar --- */
         .status-bar { position: fixed; top: 0; left: 0; width: 100%; height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 13px; font-weight: 600; color: var(--text-main); z-index: 1000; background: var(--status-bar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.03); }
         .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 12px; color: var(--text-muted); font-weight: 700; }
-        .clock-group { display: flex; gap: 25px; } .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
-        .desktop { padding: 100px 40px 40px 40px; max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 50px; z-index: 1; position: relative; height: 100%; align-content: start; overflow-y: auto; }
-        .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); width: var(--app-size); } .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
+        .clock-group { display: flex; gap: 25px; }
+        .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
+
+        /* --- Desktop Container --- */
+        .desktop {
+            padding: 100px 40px 40px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 50px;
+            z-index: 1; position: relative; height: 100%; align-content: start; overflow-y: auto; 
+        }
+
+        /* --- App Icons --- */
+        .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); width: var(--app-size); }
+        .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
         .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-shadow: var(--shadow-icon); border: 1px solid var(--border-color); margin-bottom: 15px; color: var(--text-main); position: relative; }
-        .icon-youtube { color: #e74c3c; } .icon-sys { color: #2ecc71; } .icon-weather { color: #3498db; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
+        
+        .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } .icon-weather { color: #3498db; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
         .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
+
+        /* --- Windows --- */
         .window { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 800px; max-height: 85vh; background: var(--window-bg); border-radius: 24px; box-shadow: var(--shadow-window); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1); z-index: 2000; border: 1px solid var(--border-color); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); overflow: hidden;}
         .window.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
         .window-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 25px; border-bottom: 1px solid var(--border-color); flex-shrink: 0;}
         .window-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--text-main); }
-        .btn-close { background: rgba(0,0,0,0.05); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: var(--text-muted); transition: 0.2s; } .btn-close:hover { background: rgba(0,0,0,0.1); color: var(--text-main); }
+        .btn-close { background: rgba(0,0,0,0.05); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: var(--text-muted); transition: 0.2s; }
+        .btn-close:hover { background: rgba(0,0,0,0.1); color: var(--text-main); }
         .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch; position: relative;}
 
-        /* Other Styles */
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); } .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .code-container { background: #1e1e1e; border-radius: 12px; overflow: hidden; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6; display: flex; } .line-numbers { background: #252526; color: #858585; padding: 20px 10px; text-align: right; user-select: none; border-right: 1px solid #333; min-width: 40px; } .code-editor { color: #d4d4d4; padding: 20px; overflow-x: auto; white-space: pre; flex-grow: 1; } .kw { color: #569cd6; font-weight:bold; } .type { color: #4ec9b0; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; } .num { color: #b5cea8; }
-        .monitor-row { margin-bottom: 25px; } .monitor-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-main); } .monitor-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; } .monitor-bar-fill { height: 100%; background: var(--accent-color); border-radius: 10px; width: 0%; transition: width 0.5s ease; } .monitor-val { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
-        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } .weather-card { background: var(--icon-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); text-align: center; color: var(--text-main); } .weather-temp { font-size: 42px; font-weight: 300; margin: 10px 0; } .weather-city { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing:1px; }
-        .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); } input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; } input[type=range]:focus { outline: none; } input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: var(--text-muted); opacity: 0.3; border-radius: 10px; } input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: var(--text-main); margin-top: -5px; -webkit-appearance: none; cursor: pointer; } .control-btn { background: var(--text-main); color: var(--bg-color); width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.1s;} .control-btn:active { transform: scale(0.95); }
-        .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; } .toggle-knob { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); } .toggle-switch.active { background: var(--accent-color); } .toggle-switch.active .toggle-knob { left: 24px; } .toggle-switch.locked { opacity: 0.6; cursor: not-allowed; background: var(--accent-color); } .toggle-switch.locked .toggle-knob { left: 24px; }
-        .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); } .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--text-main); } .code-block { background: var(--icon-bg); padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border:1px solid var(--border-color); color: var(--text-main); }
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; } #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
-
-        /* --- TINDER STYLES (New) --- */
-        .tinder-container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding-bottom: 20px; }
-        .tinder-card-wrap { flex-grow: 1; width: 100%; max-width: 400px; position: relative; perspective: 1000px; }
-        .tinder-card { width: 100%; height: 100%; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: absolute; top: 0; left: 0; transition: transform 0.8s ease, opacity 0.8s ease; background-size: cover; background-position: center; }
-        .tinder-card.swipe-right { transform: translateX(400px) rotate(30deg); opacity: 0; }
-        .tinder-actions { display: flex; gap: 30px; margin-top: 20px; }
-        .tinder-btn { width: 60px; height: 60px; border-radius: 50%; border: none; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-size: 28px; cursor: pointer; transition: 0.2s; display:flex; align-items:center; justify-content:center;}
-        .tinder-btn.nope { color: var(--tinder-red); } .tinder-btn.like { color: var(--tinder-green); font-size: 32px; }
-        .tinder-btn:active { transform: scale(0.9); }
-
-        /* Tinder Match Screen */
-        .tinder-match { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; text-align: center; color: white; }
-        .tinder-match.active { opacity: 1; pointer-events: auto; }
-        .match-title { font-family: 'Brush Script MT', cursive; font-size: 60px; margin-bottom: 40px; background: var(--tinder-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-        .match-photos { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; }
-        .match-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        /* --- Styles for Apps --- */
         
-        /* Tinder Chat Screen */
+        /* Tinder App */
+        .tinder-container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding-bottom: 20px; }
+        .tinder-card-wrap { flex-grow: 1; width: 100%; max-width: 380px; position: relative; perspective: 1000px; cursor: grab; }
+        .tinder-card-wrap:active { cursor: grabbing; }
+        
+        .tinder-card { 
+            width: 100%; height: 100%; 
+            background: #fff; border-radius: 20px; 
+            overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
+            position: absolute; top: 0; left: 0; 
+            background-size: cover; background-position: center;
+            /* Transition is handled by JS for dragging, only opacity needs CSS */
+            transition: opacity 0.5s ease;
+            transform-origin: 50% 100%;
+        }
+        
+        /* Overlay text on card */
+        .tinder-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 80px 20px 20px 20px; color: white;
+        }
+        .tinder-name { font-size: 28px; font-weight: 800; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        
+        /* Buttons */
+        .tinder-actions { display: flex; gap: 30px; margin-top: 25px; z-index: 5; }
+        .tinder-btn { width: 65px; height: 65px; border-radius: 50%; border: none; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-size: 28px; cursor: pointer; transition: 0.2s; display:flex; align-items:center; justify-content:center;}
+        .tinder-btn:hover { transform: scale(1.1); }
+        .tinder-btn.nope { color: var(--tinder-red); } 
+        .tinder-btn.like { color: var(--tinder-green); font-size: 34px; }
+
+        /* Match Screen */
+        .tinder-match { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; text-align: center; color: white; }
+        .tinder-match.active { opacity: 1; pointer-events: auto; }
+        .match-title { 
+            font-family: var(--font-script); /* NEW FONT */
+            font-size: 65px; margin-bottom: 40px; 
+            background: var(--tinder-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); 
+            transform: rotate(-5deg);
+        }
+        .match-photos { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; }
+        .match-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        
+        /* Chat Screen */
         .tinder-chat { position: absolute; top:0; left:0; width:100%; height:100%; background: var(--window-bg); z-index: 20; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; transform: translateY(20px); }
         .tinder-chat.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .chat-header { padding: 15px; border-bottom: 1px solid var(--border-color); font-weight: 700; text-align: center; color: var(--text-main); }
+        .chat-header { padding: 15px; border-bottom: 1px solid var(--border-color); font-weight: 700; text-align: center; color: var(--text-main); font-size: 16px; background: rgba(255,255,255,0.5); backdrop-filter: blur(10px); }
         .chat-body { flex-grow: 1; padding: 20px; overflow-y: auto; }
-        .chat-bubble { background: #e0e0e0; padding: 10px 15px; border-radius: 18px; max-width: 80%; margin-bottom: 10px; font-size: 14px; color: black; align-self: flex-start; clear: both; float: left;}
-        .chat-system { text-align: center; color: var(--text-muted); font-size: 12px; margin: 20px 0; clear: both; }
-        .chat-input-area { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; }
-        .chat-input { flex-grow: 1; border: 1px solid var(--border-color); border-radius: 20px; padding: 10px 15px; outline: none; background: var(--icon-bg); color: var(--text-main); }
-        .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; }
+        .chat-bubble { background: #e0e0e0; padding: 12px 18px; border-radius: 20px; border-bottom-left-radius: 4px; max-width: 80%; margin-bottom: 10px; font-size: 15px; color: black; align-self: flex-start; clear: both; float: left; line-height: 1.4;}
+        .chat-system { text-align: center; color: var(--text-muted); font-size: 12px; margin: 20px 0; clear: both; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
+        .chat-input-area { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; background: var(--window-bg);}
+        .chat-input { flex-grow: 1; border: 1px solid var(--border-color); border-radius: 25px; padding: 12px 20px; outline: none; background: var(--icon-bg); color: var(--text-main); font-size: 15px;}
+        .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
+        .chat-send:hover { opacity: 0.9; }
+
+        /* Other App Styles (Kept) */
+        .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        
+        .code-container { background: #1e1e1e; border-radius: 12px; overflow: hidden; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6; display: flex; } .line-numbers { background: #252526; color: #858585; padding: 20px 10px; text-align: right; user-select: none; border-right: 1px solid #333; min-width: 40px; } .code-editor { color: #d4d4d4; padding: 20px; overflow-x: auto; white-space: pre; flex-grow: 1; } .kw { color: #569cd6; font-weight:bold; } .type { color: #4ec9b0; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; } .num { color: #b5cea8; }
+        
+        .monitor-row { margin-bottom: 25px; } .monitor-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-main); } .monitor-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; } .monitor-bar-fill { height: 100%; background: var(--accent-color); border-radius: 10px; width: 0%; transition: width 0.5s ease; } .monitor-val { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+        
+        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } .weather-card { background: var(--icon-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); text-align: center; color: var(--text-main); } .weather-temp { font-size: 42px; font-weight: 300; margin: 10px 0; } .weather-city { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing:1px; }
+        
+        .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); } input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; } input[type=range]:focus { outline: none; } input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: var(--text-muted); opacity: 0.3; border-radius: 10px; } input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: var(--text-main); margin-top: -5px; -webkit-appearance: none; cursor: pointer; } .control-btn { background: var(--text-main); color: var(--bg-color); width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.1s;} .control-btn:active { transform: scale(0.95); }
+        
+        .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; } .toggle-knob { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); } .toggle-switch.active { background: var(--accent-color); } .toggle-switch.active .toggle-knob { left: 24px; } .toggle-switch.locked { opacity: 0.6; cursor: not-allowed; background: var(--accent-color); } .toggle-switch.locked .toggle-knob { left: 24px; }
+        
+        .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); } .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--text-main); } .code-block { background: var(--icon-bg); padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border:1px solid var(--border-color); color: var(--text-main); }
+        
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; } #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
 
         @media (max-width: 768px) {
             .desktop { padding: 80px 20px; gap: 30px; }
@@ -101,7 +189,7 @@
             .window { width: 95%; max-height: 90vh; }
             .window-content { padding: 25px; }
             .status-bar { font-size: 11px; padding: 0 15px; }
-            .match-title { font-size: 40px; } .match-img { width: 90px; height: 90px; }
+            .match-title { font-size: 48px; } .match-img { width: 100px; height: 100px; }
         }
     </style>
 </head>
@@ -116,42 +204,52 @@
     </div>
 
     <div class="desktop">
+        
         <div class="app-item" onclick="openWindow('win-sticky')">
             <div class="app-icon">📌</div>
             <div class="app-label">Notes</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-readme')">
             <div class="app-icon">📄</div>
             <div class="app-label">README</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-photo')">
             <div class="app-icon">🖼️</div>
             <div class="app-label">Photos</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-music')">
             <div class="app-icon">🎵</div>
             <div class="app-label">Voice Note</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-youtube')">
             <div class="app-icon icon-youtube">📺</div>
             <div class="app-label">Anthem</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();">
             <div class="app-icon icon-sys">📊</div>
             <div class="app-label">Activity</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-terminal'); focusTerminal();">
             <div class="app-icon">📟</div>
             <div class="app-label">Terminal</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-settings')">
             <div class="app-icon">⚙️</div>
             <div class="app-label">Settings</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-code')">
             <div class="app-icon">💻</div>
             <div class="app-label">Source</div>
         </div>
+
         <div class="app-item" onclick="openWindow('win-weather')">
             <div class="app-icon icon-weather">🌤️</div>
             <div class="app-label">Atmosphere</div>
@@ -166,6 +264,7 @@
             <div class="app-icon icon-deploy">🚀</div>
             <div class="app-label">Deploy</div>
         </div>
+
     </div>
 
     <div id="win-sticky" class="window">
@@ -393,13 +492,17 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="win-tinder" class="window" style="max-width: 450px; height: 700px; max-height: 80vh;">
+    <div id="win-tinder" class="window" style="max-width: 450px; height: 750px; max-height: 85vh;">
         <div class="window-header"><div class="window-title">Matches</div><button class="btn-close" onclick="closeWindow('win-tinder')">✕</button></div>
         <div class="window-content" style="padding: 20px; display:flex; flex-direction:column; height:100%; overflow:hidden; position:relative;">
             
             <div id="tinder-swipe-interface" class="tinder-container">
-                <div class="tinder-card-wrap">
-                    <div id="tinder-card" class="tinder-card" style="background-image: url('tinder-profile.jpg');"></div>
+                <div class="tinder-card-wrap" id="card-wrap">
+                    <div id="tinder-card" class="tinder-card" style="background-image: url('tinder-profile.jpg');">
+                        <div class="tinder-overlay">
+                            <h2 class="tinder-name">Abi, 24</h2>
+                        </div>
+                    </div>
                 </div>
                 <div class="tinder-actions">
                     <button class="tinder-btn nope" onclick="alert('Oops! Only one way to swipe 😉')">✕</button>
@@ -477,13 +580,13 @@ npm install chole-bhature --remote-wish</div>
                 const src = iframe.src;
                 iframe.src = ''; iframe.src = src;
             }
-            if(id === 'win-monitor') {
-                clearInterval(monitorInterval);
-            }
+            if(id === 'win-monitor') { clearInterval(monitorInterval); }
             if(id === 'win-tinder') {
-                // Reset Tinder state when closed
+                // Reset Tinder on close
                 setTimeout(() => {
-                    document.getElementById('tinder-card').classList.remove('swipe-right');
+                    const card = document.getElementById('tinder-card');
+                    card.style.transform = '';
+                    card.style.opacity = '1';
                     document.getElementById('tinder-match-screen').classList.remove('active');
                     document.getElementById('tinder-chat-screen').classList.remove('active');
                 }, 300);
@@ -502,9 +605,7 @@ npm install chole-bhature --remote-wish</div>
         slider.addEventListener('input', () => { audio.currentTime = (slider.value/100)*audio.duration; });
 
         /* --- Interactive Terminal Logic --- */
-        function focusTerminal() {
-            setTimeout(() => document.getElementById('term-input').focus(), 100);
-        }
+        function focusTerminal() { setTimeout(() => document.getElementById('term-input').focus(), 100); }
 
         function handleCommand(e) {
             if (e.key === 'Enter') {
@@ -516,52 +617,86 @@ npm install chole-bhature --remote-wish</div>
                 
                 let response = "";
                 switch(cmd) {
-                    case 'help':
-                        response = "Commands: date, love, blanket, chai, chopsticks, clear";
-                        break;
-                    case 'date':
-                        response = "Start: 2025-10-13.<br>Status: Going strong. Next update: Feb 2026.";
-                        break;
-                    case 'love':
-                        response = "<span style='color:#00ff00'>[SUCCESS]</span> Sending infinite love packets to Abi... Done.";
-                        break;
-                    case 'blanket':
-                        response = "Deploying virtual blanket... 🛌 warmth level: 100%. Snuggle mode: ON.";
-                        break;
-                    case 'chai':
-                        response = "Brewing Masala Chai... ☕ Spice level: Perfect. Sipping together in spirit.";
-                        break;
-                    case 'chopsticks':
-                        response = "Skill check: Expert. 🥢 Ready for dumpling date in Taiwan?";
-                        break;
-                    case 'clear':
-                        output.innerHTML = "";
-                        input.value = "";
-                        return;
-                    default:
-                        response = `Command not found: ${cmd}. Try 'help'.`;
+                    case 'help': response = "Commands: date, love, blanket, chai, chopsticks, clear"; break;
+                    case 'date': response = "Start: 2025-10-13.<br>Status: Going strong. Next update: Feb 2026."; break;
+                    case 'love': response = "<span style='color:#00ff00'>[SUCCESS]</span> Sending infinite love packets to Abi... Done."; break;
+                    case 'blanket': response = "Deploying virtual blanket... 🛌 warmth level: 100%. Snuggle mode: ON."; break;
+                    case 'chai': response = "Brewing Masala Chai... ☕ Spice level: Perfect. Sipping together in spirit."; break;
+                    case 'chopsticks': response = "Skill check: Expert. 🥢 Ready for dumpling date in Taiwan?"; break;
+                    case 'clear': output.innerHTML = ""; input.value = ""; return;
+                    default: response = `Command not found: ${cmd}. Try 'help'.`;
                 }
-                
-                if(response) {
-                    output.innerHTML += `<div style="color:#ccc; margin-bottom:10px;">${response}</div>`;
-                }
-                
-                input.value = "";
-                output.scrollTop = output.scrollHeight;
+                if(response) output.innerHTML += `<div style="color:#ccc; margin-bottom:10px;">${response}</div>`;
+                input.value = ""; output.scrollTop = output.scrollHeight;
             }
         }
 
-        /* --- TINDER SIMULATOR LOGIC --- */
+        /* --- TINDER DRAG & LOGIC --- */
+        const cardWrap = document.getElementById('card-wrap');
+        const card = document.getElementById('tinder-card');
+        let isDragging = false;
+        let startX, currentX;
+
+        // Mouse Events
+        cardWrap.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            card.style.transition = 'none';
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX - startX;
+            const rotate = currentX * 0.1;
+            card.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
+        });
+        document.addEventListener('mouseup', endDrag);
+
+        // Touch Events
+        cardWrap.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+            card.style.transition = 'none';
+        });
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX - startX;
+            const rotate = currentX * 0.1;
+            card.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
+        });
+        document.addEventListener('touchend', endDrag);
+
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            card.style.transition = 'transform 0.5s ease';
+            
+            if (currentX > 100) {
+                // Swiped Right
+                handleSwipeRight();
+            } else if (currentX < -100) {
+                // Swiped Left (Reset)
+                card.style.transform = 'translateX(0) rotate(0)';
+                alert("Only Right Swipe allowed! 😉");
+            } else {
+                // Reset
+                card.style.transform = 'translateX(0) rotate(0)';
+            }
+        }
+
         function startTinder() {
-            // Just to ensure it's clear when opened
-            document.getElementById('tinder-card').classList.remove('swipe-right');
-            document.getElementById('tinder-match-screen').classList.remove('active');
-            document.getElementById('tinder-chat-screen').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('tinder-card').style.transform = '';
+                document.getElementById('tinder-card').style.opacity = '1';
+                document.getElementById('tinder-match-screen').classList.remove('active');
+                document.getElementById('tinder-chat-screen').classList.remove('active');
+            }, 100);
         }
 
         function handleSwipeRight() {
-            document.getElementById('tinder-card').classList.add('swipe-right');
-            // Show Match Screen after animation
+            const c = document.getElementById('tinder-card');
+            c.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
+            c.style.transform = 'translateX(500px) rotate(45deg)';
+            c.style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('tinder-match-screen').classList.add('active');
             }, 600);
@@ -578,7 +713,7 @@ npm install chole-bhature --remote-wish</div>
             const msg = input.value.trim();
             if(!msg) return;
             
-            // Use Mailto for simplicity and safety
+            // Mailto Logic
             const myEmail = "PLEASE_REPLACE_THIS_WITH_YOUR_EMAIL@gmail.com"; 
             const subject = "Tinder Message from Naveen";
             window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
@@ -587,7 +722,7 @@ npm install chole-bhature --remote-wish</div>
             closeWindow('win-tinder');
         }
 
-        /* --- System Monitor Logic --- */
+        /* --- System Monitor --- */
         let monitorInterval;
         function startMonitor() {
             const cpu = document.getElementById('bar-cpu');
@@ -598,19 +733,11 @@ npm install chole-bhature --remote-wish</div>
             const valHr = document.getElementById('val-hr');
 
             monitorInterval = setInterval(() => {
-                // Fluctuate CPU between 95-100%
                 let c = Math.floor(Math.random() * 6) + 95;
-                cpu.style.width = c + "%";
-                valCpu.innerText = c + "%";
-
-                // Memory stable
-                mem.style.width = "99%";
-                valMem.innerText = "99%";
-
-                // Heart rate between 110-130
+                cpu.style.width = c + "%"; valCpu.innerText = c + "%";
+                mem.style.width = "99%"; valMem.innerText = "99%";
                 let h = Math.floor(Math.random() * 20) + 110;
-                hr.style.width = (h/2) + "%"; // Visual width scale
-                valHr.innerText = h + " BPM";
+                hr.style.width = (h/2) + "%"; valHr.innerText = h + " BPM";
             }, 800);
         }
 
