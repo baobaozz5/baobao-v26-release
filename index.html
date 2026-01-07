@@ -148,7 +148,7 @@
         .match-photos { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; }
         .match-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); background: #eee;}
         
-        /* Chat Screen (UPDATED FOR BUBBLES) */
+        /* Chat Screen */
         .tinder-chat { position: absolute; top:0; left:0; width:100%; height:100%; background: var(--window-bg); z-index: 20; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; transform: translateY(20px); }
         .tinder-chat.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
         .chat-header { padding: 15px; border-bottom: 1px solid var(--border-color); font-weight: 700; text-align: center; color: var(--text-main); font-size: 16px; background: rgba(255,255,255,0.5); backdrop-filter: blur(10px); }
@@ -172,7 +172,7 @@
         .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
         .chat-send:hover { opacity: 0.9; }
 
-        /* Letter Box Style (Original) */
+        /* Other Styles */
         .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
@@ -514,14 +514,14 @@ npm install chole-bhature --remote-wish</div>
                     <img src="tinder-profile.jpg" class="match-img" style="z-index:2;">
                     <img src="him.jpg" class="match-img" style="z-index:1;">
                 </div>
-                <p style="font-size:14px; margin-bottom: 30px;">You and Naveen have liked each other.</p>
+                <p style="font-size:14px; margin-bottom: 30px;">You and Abi have liked each other.</p>
                 <button class="chat-send" onclick="showChat()" style="width: 80%; font-size: 16px;">Send a Message</button>
             </div>
 
             <div id="tinder-chat-screen" class="tinder-chat">
-                <div class="chat-header">Naveen</div>
+                <div class="chat-header">Abi</div>
                 <div class="chat-body" id="chat-body-content">
-                    <div class="chat-system">You matched with Naveen on Oct 13, 2025</div>
+                    <div class="chat-system">You matched with Abi on Oct 13, 2025</div>
                     <div class="chat-bubble">hello, how are you? i am under the water. please help me.</div>
                 </div>
                 <div class="chat-input-area">
@@ -682,7 +682,7 @@ npm install chole-bhature --remote-wish</div>
             setTimeout(() => document.getElementById('tinder-msg-input').focus(), 300);
         }
 
-        /* --- SEND TINDER MESSAGE (UPDATED) --- */
+        /* --- SEND TINDER MESSAGE (UPDATED WITH VISUALS) --- */
         async function sendTinderMessage() {
             const input = document.getElementById('tinder-msg-input');
             const btn = document.querySelector('.chat-send');
@@ -691,18 +691,19 @@ npm install chole-bhature --remote-wish</div>
 
             if(!msg) return;
 
-            // 1. VISUAL FEEDBACK (Bubble)
+            // 1. VISUAL FEEDBACK (Show message immediately)
             const bubble = document.createElement('div');
-            bubble.className = 'chat-bubble me'; // Apply the 'Sent by Me' style
+            bubble.className = 'chat-bubble me'; // Sent by me style
             bubble.innerText = msg;
             chatBody.appendChild(bubble);
-            chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
+            chatBody.scrollTop = chatBody.scrollHeight; 
 
-            input.value = ""; // Clear input immediately
+            input.value = ""; // Clear input
+            const originalText = btn.innerText;
             btn.innerText = "Sending...";
 
-            // 2. FORMSPREE LOGIC
-            const formId = "mqeavvar"; // ⚠️ PASTE ID HERE
+            // 2. SEND TO FORMSPREE
+            const formId = "mqeavvar"; // 
 
             try {
                 await fetch(`https://formspree.io/f/${formId}`, {
@@ -710,11 +711,15 @@ npm install chole-bhature --remote-wish</div>
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: "Tinder Chat: " + msg })
                 });
-                btn.innerText = "Sent! 💘";
-                setTimeout(() => btn.innerText = "Send", 2000);
+                btn.innerText = "Sent!";
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    // Optional: close window after 2 seconds
+                    // closeWindow('win-tinder'); 
+                }, 1500);
             } catch (error) {
                 btn.innerText = "Error";
-                alert("Please replace 'YOUR_FORMSPREE_ID_HERE' in the code with your actual Formspree ID.");
+                alert("Please replace 'YOUR_FORMSPREE_ID_HERE' with your real ID.");
             }
         }
 
