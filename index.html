@@ -6,6 +6,7 @@
     <title>Baobao OS v26.0</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+
     <meta property="og:title" content="Baobao OS v26.0 🎂">
     <meta property="og:description" content="Happy 26th Birthday, Naveen! Access Granted.">
     <meta property="og:image" content="baobao.jpg">
@@ -13,26 +14,31 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <style>
         :root {
+            /* Palette */
             --bg-color: #f2f4f6;
             --text-main: #2c3e50;
             --text-muted: #95a5a6;
             --window-bg: rgba(255, 255, 255, 0.96);
             --icon-bg: #f2f4f6;
             --border-color: rgba(255,255,255,0.4);
-            --shadow-icon: 10px 10px 20px rgba(163, 177, 198, 0.4), -10px -10px 20px rgba(255, 255, 255, 0.8);
+            
+            /* Shadows */
+            --shadow-icon: 12px 12px 24px rgba(163, 177, 198, 0.5), -12px -12px 24px rgba(255, 255, 255, 0.9);
             --shadow-window: 0 40px 100px rgba(0,0,0,0.15);
+            
             --status-bar-bg: rgba(242, 244, 246, 0.85);
             --accent-color: #007AFF;
-            --map-filter: none;
             --app-size: 125px; 
+            
+            /* Fonts */
             --font-main: 'Open Sans', sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
         }
 
+        /* Dark Mode */
         [data-theme="dark"] {
             --bg-color: #1a1a1a;
             --text-main: #f0f0f0;
@@ -44,26 +50,29 @@
             --shadow-window: 0 40px 100px rgba(0,0,0,0.5);
             --status-bar-bg: rgba(26, 26, 26, 0.85);
             --accent-color: #0A84FF;
-            --map-filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s ease, color 0.3s ease; }
         body { margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-main); height: 100vh; width: 100vw; overflow: hidden; user-select: none; }
 
+        /* Status Bar */
         .status-bar { position: fixed; top: 0; left: 0; width: 100%; height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 13px; font-weight: 600; color: var(--text-main); z-index: 1000; background: var(--status-bar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.03); }
         .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 12px; color: var(--text-muted); font-weight: 700; }
         .clock-group { display: flex; gap: 25px; }
         .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
 
+        /* Desktop */
         .desktop { padding: 100px 40px 40px 40px; max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 50px; z-index: 1; position: relative; height: 100%; align-content: start; overflow-y: auto; }
 
+        /* App Icons */
         .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); width: var(--app-size); }
         .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
         .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-shadow: var(--shadow-icon); border: 1px solid var(--border-color); margin-bottom: 15px; color: var(--text-main); position: relative; }
         
-        .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } .icon-weather { color: #3498db; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { color: #FF2D55; }
+        .icon-youtube { color: #e74c3c; } .icon-sys { color: #2ecc71; } .icon-weather { color: #3498db; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { color: #FF2D55; }
         .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
 
+        /* Windows */
         .window { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 800px; max-height: 85vh; background: var(--window-bg); border-radius: 24px; box-shadow: var(--shadow-window); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1); z-index: 2000; border: 1px solid var(--border-color); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
         .window.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
         .window-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 25px; border-bottom: 1px solid var(--border-color); }
@@ -72,34 +81,45 @@
         .btn-close:hover { background: rgba(0,0,0,0.1); color: var(--text-main); }
         .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch;}
 
-        /* Letter Box Style */
+        /* System Monitor Styles */
+        .monitor-row { margin-bottom: 25px; }
+        .monitor-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-main); }
+        .monitor-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; }
+        .monitor-bar-fill { height: 100%; background: var(--accent-color); border-radius: 10px; width: 0%; transition: width 0.5s ease; }
+        .monitor-val { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+
+        /* Other Styles */
         .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
-        .letter-form textarea::placeholder { color: var(--text-muted); }
-        
-        #map-container { width: 100%; height: 400px; border-radius: 16px; z-index: 1; border: 4px solid var(--window-bg); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .leaflet-layer, .leaflet-control-zoom-in, .leaflet-control-zoom-out, .leaflet-control-attribution { filter: var(--map-filter); }
-        .map-info { margin-top:20px; padding:15px; background:var(--icon-bg); border-radius:12px; display:flex; justify-content:space-between; font-weight:600; color:var(--text-main);}
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .code-editor { background: #1e1e1e; border-radius: 12px; padding: 25px; font-family: var(--font-mono); font-size: 14px; line-height: 1.6; color: #d4d4d4; overflow-x: auto; }
+        
+        /* C++ Code Editor Style (Fixed) */
+        .code-container { background: #1e1e1e; border-radius: 12px; overflow: hidden; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6; display: flex; }
+        .line-numbers { background: #252526; color: #858585; padding: 20px 10px; text-align: right; user-select: none; border-right: 1px solid #333; min-width: 40px; }
+        .code-editor { color: #d4d4d4; padding: 20px; overflow-x: auto; white-space: pre; flex-grow: 1; }
         .kw { color: #569cd6; font-weight:bold; } .type { color: #4ec9b0; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; } .num { color: #b5cea8; }
+
         .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .weather-card { background: var(--icon-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); text-align: center; color: var(--text-main); }
         .weather-temp { font-size: 42px; font-weight: 300; margin: 10px 0; }
         .weather-city { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing:1px; }
+        
         .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); }
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; } input[type=range]:focus { outline: none; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: var(--text-muted); opacity: 0.3; border-radius: 10px; }
         input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: var(--text-main); margin-top: -5px; -webkit-appearance: none; cursor: pointer; }
         .control-btn { background: var(--text-main); color: var(--bg-color); width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.1s;}
         .control-btn:active { transform: scale(0.95); }
+        
         .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; }
         .toggle-knob { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .toggle-switch.active { background: var(--accent-color); } .toggle-switch.active .toggle-knob { left: 24px; }
         .toggle-switch.locked { opacity: 0.6; cursor: not-allowed; background: var(--accent-color); } .toggle-switch.locked .toggle-knob { left: 24px; }
+        
         .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); }
         .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--text-main); }
         .code-block { background: var(--icon-bg); padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border:1px solid var(--border-color); color: var(--text-main); }
+        
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; }
         #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
 
@@ -150,9 +170,9 @@
             <div class="app-label">Anthem</div>
         </div>
 
-        <div class="app-item" onclick="openWindow('win-map'); initMap();">
-            <div class="app-icon icon-map">📍</div>
-            <div class="app-label">Find My</div>
+        <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();">
+            <div class="app-icon icon-sys">📊</div>
+            <div class="app-label">Activity</div>
         </div>
 
         <div class="app-item" onclick="openWindow('win-terminal'); focusTerminal();">
@@ -310,24 +330,26 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="win-map" class="window" style="max-width: 600px;">
-        <div class="window-header"><div class="window-title">Find My</div><button class="btn-close" onclick="closeWindow('win-map')">✕</button></div>
-        <div class="window-content" style="padding:0;">
-            <div id="map-container"></div>
-            <div class="map-info" style="margin: 0 20px 20px 20px; padding:20px; background:var(--icon-bg); border-radius:12px; display:flex; justify-content:space-between; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
-                <div style="text-align:left;">
-                    <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase;">You</div>
-                    <div style="font-size:18px; font-weight:700;">Gurgaon 🇮🇳</div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase;">Distance</div>
-                    <div style="font-size:18px; font-weight:700; color:#007AFF;">4,300 km</div>
-                </div>
-                <div style="text-align:right;">
-                    <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase;">Me</div>
-                    <div style="font-size:18px; font-weight:700;">Hsinchu 🇹🇼</div>
-                </div>
+    <div id="win-monitor" class="window" style="max-width: 500px;">
+        <div class="window-header"><div class="window-title">Activity Monitor</div><button class="btn-close" onclick="closeWindow('win-monitor')">✕</button></div>
+        <div class="window-content">
+            <div class="monitor-row">
+                <div class="monitor-label"><span>CPU (Love Load)</span><span id="val-cpu" class="monitor-val">100%</span></div>
+                <div class="monitor-bar-bg"><div id="bar-cpu" class="monitor-bar-fill" style="width:100%; background:#FF3B30;"></div></div>
             </div>
+            <div class="monitor-row">
+                <div class="monitor-label"><span>Memory (Thinking of Abi)</span><span id="val-mem" class="monitor-val">99%</span></div>
+                <div class="monitor-bar-bg"><div id="bar-mem" class="monitor-bar-fill" style="width:99%; background:#007AFF;"></div></div>
+            </div>
+            <div class="monitor-row">
+                <div class="monitor-label"><span>Heart Rate</span><span id="val-hr" class="monitor-val">120 BPM</span></div>
+                <div class="monitor-bar-bg"><div id="bar-hr" class="monitor-bar-fill" style="width:80%; background:#FF9500;"></div></div>
+            </div>
+            <div class="monitor-row">
+                <div class="monitor-label"><span>Network Latency</span><span class="monitor-val">0 ms (Synced)</span></div>
+                <div class="monitor-bar-bg"><div class="monitor-bar-fill" style="width:100%; background:#34C759;"></div></div>
+            </div>
+            <p style="margin-top:30px; font-size:13px; color:var(--text-muted);">System is running at maximum affection capacity.</p>
         </div>
     </div>
 
@@ -349,16 +371,11 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-   <div id="win-code" class="window" style="max-width: 600px;">
-        <div class="window-header">
-            <div class="window-title">kernel_love.cpp</div>
-            <button class="btn-close" onclick="closeWindow('win-code')">✕</button>
-        </div>
-        <div class="window-content" style="background:#1e1e1e; padding:0; display:flex; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6;">
-            <div style="background:#252526; color:#858585; padding: 25px 15px; text-align: right; user-select: none; border-right: 1px solid #333;">
-                1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24
-            </div>
-            <div class="code-editor" style="padding: 25px; flex-grow: 1; overflow-x: auto; white-space: pre;">
+    <div id="win-code" class="window" style="max-width: 600px;">
+        <div class="window-header"><div class="window-title">kernel_love.cpp</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div>
+        <div class="window-content" style="background:#1e1e1e; padding:0; display:flex;">
+            <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
+            <div class="code-editor">
 <span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
 <span class="kw">#include</span> <span class="str">&lt;string&gt;</span>
 
@@ -393,10 +410,6 @@ npm install chole-bhature --remote-wish</div>
     baobao.<span class="fn">maintain_connection</span>();
     <span class="kw">return</span> <span class="num">0</span>;
 }</div>
-        </div>
-    </div>
-}
-            </div>
         </div>
     </div>
 
@@ -477,6 +490,9 @@ npm install chole-bhature --remote-wish</div>
                 const src = iframe.src;
                 iframe.src = ''; iframe.src = src;
             }
+            if(id === 'win-monitor') {
+                clearInterval(monitorInterval);
+            }
         }
 
         const audio = document.getElementById('audio-file');
@@ -489,25 +505,6 @@ npm install chole-bhature --remote-wish</div>
         }
         audio.addEventListener('timeupdate', () => { slider.value = (audio.currentTime/audio.duration)*100; });
         slider.addEventListener('input', () => { audio.currentTime = (slider.value/100)*audio.duration; });
-
-        /* --- Map Logic --- */
-        let map;
-        function initMap() {
-            if(map) return; 
-            setTimeout(() => {
-                const gurgaon = [28.4595, 77.0266];
-                const hsinchu = [24.8138, 120.9675];
-                map = L.map('map-container').setView([26, 99], 3);
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                    attribution: '&copy; CARTO', subdomains: 'abcd', maxZoom: 19
-                }).addTo(map);
-                const redIcon = L.divIcon({className: 'custom-icon', html: '<div style="background:#FF3B30; width:14px; height:14px; border-radius:50%; border:2px solid white; box-shadow:0 2px 5px rgba(0,0,0,0.2);"></div>'});
-                const blueIcon = L.divIcon({className: 'custom-icon', html: '<div style="background:#007AFF; width:14px; height:14px; border-radius:50%; border:2px solid white; box-shadow:0 2px 5px rgba(0,0,0,0.2);"></div>'});
-                L.marker(gurgaon, {icon: blueIcon}).addTo(map).bindPopup("Naveen (Gurgaon)").openPopup();
-                L.marker(hsinchu, {icon: redIcon}).addTo(map).bindPopup("Abi (Hsinchu)");
-                L.polyline([gurgaon, hsinchu], {color: '#888', dashArray: '5, 10', weight: 2}).addTo(map);
-            }, 300);
-        }
 
         /* --- Interactive Terminal Logic --- */
         function focusTerminal() {
@@ -559,8 +556,8 @@ npm install chole-bhature --remote-wish</div>
             }
         }
 
-        /* --- Formspree Logic (Letter Box) --- */
-        async function sendLetter(event) {
+        /* --- Letter Box (Mailto Version - Safer) --- */
+        function sendLetter(event) {
             event.preventDefault();
             const btn = event.target.querySelector('button');
             const textarea = document.getElementById('message-text');
@@ -568,28 +565,51 @@ npm install chole-bhature --remote-wish</div>
             
             if(!textarea.value.trim()) return;
 
-            btn.innerText = "Sending...";
+            btn.innerText = "Opening Mail...";
             
-            // Replace with your Formspree ID
-            const formId = "mqeavvar"; 
-            
-            try {
-                await fetch(`https://formspree.io/f/${formId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: textarea.value })
-                });
-                btn.innerText = "Sent Successfully! ✈️";
+            const myEmail = "PLEASE_REPLACE_THIS_WITH_YOUR_EMAIL@gmail.com"; 
+            const subject = "Message from Baobao OS";
+            const body = textarea.value;
+
+            window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            setTimeout(() => { 
+                btn.innerText = "Opened! ✈️";
                 btn.style.background = "#34C759";
                 setTimeout(() => { 
                     closeWindow('win-letter'); 
                     btn.innerText = originalText;
                     btn.style.background = "";
                     textarea.value = "";
-                }, 2000);
-            } catch (error) {
-                btn.innerText = "Error. Try again.";
-            }
+                }, 1500);
+            }, 1000);
+        }
+
+        /* --- System Monitor Logic --- */
+        let monitorInterval;
+        function startMonitor() {
+            const cpu = document.getElementById('bar-cpu');
+            const mem = document.getElementById('bar-mem');
+            const hr = document.getElementById('bar-hr');
+            const valCpu = document.getElementById('val-cpu');
+            const valMem = document.getElementById('val-mem');
+            const valHr = document.getElementById('val-hr');
+
+            monitorInterval = setInterval(() => {
+                // Fluctuate CPU between 95-100%
+                let c = Math.floor(Math.random() * 6) + 95;
+                cpu.style.width = c + "%";
+                valCpu.innerText = c + "%";
+
+                // Memory stable
+                mem.style.width = "99%";
+                valMem.innerText = "99%";
+
+                // Heart rate between 110-130
+                let h = Math.floor(Math.random() * 20) + 110;
+                hr.style.width = (h/2) + "%"; // Visual width scale
+                valHr.innerText = h + " BPM";
+            }, 800);
         }
 
         /* --- Confetti Logic --- */
