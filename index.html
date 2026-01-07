@@ -8,12 +8,12 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
 
     <meta property="og:title" content="Baobao OS v26.0 🎂">
-    <meta property="og:description" content="Happy 26th Birthday, Naveen! Access Granted.">
+    <meta property="og:description" content="Happy 26th Birthday, Naveen! System Ready.">
     <meta property="og:image" content="baobao.jpg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
@@ -39,6 +39,7 @@
             --font-main: 'Open Sans', sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
             --font-script: 'Pacifico', cursive;
+            --font-digital: 'Orbitron', sans-serif; /* For Countdown */
             
             /* Tinder Colors */
             --tinder-grad: linear-gradient(to right, #fd297b, #ff655b);
@@ -73,11 +74,12 @@
             user-select: none;
         }
 
-        /* --- Status Bar --- */
-        .status-bar { position: fixed; top: 0; left: 0; width: 100%; height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 13px; font-weight: 600; color: var(--text-main); z-index: 1000; background: var(--status-bar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.03); }
-        .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 12px; color: var(--text-muted); font-weight: 700; }
-        .clock-group { display: flex; gap: 25px; }
-        .clock-item span { color: var(--text-muted); margin-right: 6px; font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
+        /* --- Status Bar (UPDATED FONT SIZE) --- */
+        .status-bar { position: fixed; top: 0; left: 0; width: 100%; height: 48px; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 14px; font-weight: 600; color: var(--text-main); z-index: 1000; background: var(--status-bar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.03); }
+        .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 13px; color: var(--text-muted); font-weight: 700; }
+        .clock-group { display: flex; gap: 30px; }
+        .clock-item { font-size: 15px; font-weight: 700; } /* Bigger Font */
+        .clock-item span { color: var(--text-muted); margin-right: 8px; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
 
         /* --- Desktop Container --- */
         .desktop {
@@ -93,7 +95,9 @@
         .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
         .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-shadow: var(--shadow-icon); border: 1px solid var(--border-color); margin-bottom: 15px; color: var(--text-main); position: relative; }
         
-        .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } .icon-weather { color: #3498db; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
+        .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } 
+        .icon-ticket { color: #FF9500; } /* Ticket Color */
+        .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
         .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
 
         /* --- Windows --- */
@@ -105,91 +109,68 @@
         .btn-close:hover { background: rgba(0,0,0,0.1); color: var(--text-main); }
         .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch; position: relative;}
 
-        /* --- Styles for Apps --- */
-        
-        /* Tinder App */
+        /* --- TINDER STYLE --- */
         .tinder-container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding-bottom: 20px; }
         .tinder-card-wrap { flex-grow: 1; width: 100%; max-width: 380px; position: relative; perspective: 1000px; cursor: grab; }
         .tinder-card-wrap:active { cursor: grabbing; }
-        
-        .tinder-card { 
-            width: 100%; height: 100%; 
-            background: #fff; border-radius: 20px; 
-            overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
-            position: absolute; top: 0; left: 0; 
-            background-size: cover; background-position: center;
-            transition: opacity 0.5s ease;
-            transform-origin: 50% 100%;
-        }
-        
-        .tinder-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            padding: 80px 20px 20px 20px; color: white;
-        }
+        .tinder-card { width: 100%; height: 100%; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); position: absolute; top: 0; left: 0; background-size: cover; background-position: center; transition: opacity 0.5s ease; transform-origin: 50% 100%; }
+        .tinder-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); padding: 80px 20px 20px 20px; color: white; }
         .tinder-name { font-size: 28px; font-weight: 800; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        
         .tinder-actions { display: flex; gap: 30px; margin-top: 25px; z-index: 5; }
         .tinder-btn { width: 65px; height: 65px; border-radius: 50%; border: none; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-size: 28px; cursor: pointer; transition: 0.2s; display:flex; align-items:center; justify-content:center;}
         .tinder-btn:hover { transform: scale(1.1); }
-        .tinder-btn.nope { color: var(--tinder-red); } 
-        .tinder-btn.like { color: var(--tinder-green); font-size: 34px; }
-
-        /* Match Screen */
+        .tinder-btn.nope { color: var(--tinder-red); } .tinder-btn.like { color: var(--tinder-green); font-size: 34px; }
         .tinder-match { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; text-align: center; color: white; }
         .tinder-match.active { opacity: 1; pointer-events: auto; }
-        .match-title { 
-            font-family: var(--font-script); 
-            font-size: 65px; margin-bottom: 40px; 
-            background: var(--tinder-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); 
-            transform: rotate(-5deg);
-        }
+        .match-title { font-family: var(--font-script); font-size: 65px; margin-bottom: 40px; background: var(--tinder-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); transform: rotate(-5deg); }
         .match-photos { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; }
         .match-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); background: #eee;}
-        
-        /* Chat Screen */
         .tinder-chat { position: absolute; top:0; left:0; width:100%; height:100%; background: var(--window-bg); z-index: 20; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; transform: translateY(20px); }
         .tinder-chat.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
         .chat-header { padding: 15px; border-bottom: 1px solid var(--border-color); font-weight: 700; text-align: center; color: var(--text-main); font-size: 16px; background: rgba(255,255,255,0.5); backdrop-filter: blur(10px); }
-        
         .chat-body { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        
         .chat-bubble { background: #e5e5ea; padding: 12px 18px; border-radius: 20px; border-bottom-left-radius: 4px; max-width: 80%; font-size: 15px; color: black; align-self: flex-start; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        
-        /* Sent Message Bubble (Blue, Right aligned) */
-        .chat-bubble.me {
-            background: var(--accent-color);
-            color: white;
-            align-self: flex-end;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 4px;
-        }
-
+        .chat-bubble.me { background: var(--accent-color); color: white; align-self: flex-end; border-bottom-left-radius: 20px; border-bottom-right-radius: 4px; }
         .chat-system { text-align: center; color: var(--text-muted); font-size: 12px; margin: 20px 0; clear: both; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
         .chat-input-area { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; background: var(--window-bg);}
         .chat-input { flex-grow: 1; border: 1px solid var(--border-color); border-radius: 25px; padding: 12px 20px; outline: none; background: var(--icon-bg); color: var(--text-main); font-size: 15px;}
         .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
         .chat-send:hover { opacity: 0.9; }
 
+        /* --- TICKET STYLES (NEW) --- */
+        .ticket-wrap { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .ticket-header { background: #E74C3C; padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .ticket-logo { font-weight: 800; font-size: 20px; letter-spacing: -1px; display: flex; align-items: center; gap: 5px; }
+        .ticket-body { padding: 30px; }
+        .flight-route { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .city-code { font-size: 48px; font-weight: 800; color: #333; }
+        .city-name { font-size: 14px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .flight-icon { font-size: 30px; color: #E74C3C; transform: rotate(90deg); }
+        .flight-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .detail-label { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; }
+        .detail-val { font-size: 18px; font-weight: 700; color: #333; }
+        .ticket-footer { background: #f9f9f9; padding: 20px; border-top: 2px dashed #ddd; text-align: center; color: #007AFF; font-weight: 600; letter-spacing: 1px; font-size: 14px; }
+
+        /* --- DEPLOY ANIMATION --- */
+        .rocket-launch-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; color: #00ff00; font-family: var(--font-digital); }
+        .rocket-emoji { font-size: 100px; transition: transform 0.1s; }
+        .countdown-text { font-size: 80px; margin-top: 20px; }
+        .shake { animation: shake 0.5s infinite; }
+        .fly-away { transition: transform 1s ease-in; transform: translateY(-150vh); }
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+
         /* Other Styles */
         .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        
         .code-container { background: #1e1e1e; border-radius: 12px; overflow: hidden; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6; display: flex; } .line-numbers { background: #252526; color: #858585; padding: 20px 10px; text-align: right; user-select: none; border-right: 1px solid #333; min-width: 40px; } .code-editor { color: #d4d4d4; padding: 20px; overflow-x: auto; white-space: pre; flex-grow: 1; } .kw { color: #569cd6; font-weight:bold; } .type { color: #4ec9b0; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; } .num { color: #b5cea8; }
-        
         .monitor-row { margin-bottom: 25px; } .monitor-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-main); } .monitor-bar-bg { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; } .monitor-bar-fill { height: 100%; background: var(--accent-color); border-radius: 10px; width: 0%; transition: width 0.5s ease; } .monitor-val { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
-        
-        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } .weather-card { background: var(--icon-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.04); text-align: center; color: var(--text-main); } .weather-temp { font-size: 42px; font-weight: 300; margin: 10px 0; } .weather-city { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing:1px; }
-        
         .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); } input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; } input[type=range]:focus { outline: none; } input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: var(--text-muted); opacity: 0.3; border-radius: 10px; } input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: var(--text-main); margin-top: -5px; -webkit-appearance: none; cursor: pointer; } .control-btn { background: var(--text-main); color: var(--bg-color); width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.1s;} .control-btn:active { transform: scale(0.95); }
-        
         .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; } .toggle-knob { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); } .toggle-switch.active { background: var(--accent-color); } .toggle-switch.active .toggle-knob { left: 24px; } .toggle-switch.locked { opacity: 0.6; cursor: not-allowed; background: var(--accent-color); } .toggle-switch.locked .toggle-knob { left: 24px; }
-        
         .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); } .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--text-main); } .code-block { background: var(--icon-bg); padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border:1px solid var(--border-color); color: var(--text-main); }
-        
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; } #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; opacity: 0; pointer-events: none; transition: opacity 1s;}
+        #overlay.show { opacity: 1; pointer-events: auto; }
+        #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
 
         @media (max-width: 768px) {
             .desktop { padding: 80px 20px; gap: 30px; }
@@ -197,7 +178,7 @@
             .app-label { font-size: 12px; }
             .window { width: 95%; max-height: 90vh; }
             .window-content { padding: 25px; }
-            .status-bar { font-size: 11px; padding: 0 15px; }
+            .status-bar { font-size: 12px; padding: 0 15px; }
             .match-title { font-size: 48px; } .match-img { width: 100px; height: 100px; }
         }
     </style>
@@ -249,9 +230,10 @@
             <div class="app-icon">💻</div>
             <div class="app-label">Source</div>
         </div>
-        <div class="app-item" onclick="openWindow('win-weather')">
-            <div class="app-icon icon-weather">🌤️</div>
-            <div class="app-label">Atmosphere</div>
+        
+        <div class="app-item" onclick="openWindow('win-ticket')">
+            <div class="app-icon icon-ticket">🎫</div>
+            <div class="app-label">Boarding Pass</div>
         </div>
 
         <div class="app-item" onclick="openWindow('win-tinder'); startTinder();">
@@ -259,7 +241,7 @@
             <div class="app-label">Matches</div>
         </div>
 
-        <div class="app-item" onclick="deploySystem()">
+        <div class="app-item" onclick="startRocketLaunch()">
             <div class="app-icon icon-deploy">🚀</div>
             <div class="app-label">Deploy</div>
         </div>
@@ -471,22 +453,49 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="win-weather" class="window" style="max-width: 500px;">
-        <div class="window-header"><div class="window-title">Atmosphere</div><button class="btn-close" onclick="closeWindow('win-weather')">✕</button></div>
-        <div class="window-content">
-            <div class="weather-grid">
-                <div class="weather-card">
-                    <div class="weather-city">Taipei</div>
-                    <div class="weather-temp">22°</div>
-                    <div style="color:var(--text-muted);">Cloudy</div>
+    <div id="win-ticket" class="window" style="max-width: 500px;">
+        <div class="window-header"><div class="window-title">Boarding Pass</div><button class="btn-close" onclick="closeWindow('win-ticket')">✕</button></div>
+        <div class="window-content" style="background: #eee;">
+            <div class="ticket-wrap">
+                <div class="ticket-header">
+                    <div class="ticket-logo">✈️ ixigo approved</div>
+                    <div>CLASS: <span style="font-weight:700">BOYFRIEND</span></div>
                 </div>
-                <div class="weather-card">
-                    <div class="weather-city">Delhi</div>
-                    <div class="weather-temp">18°</div>
-                    <div style="color:var(--text-muted);">Hazy</div>
+                <div class="ticket-body">
+                    <div class="flight-route">
+                        <div style="text-align:left;">
+                            <div class="city-code">DEL</div>
+                            <div class="city-name">New Delhi</div>
+                        </div>
+                        <div class="flight-icon">✈</div>
+                        <div style="text-align:right;">
+                            <div class="city-code">TPE</div>
+                            <div class="city-name">Taipei</div>
+                        </div>
+                    </div>
+                    <div class="flight-details">
+                        <div>
+                            <div class="detail-label">PASSENGER</div>
+                            <div class="detail-val">NAVEEN</div>
+                        </div>
+                        <div>
+                            <div class="detail-label">DATE</div>
+                            <div class="detail-val">13 FEB 2026</div>
+                        </div>
+                        <div>
+                            <div class="detail-label">GATE</div>
+                            <div class="detail-val">A13</div>
+                        </div>
+                        <div>
+                            <div class="detail-label">SEAT</div>
+                            <div class="detail-val">1A (VIP)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket-footer">
+                    CONFIRMED • NON-REFUNDABLE • SEE YOU SOON
                 </div>
             </div>
-            <p style="text-align:center; color:var(--text-muted); font-size:14px; margin-top:25px;">Same sky, different timezone.</p>
         </div>
     </div>
 
@@ -533,7 +542,12 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="overlay" onclick="this.style.display='none'">
+    <div id="rocket-container" class="rocket-launch-container">
+        <div id="countdown" class="countdown-text">3</div>
+        <div id="rocket" class="rocket-emoji">🚀</div>
+    </div>
+
+    <div id="overlay">
         <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: var(--text-main);">Happy 26th Birthday!</h1>
         <p style="color: var(--text-muted);">Baobao OS Update Complete.</p>
         <div style="margin-top: 30px; font-size: 5rem;">🎂</div>
@@ -682,7 +696,7 @@ npm install chole-bhature --remote-wish</div>
             setTimeout(() => document.getElementById('tinder-msg-input').focus(), 300);
         }
 
-        /* --- SEND TINDER MESSAGE (UPDATED WITH VISUALS) --- */
+        /* --- SEND TINDER MESSAGE --- */
         async function sendTinderMessage() {
             const input = document.getElementById('tinder-msg-input');
             const btn = document.querySelector('.chat-send');
@@ -691,9 +705,9 @@ npm install chole-bhature --remote-wish</div>
 
             if(!msg) return;
 
-            // 1. VISUAL FEEDBACK (Show message immediately)
+            // 1. VISUAL FEEDBACK (Bubble)
             const bubble = document.createElement('div');
-            bubble.className = 'chat-bubble me'; // Sent by me style
+            bubble.className = 'chat-bubble me'; // Sent by me
             bubble.innerText = msg;
             chatBody.appendChild(bubble);
             chatBody.scrollTop = chatBody.scrollHeight; 
@@ -704,7 +718,6 @@ npm install chole-bhature --remote-wish</div>
 
             // 2. SEND TO FORMSPREE
             const formId = "mqeavvar"; // 
-
             try {
                 await fetch(`https://formspree.io/f/${formId}`, {
                     method: 'POST',
@@ -714,8 +727,6 @@ npm install chole-bhature --remote-wish</div>
                 btn.innerText = "Sent!";
                 setTimeout(() => {
                     btn.innerText = originalText;
-                    // Optional: close window after 2 seconds
-                    // closeWindow('win-tinder'); 
                 }, 1500);
             } catch (error) {
                 btn.innerText = "Error";
@@ -742,6 +753,36 @@ npm install chole-bhature --remote-wish</div>
             }, 800);
         }
 
+        /* --- Rocket Launch Sequence --- */
+        function startRocketLaunch() {
+            const container = document.getElementById('rocket-container');
+            const countdown = document.getElementById('countdown');
+            const rocket = document.getElementById('rocket');
+            
+            container.style.display = 'flex';
+            
+            let count = 3;
+            countdown.innerText = count;
+            
+            const timer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdown.innerText = count;
+                } else if (count === 0) {
+                    countdown.innerText = "LIFTOFF!";
+                    rocket.classList.add('shake');
+                } else {
+                    clearInterval(timer);
+                    rocket.classList.remove('shake');
+                    rocket.classList.add('fly-away');
+                    setTimeout(() => {
+                        container.style.display = 'none';
+                        deploySystem(); // Confetti
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
         /* --- Confetti Logic --- */
         const cvs = document.getElementById('confetti-canvas');
         const ctx = cvs.getContext('2d');
@@ -760,7 +801,7 @@ npm install chole-bhature --remote-wish</div>
             if(act>0) requestAnimationFrame(draw);
         }
         function deploySystem() {
-            document.getElementById('overlay').style.display='flex';
+            document.getElementById('overlay').classList.add('show');
             spawning=true; spawn(); draw();
             setTimeout(()=>{spawning=false;},3000);
         }
