@@ -38,7 +38,7 @@
             
             --font-main: 'Open Sans', sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
-            --font-script: 'Pacifico', cursive; /* New Font */
+            --font-script: 'Pacifico', cursive;
             
             /* Tinder Colors */
             --tinder-grad: linear-gradient(to right, #fd297b, #ff655b);
@@ -118,12 +118,10 @@
             overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
             position: absolute; top: 0; left: 0; 
             background-size: cover; background-position: center;
-            /* Transition is handled by JS for dragging, only opacity needs CSS */
             transition: opacity 0.5s ease;
             transform-origin: 50% 100%;
         }
         
-        /* Overlay text on card */
         .tinder-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%;
             background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
@@ -131,7 +129,6 @@
         }
         .tinder-name { font-size: 28px; font-weight: 800; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
         
-        /* Buttons */
         .tinder-actions { display: flex; gap: 30px; margin-top: 25px; z-index: 5; }
         .tinder-btn { width: 65px; height: 65px; border-radius: 50%; border: none; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-size: 28px; cursor: pointer; transition: 0.2s; display:flex; align-items:center; justify-content:center;}
         .tinder-btn:hover { transform: scale(1.1); }
@@ -142,14 +139,15 @@
         .tinder-match { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; text-align: center; color: white; }
         .tinder-match.active { opacity: 1; pointer-events: auto; }
         .match-title { 
-            font-family: var(--font-script); /* NEW FONT */
+            font-family: var(--font-script); 
             font-size: 65px; margin-bottom: 40px; 
             background: var(--tinder-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
             filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); 
             transform: rotate(-5deg);
         }
         .match-photos { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; }
-        .match-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        /* 修正：兩個圓圈頭像，確保圖片填滿 */
+        .match-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); background: #eee;}
         
         /* Chat Screen */
         .tinder-chat { position: absolute; top:0; left:0; width:100%; height:100%; background: var(--window-bg); z-index: 20; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; transform: translateY(20px); }
@@ -163,7 +161,7 @@
         .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
         .chat-send:hover { opacity: 0.9; }
 
-        /* Other App Styles (Kept) */
+        /* Letter Box Style (Original) */
         .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
@@ -204,52 +202,42 @@
     </div>
 
     <div class="desktop">
-        
         <div class="app-item" onclick="openWindow('win-sticky')">
             <div class="app-icon">📌</div>
             <div class="app-label">Notes</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-readme')">
             <div class="app-icon">📄</div>
             <div class="app-label">README</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-photo')">
             <div class="app-icon">🖼️</div>
             <div class="app-label">Photos</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-music')">
             <div class="app-icon">🎵</div>
             <div class="app-label">Voice Note</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-youtube')">
             <div class="app-icon icon-youtube">📺</div>
             <div class="app-label">Anthem</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();">
             <div class="app-icon icon-sys">📊</div>
             <div class="app-label">Activity</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-terminal'); focusTerminal();">
             <div class="app-icon">📟</div>
             <div class="app-label">Terminal</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-settings')">
             <div class="app-icon">⚙️</div>
             <div class="app-label">Settings</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-code')">
             <div class="app-icon">💻</div>
             <div class="app-label">Source</div>
         </div>
-
         <div class="app-item" onclick="openWindow('win-weather')">
             <div class="app-icon icon-weather">🌤️</div>
             <div class="app-label">Atmosphere</div>
@@ -264,7 +252,6 @@
             <div class="app-icon icon-deploy">🚀</div>
             <div class="app-label">Deploy</div>
         </div>
-
     </div>
 
     <div id="win-sticky" class="window">
@@ -513,7 +500,7 @@ npm install chole-bhature --remote-wish</div>
             <div id="tinder-match-screen" class="tinder-match">
                 <div class="match-title">It's a Match!</div>
                 <div class="match-photos">
-                    <img src="baobao.jpg" class="match-img" style="z-index:2;">
+                    <img src="tinder-profile.jpg" class="match-img" style="z-index:2;">
                     <img src="him.jpg" class="match-img" style="z-index:1;">
                 </div>
                 <p style="font-size:14px; margin-bottom: 30px;">You and Naveen have liked each other.</p>
@@ -621,7 +608,7 @@ npm install chole-bhature --remote-wish</div>
                     case 'date': response = "Start: 2025-10-13.<br>Status: Going strong. Next update: Feb 2026."; break;
                     case 'love': response = "<span style='color:#00ff00'>[SUCCESS]</span> Sending infinite love packets to Abi... Done."; break;
                     case 'blanket': response = "Deploying virtual blanket... 🛌 warmth level: 100%. Snuggle mode: ON."; break;
-                    case 'chai': response = "Brewing Masala Chai... ☕ Spice level: Perfect. Sipping together in spirit."; break;
+                    case 'chai': response = "Brewing Chai... ☕ Spice level: Perfect. Sipping together in spirit."; break;
                     case 'chopsticks': response = "Skill check: Expert. 🥢 Ready for dumpling date in Taiwan?"; break;
                     case 'clear': output.innerHTML = ""; input.value = ""; return;
                     default: response = `Command not found: ${cmd}. Try 'help'.`;
@@ -631,7 +618,7 @@ npm install chole-bhature --remote-wish</div>
             }
         }
 
-        /* --- TINDER DRAG & LOGIC --- */
+        /* --- TINDER SIMULATOR LOGIC --- */
         const cardWrap = document.getElementById('card-wrap');
         const card = document.getElementById('tinder-card');
         let isDragging = false;
@@ -671,14 +658,11 @@ npm install chole-bhature --remote-wish</div>
             card.style.transition = 'transform 0.5s ease';
             
             if (currentX > 100) {
-                // Swiped Right
                 handleSwipeRight();
             } else if (currentX < -100) {
-                // Swiped Left (Reset)
                 card.style.transform = 'translateX(0) rotate(0)';
                 alert("Only Right Swipe allowed! 😉");
             } else {
-                // Reset
                 card.style.transform = 'translateX(0) rotate(0)';
             }
         }
@@ -708,21 +692,37 @@ npm install chole-bhature --remote-wish</div>
             setTimeout(() => document.getElementById('tinder-msg-input').focus(), 300);
         }
 
-        function sendTinderMessage() {
+        // FORMSPREE LOGIC
+        async function sendTinderMessage() {
             const input = document.getElementById('tinder-msg-input');
+            const btn = document.querySelector('.chat-send');
             const msg = input.value.trim();
             if(!msg) return;
-            
-            // Mailto Logic
-            const myEmail = "PLEASE_REPLACE_THIS_WITH_YOUR_EMAIL@gmail.com"; 
-            const subject = "Tinder Message from Naveen";
-            window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
-            
-            input.value = "";
-            closeWindow('win-tinder');
+
+            // ⚠️ REPLACE THIS WITH YOUR FORMSPREE ID
+            const formId = "mqeavvar"; 
+
+            btn.innerText = "Sending...";
+
+            try {
+                await fetch(`https://formspree.io/f/${formId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: "Tinder Chat: " + msg })
+                });
+                btn.innerText = "Sent! 💘";
+                setTimeout(() => {
+                    input.value = "";
+                    closeWindow('win-tinder');
+                    btn.innerText = "Send";
+                }, 1500);
+            } catch (error) {
+                btn.innerText = "Error";
+                alert("Formspree Error: Check ID in code.");
+            }
         }
 
-        /* --- System Monitor --- */
+        /* --- System Monitor Logic --- */
         let monitorInterval;
         function startMonitor() {
             const cpu = document.getElementById('bar-cpu');
