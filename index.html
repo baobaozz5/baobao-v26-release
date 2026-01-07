@@ -13,7 +13,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
@@ -39,11 +39,16 @@
             --font-main: 'Open Sans', sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
             --font-script: 'Pacifico', cursive;
+            --font-duo: 'Nunito', sans-serif; /* Duolingo-ish font */
             
             /* Tinder Colors */
             --tinder-grad: linear-gradient(to right, #fd297b, #ff655b);
             --tinder-green: #2ee681;
             --tinder-red: #ec4768;
+            
+            /* Duolingo Colors */
+            --duo-green: #58cc02;
+            --duo-face: #fff;
         }
 
         /* DARK MODE Variables */
@@ -73,11 +78,11 @@
             user-select: none;
         }
 
-        /* --- Status Bar --- */
+        /* --- Status Bar (UPDATED FONT SIZE) --- */
         .status-bar { position: fixed; top: 0; left: 0; width: 100%; height: 48px; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 14px; font-weight: 600; color: var(--text-main); z-index: 1000; background: var(--status-bar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.03); }
         .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 13px; color: var(--text-muted); font-weight: 700; }
         .clock-group { display: flex; gap: 30px; }
-        .clock-item { font-size: 15px; font-weight: 700; }
+        .clock-item { font-size: 15px; font-weight: 700; } /* Bigger Font */
         .clock-item span { color: var(--text-muted); margin-right: 8px; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
 
         /* --- Desktop Container --- */
@@ -95,7 +100,7 @@
         .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-shadow: var(--shadow-icon); border: 1px solid var(--border-color); margin-bottom: 15px; color: var(--text-main); position: relative; }
         
         .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } 
-        .icon-bug { color: #FF3B30; } /* Bug Tracker Color */
+        .icon-duo { color: #58cc02; } /* Duolingo Green */
         .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
         .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
 
@@ -136,15 +141,18 @@
         .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
         .chat-send:hover { opacity: 0.9; }
 
-        /* --- ISSUE TRACKER STYLE (NEW) --- */
-        .issue-list { display: flex; flex-direction: column; gap: 15px; }
-        .issue-item { background: var(--icon-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .issue-info h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--text-main); }
-        .issue-info p { margin: 0; font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); }
-        .issue-status { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        .status-critical { background: #FF3B30; color: white; }
-        .status-warning { background: #FF9500; color: white; }
-        .status-fix { background: #34C759; color: white; }
+        /* --- DUOLINGO STYLE (NEW) --- */
+        .duo-wrap { text-align: center; padding: 20px; font-family: var(--font-duo); color: var(--text-main); }
+        .duo-owl { font-size: 80px; margin-bottom: 20px; animation: bounce 2s infinite; }
+        .duo-streak-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 30px; }
+        .duo-fire { font-size: 40px; color: #ff9600; }
+        .duo-streak-num { font-size: 40px; font-weight: 800; color: #ff9600; }
+        .duo-card { background: var(--icon-bg); border: 2px solid #e5e5e5; border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; }
+        .duo-title { font-size: 18px; font-weight: 800; color: var(--duo-green); margin-bottom: 5px; text-transform: uppercase; }
+        .duo-text { font-size: 16px; font-weight: 700; color: var(--text-main); }
+        .duo-btn { background: var(--duo-green); color: white; border: none; width: 100%; padding: 15px; border-radius: 16px; font-size: 18px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #46a302; transition: 0.1s; text-transform: uppercase; letter-spacing: 1px; }
+        .duo-btn:active { transform: translateY(4px); box-shadow: none; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         /* Other Styles */
         .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
@@ -155,7 +163,6 @@
         .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); } input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; } input[type=range]:focus { outline: none; } input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 5px; background: var(--text-muted); opacity: 0.3; border-radius: 10px; } input[type=range]::-webkit-slider-thumb { height: 16px; width: 16px; border-radius: 50%; background: var(--text-main); margin-top: -5px; -webkit-appearance: none; cursor: pointer; } .control-btn { background: var(--text-main); color: var(--bg-color); width: 60px; height: 60px; border-radius: 50%; font-size: 24px; border:none; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.1s;} .control-btn:active { transform: scale(0.95); }
         .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; } .toggle-knob { width: 24px; height: 24px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); } .toggle-switch.active { background: var(--accent-color); } .toggle-switch.active .toggle-knob { left: 24px; } .toggle-switch.locked { opacity: 0.6; cursor: not-allowed; background: var(--accent-color); } .toggle-switch.locked .toggle-knob { left: 24px; }
         .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); } .readme-content h2 { font-size: 20px; font-weight: 700; margin-top: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; color: var(--text-main); } .code-block { background: var(--icon-bg); padding: 25px; border-radius: 12px; font-family: var(--font-mono); font-size: 13px; white-space: pre-wrap; margin: 20px 0; border:1px solid var(--border-color); color: var(--text-main); }
-        
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--window-bg); display: none; align-items: center; justify-content: center; z-index: 3000; flex-direction: column; text-align: center; opacity: 0; pointer-events: none; transition: opacity 1s;}
         #overlay.show { opacity: 1; pointer-events: auto; }
         #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; }
@@ -219,9 +226,9 @@
             <div class="app-label">Source</div>
         </div>
         
-        <div class="app-item" onclick="openWindow('win-issues')">
-            <div class="app-icon icon-bug">🐞</div>
-            <div class="app-label">Issues</div>
+        <div class="app-item" onclick="openWindow('win-duo'); updateStreak();">
+            <div class="app-icon icon-duo">🦉</div>
+            <div class="app-label">Streak</div>
         </div>
 
         <div class="app-item" onclick="openWindow('win-tinder'); startTinder();">
@@ -441,33 +448,26 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="win-issues" class="window" style="max-width: 500px;">
-        <div class="window-header"><div class="window-title">Issue Tracker</div><button class="btn-close" onclick="closeWindow('win-issues')">✕</button></div>
-        <div class="window-content" style="padding: 25px;">
-            <div class="issue-list">
-                <div class="issue-item">
-                    <div class="issue-info">
-                        <h3>Bug #404: Boyfriend Not Found</h3>
-                        <p>Location: Taiwan Server (TPE)</p>
-                    </div>
-                    <div class="issue-status status-critical">CRITICAL</div>
+    <div id="win-duo" class="window" style="max-width: 400px;">
+        <div class="window-header"><div class="window-title">Streak</div><button class="btn-close" onclick="closeWindow('win-duo')">✕</button></div>
+        <div class="window-content" style="padding: 20px;">
+            <div class="duo-wrap">
+                <div class="duo-owl">🦉</div>
+                <div class="duo-streak-row">
+                    <span class="duo-fire">🔥</span>
+                    <span id="streak-num" class="duo-streak-num">0</span>
                 </div>
-                <div class="issue-item">
-                    <div class="issue-info">
-                        <h3>Error: High Latency</h3>
-                        <p>Distance > 4300km. Ping > 999ms.</p>
-                    </div>
-                    <div class="issue-status status-warning">WARNING</div>
+                <div class="duo-card">
+                    <div class="duo-title">Daily Quest</div>
+                    <div class="duo-text">Say "Wo Ai Ni" to Abi</div>
                 </div>
-                <div class="issue-item">
-                    <div class="issue-info">
-                        <h3>Patch: Deploy Naveen to TPE</h3>
-                        <p>Scheduled: 13 Feb 2026</p>
-                    </div>
-                    <div class="issue-status status-fix">IN PROGRESS</div>
+                <div class="duo-card">
+                    <div class="duo-title">Language</div>
+                    <div class="duo-text">Mandarin 🇹🇼 & Hindi 🇮🇳</div>
                 </div>
+                <p style="margin: 25px 0; font-size: 14px; color: #ff3b30; font-weight: 700;">"Looks like you missed your lesson... you know what happens next."</p>
+                <button class="duo-btn" onclick="alert('Good boy. No kidnapping today.')">I'LL DO IT NOW!</button>
             </div>
-            <p style="margin-top:20px; text-align:center; font-size:13px; color:var(--text-muted);">* Assigned to: Naveen Sir</p>
         </div>
     </div>
 
@@ -609,6 +609,14 @@ npm install chole-bhature --remote-wish</div>
             }
         }
 
+        /* --- DUOLINGO LOGIC --- */
+        function updateStreak() {
+            const start = new Date("2025-10-13");
+            const now = new Date();
+            const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+            document.getElementById('streak-num').innerText = diff;
+        }
+
         /* --- TINDER LOGIC --- */
         const cardWrap = document.getElementById('card-wrap');
         const card = document.getElementById('tinder-card');
@@ -672,18 +680,16 @@ npm install chole-bhature --remote-wish</div>
 
             if(!msg) return;
 
-            // 1. VISUAL FEEDBACK (Bubble)
             const bubble = document.createElement('div');
-            bubble.className = 'chat-bubble me'; // Sent by me
+            bubble.className = 'chat-bubble me'; 
             bubble.innerText = msg;
             chatBody.appendChild(bubble);
             chatBody.scrollTop = chatBody.scrollHeight; 
 
-            input.value = ""; // Clear input
+            input.value = ""; 
             const originalText = btn.innerText;
             btn.innerText = "Sending...";
 
-            // 2. SEND TO FORMSPREE
             const formId = "mqeavvar"; // 
 
             try {
