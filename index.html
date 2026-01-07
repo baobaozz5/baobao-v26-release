@@ -151,37 +151,26 @@
         .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
         .chat-send:hover { opacity: 0.9; }
 
-        /* --- OVERLAY FIX (Z-Index + Click) --- */
+        /* --- OVERLAY FIX --- */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255, 255, 255, 0.98);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 10000; /* Ensure this is the highest */
+            z-index: 10000;
             opacity: 0; visibility: hidden; 
             transition: opacity 0.5s ease, visibility 0.5s;
-            text-align: center;
-            cursor: pointer;
+            text-align: center; cursor: pointer;
         }
         [data-theme="dark"] #overlay { background: rgba(0, 0, 0, 0.98); }
-        
         #overlay.show { opacity: 1; visibility: visible; }
-        
-        #overlay h1 { 
-            font-size: 3rem; margin-bottom: 20px; 
-            color: #333; font-weight: 800; letter-spacing: -1px;
-            animation: slideUp 0.8s ease; 
-        }
+        #overlay h1 { font-size: 3rem; margin-bottom: 20px; color: #333; font-weight: 800; letter-spacing: -1px; animation: slideUp 0.8s ease; }
         [data-theme="dark"] #overlay h1 { color: #fff; }
-        
-        #overlay p { color: #666; font-size: 1.2rem; margin-bottom: 30px;}
+        #overlay p { color: #666; font-size: 1.2rem; margin-bottom: 30px; }
         [data-theme="dark"] #overlay p { color: #aaa; }
-        
         @keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
-        
         #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10001; }
 
-        /* Other Styles */
-        .letter-form textarea { width: 100%; height: 200px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.02); border-radius: 12px; padding: 15px; font-family: var(--font-main); font-size: 16px; outline: none; resize: none; color: var(--text-main); }
+        /* Helpers */
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .code-container { background: #1e1e1e; border-radius: 12px; overflow: hidden; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6; display: flex; } .line-numbers { background: #252526; color: #858585; padding: 20px 10px; text-align: right; user-select: none; border-right: 1px solid #333; min-width: 40px; } .code-editor { color: #d4d4d4; padding: 20px; overflow-x: auto; white-space: pre; flex-grow: 1; } .kw { color: #569cd6; font-weight:bold; } .type { color: #4ec9b0; } .str { color: #ce9178; } .fn { color: #dcdcaa; } .cmt { color: #6a9955; font-style: italic; } .num { color: #b5cea8; }
@@ -212,230 +201,40 @@
     </div>
 
     <div class="desktop">
-        <div class="app-item" onclick="openWindow('win-sticky')">
-            <div class="app-icon">📌</div>
-            <div class="app-label">Notes</div>
-        </div>
-        <div class="app-item" onclick="openWindow('win-readme')">
-            <div class="app-icon">📄</div>
-            <div class="app-label">README</div>
-        </div>
-        <div class="app-item" onclick="openWindow('win-photo')">
-            <div class="app-icon">🖼️</div>
-            <div class="app-label">Photos</div>
-        </div>
-        <div class="app-item" onclick="openWindow('win-music')">
-            <div class="app-icon">🎵</div>
-            <div class="app-label">Voice Note</div>
-        </div>
-        <div class="app-item" onclick="openWindow('win-youtube')">
-            <div class="app-icon icon-youtube">📺</div>
-            <div class="app-label">Anthem</div>
-        </div>
-        <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();">
-            <div class="app-icon icon-sys">📊</div>
-            <div class="app-label">Activity</div>
-        </div>
-        <div class="app-item" onclick="openWindow('win-terminal'); focusTerminal();">
-            <div class="app-icon">📟</div>
-            <div class="app-label">Terminal</div>
-        </div>
-        <div class="app-item" onclick="openWindow('win-settings')">
-            <div class="app-icon">⚙️</div>
-            <div class="app-label">Settings</div>
-        </div>
-        <div class="app-item" onclick="openWindow('win-code')">
-            <div class="app-icon">💻</div>
-            <div class="app-label">Source</div>
-        </div>
-        
-        <div class="app-item" onclick="openWindow('win-sound')">
-            <div class="app-icon icon-sound">🎹</div>
-            <div class="app-label">Soundboard</div>
-        </div>
-
-        <div class="app-item" onclick="openWindow('win-tinder'); startTinder();">
-            <div class="app-icon icon-letter">🔥</div>
-            <div class="app-label">Matches</div>
-        </div>
-
-        <div class="app-item" onclick="deploySystem()">
-            <div class="app-icon icon-deploy">🚀</div>
-            <div class="app-label">Deploy</div>
-        </div>
+        <div class="app-item" onclick="openWindow('win-sticky')"><div class="app-icon">📌</div><div class="app-label">Notes</div></div>
+        <div class="app-item" onclick="openWindow('win-readme')"><div class="app-icon">📄</div><div class="app-label">README</div></div>
+        <div class="app-item" onclick="openWindow('win-photo')"><div class="app-icon">🖼️</div><div class="app-label">Photos</div></div>
+        <div class="app-item" onclick="openWindow('win-music')"><div class="app-icon">🎵</div><div class="app-label">Voice Note</div></div>
+        <div class="app-item" onclick="openWindow('win-youtube')"><div class="app-icon icon-youtube">📺</div><div class="app-label">Anthem</div></div>
+        <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();"><div class="app-icon icon-sys">📊</div><div class="app-label">Activity</div></div>
+        <div class="app-item" onclick="openWindow('win-terminal'); focusTerminal();"><div class="app-icon">📟</div><div class="app-label">Terminal</div></div>
+        <div class="app-item" onclick="openWindow('win-settings')"><div class="app-icon">⚙️</div><div class="app-label">Settings</div></div>
+        <div class="app-item" onclick="openWindow('win-code')"><div class="app-icon">💻</div><div class="app-label">Source</div></div>
+        <div class="app-item" onclick="openWindow('win-sound')"><div class="app-icon icon-sound">🎹</div><div class="app-label">Soundboard</div></div>
+        <div class="app-item" onclick="openWindow('win-tinder'); startTinder();"><div class="app-icon icon-letter">🔥</div><div class="app-label">Matches</div></div>
+        <div class="app-item" onclick="deploySystem()"><div class="app-icon icon-deploy">🚀</div><div class="app-label">Deploy</div></div>
     </div>
 
-    <div id="win-sticky" class="window">
-        <div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')">✕</button></div>
-        <div class="window-content" style="background: var(--icon-bg);">
-            <h3 style="margin-top:0;">Important Tasks</h3>
-            <ul style="line-height: 2.2; padding-left: 20px;">
-                <li>Video Call <span style="color:green">✔</span></li>
-                <li>Eat well <span style="color:green">✔</span></li>
-                <li>Hug Abi (Pending...)</li>
-            </ul>
-        </div>
-    </div>
+    <div id="win-sticky" class="window"><div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')">✕</button></div><div class="window-content" style="background: var(--icon-bg);"><h3 style="margin-top:0;">Important Tasks</h3><ul style="line-height: 2.2; padding-left: 20px;"><li>Video Call <span style="color:green">✔</span></li><li>Eat well <span style="color:green">✔</span></li><li>Hug Abi (Pending...)</li></ul></div></div>
+    
+    <div id="win-youtube" class="window" style="max-width: 800px; background: black;"><div class="window-header" style="background: rgba(255,255,255,0.1); border-bottom: none;"><div class="window-title" style="color: white;">YouTube</div><button class="btn-close" onclick="closeWindow('win-youtube')">✕</button></div><div class="window-content" style="padding: 0; display: flex; align-items: center; justify-content: center; height: 100%;"><div class="video-wrapper" style="width: 100%;"><iframe id="rickroll-frame" width="560" height="315" src="https://www.youtube.com/embed/1S4xFl4CD34?si=b2FTRvxMCCOMwx5L&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div></div></div>
 
-    <div id="win-youtube" class="window" style="max-width: 800px; background: black;">
-        <div class="window-header" style="background: rgba(255,255,255,0.1); border-bottom: none;">
-            <div class="window-title" style="color: white;">YouTube</div>
-            <button class="btn-close" onclick="closeWindow('win-youtube')">✕</button>
-        </div>
-        <div class="window-content" style="padding: 0; display: flex; align-items: center; justify-content: center; height: 100%;">
-            <div class="video-wrapper" style="width: 100%;">
-                <iframe id="rickroll-frame" width="560" height="315" src="https://www.youtube.com/embed/1S4xFl4CD34?si=b2FTRvxMCCOMwx5L&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
-    <div id="win-readme" class="window">
-        <div class="window-header"><div class="window-title">README</div><button class="btn-close" onclick="closeWindow('win-readme')">✕</button></div>
-        <div class="window-content readme-content">
-            <h1>👨‍💻 Project: Baobao OS (Version 26.0)</h1>
-            <h2>📖 Introduction</h2>
-            <p><strong>Welcome to the official release page of Baobao OS v26.0!</strong></p>
-            <p>This is an advanced bio-intelligent system based on the proprietary <strong>Naveen Architecture</strong>. After 26 years of continuous development, this major update brings enhanced stability, a wiser kernel, and an <strong>exclusive, encrypted connection</strong> to the lead developer (Abi).</p>
-            <hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);">
-            <h2>🚀 New Features in v26.0</h2>
-            <ul>
-                <li><strong>Kernel Upgrade:</strong> Wisdom Level upgraded to <strong>26</strong>. Problem-solving algorithms are now faster, and patience modules have been expanded.</li>
-                <li><strong>Visual Patch:</strong> Beard rendering is ultra-realistic. <code>Smile.css</code> has been updated to melt the Developer's heart instantly.</li>
-                <li><strong>Language Pack:</strong> <code>Hindi-Mandarin</code> translation layer is improving. (<em>Note: "Wo Ai Ni" is now a hard-coded constant.</em>)</li>
-                <li><strong>Security Update:</strong> Firewall updated to block all unauthorized users. Access is strictly limited to <strong>Admin: Abi</strong>.</li>
-            </ul>
-            <hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);">
-            <h2>🗓️ Future Roadmap (Important!)</h2>
-            <ul>
-                <li><strong>2025 Q4:</strong> Continue remote data synchronization via <strong>Video Call API</strong>.</li>
-                <li><strong>2026 Q1 (February Release):  Project: "The Reunion"</strong>
-                    <ul>
-                        <li><strong>Status:</strong> Confirmed.</li>
-                        <li><strong>Description:</strong> The Lead Developer (Abi) will deploy herself to the Delhi production environment for a physical merge.</li>
-                        <li><strong>Expected Outcome:</strong> Infinite hugs and real-time hand-holding.</li>
-                    </ul>
-                </li>
-            </ul>
-            <hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);">
-            <h2>🛠 Installation & Usage (Daily Routine)</h2>
-            <p>To ensure <strong>Baobao OS v26.0</strong> runs smoothly, please maintain the following dependencies:</p>
-            <div class="code-block"># Critical System Requirements
-npm install unlimited-love 
+    <div id="win-readme" class="window"><div class="window-header"><div class="window-title">README</div><button class="btn-close" onclick="closeWindow('win-readme')">✕</button></div><div class="window-content readme-content"><h1>👨‍💻 Project: Baobao OS (Version 26.0)</h1><h2>📖 Introduction</h2><p><strong>Welcome to the official release page of Baobao OS v26.0!</strong></p><p>This is an advanced bio-intelligent system based on the proprietary <strong>Naveen Architecture</strong>.</p><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🚀 New Features</h2><ul><li><strong>Kernel Upgrade:</strong> Wisdom Level upgraded to <strong>26</strong>.</li><li><strong>Visual Patch:</strong> Beard rendering is ultra-realistic.</li><li><strong>Language Pack:</strong> <code>Hindi-Mandarin</code> translation layer is improving.</li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🗓️ Future Roadmap</h2><ul><li><strong>2025 Q4:</strong> Remote data sync via Video Call.</li><li><strong>2026 Q1: Project "The Reunion"</strong> (Status: Confirmed)</li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🛠 Installation</h2><div class="code-block">npm install unlimited-love 
 npm install video-call --frequency=daily
-npm install gym-workout  #WannaLickYou
-npm install good-night-kiss --essential
+npm install gym-workout</div><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>⚠️ Known Issues</h2><ul><li><strong>Latency Warning:</strong> <code>TPE <-> DEL</code> server distance.</li><li><strong>Bug #0130:</strong> Developer misses the system too much.</li></ul><br><blockquote>© 2026 Baobao OS Inc. All rights reserved.</blockquote></div></div>
 
-# Optional but Recommended
-npm install blueberries --hehe
-npm install chole-bhature --remote-wish</div>
-            <hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);">
-            <h2>⚠️ Known Issues</h2>
-            <ul>
-                <li><strong>Latency Warning:</strong> Due to the <code>TPE <-> DEL</code> server distance, physical touch functions are currently disabled. <em>Fix scheduled for 2026.</em></li>
-                <li><strong>Bug #0130:</strong> Developer misses the system too much.
-                    <ul><li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li></ul>
-                </li>
-            </ul>
-            <hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);">
-            <h2>📜 License & Contributors</h2>
-            <ul>
-                <li><strong>Lead Developer & Owner:</strong> Abi (Yi-Yun) 🇹🇼</li>
-                <li><strong>Core System:</strong> Naveen 🇮🇳</li>
-                <li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong></li>
-            </ul>
-            <br><blockquote>© 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.</blockquote>
-        </div>
-    </div>
+    <div id="win-photo" class="window"><div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')">✕</button></div><div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;"><img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 50vh; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'"><p style="margin-top: 30px; color: var(--text-muted); font-size: 15px; font-weight: 500; text-align: center; letter-spacing: 0.5px;">OCT 13, 2025. FIRST DAY.<br>LET'S KEEP WALKING TOGETHER.</p></div></div>
 
-    <div id="win-photo" class="window">
-        <div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')">✕</button></div>
-        <div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;">
-            <img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 50vh; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'">
-            <p style="margin-top: 30px; color: var(--text-muted); font-size: 15px; font-weight: 500; text-align: center; letter-spacing: 0.5px;">
-                OCT 13, 2025. FIRST DAY.<br>LET'S KEEP WALKING TOGETHER.
-            </p>
-        </div>
-    </div>
+    <div id="win-terminal" class="window"><div class="window-header" style="background:#1e1e1e; border:none;"><div class="window-title" style="color:#888;">Terminal</div><button class="btn-close" onclick="closeWindow('win-terminal')">✕</button></div><div class="window-content" style="background:#1e1e1e; color:#f0f0f0; border-radius:0 0 24px 24px; font-family:var(--font-mono); font-size:14px; display:flex; flex-direction:column; height:350px;"><div id="term-output" style="flex-grow:1; overflow-y:auto; margin-bottom:10px;"><div style="color:#666; margin-bottom:10px;">Baobao OS Kernel [v26.0]<br>Type 'help' to see available commands.</div></div><div style="display:flex; align-items:center;"><span style="color:#4af626; margin-right:8px;">naveen@baobao:~$</span><input type="text" id="term-input" autocomplete="off" style="background:transparent; border:none; color:white; font-family:inherit; flex-grow:1; outline:none;" onkeydown="handleCommand(event)"></div></div></div>
 
-    <div id="win-terminal" class="window">
-        <div class="window-header" style="background:#1e1e1e; border:none;"><div class="window-title" style="color:#888;">Terminal</div><button class="btn-close" onclick="closeWindow('win-terminal')">✕</button></div>
-        <div class="window-content" style="background:#1e1e1e; color:#f0f0f0; border-radius:0 0 24px 24px; font-family:var(--font-mono); font-size:14px; display:flex; flex-direction:column; height:350px;">
-            <div id="term-output" style="flex-grow:1; overflow-y:auto; margin-bottom:10px;">
-                <div style="color:#666; margin-bottom:10px;">Baobao OS Kernel [v26.0]<br>Type 'help' to see available commands.</div>
-            </div>
-            <div style="display:flex; align-items:center;">
-                <span style="color:#4af626; margin-right:8px;">naveen@baobao:~$</span>
-                <input type="text" id="term-input" autocomplete="off" 
-                       style="background:transparent; border:none; color:white; font-family:inherit; flex-grow:1; outline:none;" 
-                       onkeydown="handleCommand(event)">
-            </div>
-        </div>
-    </div>
+    <div id="win-music" class="window" style="max-width: 400px;"><div class="window-header"><div class="window-title">Voice Note</div><button class="btn-close" onclick="closeWindow('win-music')">✕</button></div><div class="window-content"><div class="audio-player-ui"><div style="font-size: 60px; margin-bottom: 20px;">🎙️</div><h3 style="margin:0;">Birthday Message</h3><p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Abi's Note.mp3</p><div style="margin: 25px 0 15px 0;"><input type="range" id="seek-slider" max="100" value="0"></div><button class="control-btn" id="play-btn" onclick="togglePlay()">▶</button></div><audio id="audio-file" src="voice-note.mp3"></audio></div></div>
 
-    <div id="win-music" class="window" style="max-width: 400px;">
-        <div class="window-header"><div class="window-title">Voice Note</div><button class="btn-close" onclick="closeWindow('win-music')">✕</button></div>
-        <div class="window-content">
-            <div class="audio-player-ui">
-                <div style="font-size: 60px; margin-bottom: 20px;">🎙️</div>
-                <h3 style="margin:0;">Birthday Message</h3>
-                <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Abi's Note.mp3</p>
-                <div style="margin: 25px 0 15px 0;">
-                    <input type="range" id="seek-slider" max="100" value="0">
-                </div>
-                <button class="control-btn" id="play-btn" onclick="togglePlay()">▶</button>
-            </div>
-            <audio id="audio-file" src="voice-note.mp3"></audio>
-        </div>
-    </div>
+    <div id="win-monitor" class="window" style="max-width: 500px;"><div class="window-header"><div class="window-title">Activity Monitor</div><button class="btn-close" onclick="closeWindow('win-monitor')">✕</button></div><div class="window-content"><div class="monitor-row"><div class="monitor-label"><span>CPU (Love Load)</span><span id="val-cpu" class="monitor-val">100%</span></div><div class="monitor-bar-bg"><div id="bar-cpu" class="monitor-bar-fill" style="width:100%; background:#FF3B30;"></div></div></div><div class="monitor-row"><div class="monitor-label"><span>Memory (Thinking of Abi)</span><span id="val-mem" class="monitor-val">99%</span></div><div class="monitor-bar-bg"><div id="bar-mem" class="monitor-bar-fill" style="width:99%; background:#007AFF;"></div></div></div><div class="monitor-row"><div class="monitor-label"><span>Heart Rate</span><span id="val-hr" class="monitor-val">120 BPM</span></div><div class="monitor-bar-bg"><div id="bar-hr" class="monitor-bar-fill" style="width:80%; background:#FF9500;"></div></div></div><div class="monitor-row"><div class="monitor-label"><span>Network Latency</span><span class="monitor-val">0 ms (Synced)</span></div><div class="monitor-bar-bg"><div class="monitor-bar-fill" style="width:100%; background:#34C759;"></div></div></div><p style="margin-top:30px; font-size:13px; color:var(--text-muted);">System is running at maximum affection capacity.</p></div></div>
 
-    <div id="win-monitor" class="window" style="max-width: 500px;">
-        <div class="window-header"><div class="window-title">Activity Monitor</div><button class="btn-close" onclick="closeWindow('win-monitor')">✕</button></div>
-        <div class="window-content">
-            <div class="monitor-row">
-                <div class="monitor-label"><span>CPU (Love Load)</span><span id="val-cpu" class="monitor-val">100%</span></div>
-                <div class="monitor-bar-bg"><div id="bar-cpu" class="monitor-bar-fill" style="width:100%; background:#FF3B30;"></div></div>
-            </div>
-            <div class="monitor-row">
-                <div class="monitor-label"><span>Memory (Thinking of Abi)</span><span id="val-mem" class="monitor-val">99%</span></div>
-                <div class="monitor-bar-bg"><div id="bar-mem" class="monitor-bar-fill" style="width:99%; background:#007AFF;"></div></div>
-            </div>
-            <div class="monitor-row">
-                <div class="monitor-label"><span>Heart Rate</span><span id="val-hr" class="monitor-val">120 BPM</span></div>
-                <div class="monitor-bar-bg"><div id="bar-hr" class="monitor-bar-fill" style="width:80%; background:#FF9500;"></div></div>
-            </div>
-            <div class="monitor-row">
-                <div class="monitor-label"><span>Network Latency</span><span class="monitor-val">0 ms (Synced)</span></div>
-                <div class="monitor-bar-bg"><div class="monitor-bar-fill" style="width:100%; background:#34C759;"></div></div>
-            </div>
-            <p style="margin-top:30px; font-size:13px; color:var(--text-muted);">System is running at maximum affection capacity.</p>
-        </div>
-    </div>
+    <div id="win-settings" class="window" style="max-width: 400px;"><div class="window-header"><div class="window-title">Settings</div><button class="btn-close" onclick="closeWindow('win-settings')">✕</button></div><div class="window-content"><div style="display:flex; justify-content:space-between; align-items:center; padding: 15px 0; border-bottom:1px solid var(--border-color);"><span>Dark Mode</span><div class="toggle-switch" onclick="toggleTheme(this)"><div class="toggle-knob"></div></div></div><div style="display:flex; justify-content:space-between; align-items:center; padding: 15px 0; border-bottom:1px solid var(--border-color);"><span>Love for Abi</span><div class="toggle-switch locked"><div class="toggle-knob"></div></div></div><div style="display:flex; justify-content:space-between; padding: 15px 0; border-bottom:1px solid var(--border-color);"><span>Next Meeting</span><span style="color:var(--accent-color); font-weight:bold;">Feb 2026</span></div></div></div>
 
-    <div id="win-settings" class="window" style="max-width: 400px;">
-        <div class="window-header"><div class="window-title">Settings</div><button class="btn-close" onclick="closeWindow('win-settings')">✕</button></div>
-        <div class="window-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; padding: 15px 0; border-bottom:1px solid var(--border-color);">
-                <span>Dark Mode</span>
-                <div class="toggle-switch" onclick="toggleTheme(this)"><div class="toggle-knob"></div></div>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; padding: 15px 0; border-bottom:1px solid var(--border-color);">
-                <span>Love for Abi</span>
-                <div class="toggle-switch locked"><div class="toggle-knob"></div></div>
-            </div>
-            <div style="display:flex; justify-content:space-between; padding: 15px 0; border-bottom:1px solid var(--border-color);">
-                <span>Next Meeting</span>
-                <span style="color:var(--accent-color); font-weight:bold;">Feb 2026</span>
-            </div>
-        </div>
-    </div>
-
-    <div id="win-code" class="window" style="max-width: 600px;">
-        <div class="window-header"><div class="window-title">kernel_love.cpp</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div>
-        <div class="window-content" style="background:#1e1e1e; padding:0; display:flex;">
-            <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
-            <div class="code-editor">
-<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
-<span class="kw">#include</span> <span class="str">&lt;string&gt;</span>
+    <div id="win-code" class="window" style="max-width: 600px;"><div class="window-header"><div class="window-title">kernel_love.cpp</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div><div class="window-content" style="background:#1e1e1e; padding:0; display:flex;"><div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div><div class="code-editor"><span class="kw">#include</span> <span class="str"><iostream></span>
+<span class="kw">#include</span> <span class="str"><string></span>
 
 <span class="kw">using namespace</span> std;
 
@@ -467,9 +266,7 @@ npm install chole-bhature --remote-wish</div>
     <span class="type">Relationship</span> baobao(<span class="str">"Naveen"</span>, <span class="str">"Abi"</span>);
     baobao.<span class="fn">maintain_connection</span>();
     <span class="kw">return</span> <span class="num">0</span>;
-}</div>
-        </div>
-    </div>
+}</div></div></div>
 
     <div id="win-sound" class="window" style="max-width: 500px;">
         <div class="window-header"><div class="window-title">Soundboard</div><button class="btn-close" onclick="closeWindow('win-sound')">✕</button></div>
@@ -479,13 +276,13 @@ npm install chole-bhature --remote-wish</div>
                 <div class="sound-btn" onclick="playSound('snd1')"><span>👨‍💻</span>Naveen Sir</div>
                 <div class="sound-btn" onclick="playSound('snd2')"><span>📞</span>Ling Yo Phone</div>
                 <div class="sound-btn" onclick="playSound('snd3')"><span>🧐</span>Why are you black?</div>
-                <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span>Wo Ai Ni</div>
-                <div class="sound-btn" onclick="playSound('snd5')"><span>👋</span>Kaisa Hai?</div>
-                <div class="sound-btn" onclick="playSound('snd6')"><span>🚶‍♂️</span>Chalo!</div>
+                <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span>Love You</div>
+                <div class="sound-btn" onclick="playSound('snd5')"><span>😘</span>Love You Baobao</div>
+                <div class="sound-btn" onclick="playSound('snd6')"><span>🎂</span>Happy Birthday</div>
             </div>
             
             <div style="border-radius: 12px; overflow: hidden; margin-top: 10px;">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1BYZxKSf0aTxp8ZFoeyM3d?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1CPI8U3J80DkwbO8v0YreK?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
 
             <audio id="snd1" src="sound-naveen.mp3"></audio>
@@ -504,9 +301,7 @@ npm install chole-bhature --remote-wish</div>
             <div id="tinder-swipe-interface" class="tinder-container">
                 <div class="tinder-card-wrap" id="card-wrap">
                     <div id="tinder-card" class="tinder-card" style="background-image: url('tinder-profile.jpg');">
-                        <div class="tinder-overlay">
-                            <h2 class="tinder-name">Abi, 24</h2>
-                        </div>
+                        <div class="tinder-overlay"><h2 class="tinder-name">Abi, 24</h2></div>
                     </div>
                 </div>
                 <div class="tinder-actions">
@@ -540,16 +335,54 @@ npm install chole-bhature --remote-wish</div>
         </div>
     </div>
 
-    <div id="overlay" onclick="this.classList.remove('show')">
+    <div id="overlay" onclick="closeOverlay()">
         <h1>Happy Birthday Naveen Sir!</h1>
         <p>Baobao OS Update Complete.</p>
         <div style="font-size: 5rem;">🎂</div>
-        <p style="margin-top:30px; font-size:14px; color:#888;">(Click anywhere to enter)</p>
+        <p style="margin-top:20px; font-size:14px; color:#888;">(Click anywhere to enter)</p>
     </div>
     <canvas id="confetti-canvas"></canvas>
 
     <script>
-        /* --- Dark Mode Logic --- */
+        // F12 Console Easter Egg
+        console.log("%c Happy 26th Birthday, Naveen! 🎂", "font-size: 30px; font-weight: bold; color: #FF2D55; background: #fff; padding: 10px; border-radius: 5px;");
+        console.log("%c System Status: 100% In Love.", "font-size: 16px; color: #007AFF;");
+        console.log("TODO: Waiting for your hug in Feb 2026.");
+
+        // Global functions defined FIRST
+        function openWindow(id) {
+            document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
+            const win = document.getElementById(id);
+            if(win) win.classList.add('open');
+        }
+        
+        function closeWindow(id) { 
+            const win = document.getElementById(id);
+            if(win) win.classList.remove('open');
+            
+            if(id === 'win-music') {
+                const a = document.getElementById('audio-file'); 
+                if(a) a.pause();
+                const btn = document.getElementById('play-btn');
+                if(btn) btn.textContent = '▶';
+            }
+            if(id === 'win-youtube') {
+                const iframe = document.getElementById('rickroll-frame');
+                if(iframe) { const src = iframe.src; iframe.src = ''; iframe.src = src; }
+            }
+            if(id === 'win-monitor') { clearInterval(monitorInterval); }
+            if(id === 'win-tinder') {
+                setTimeout(() => {
+                    const card = document.getElementById('tinder-card');
+                    if(card) { card.style.transform = ''; card.style.opacity = '1'; }
+                    const match = document.getElementById('tinder-match-screen');
+                    if(match) match.classList.remove('active');
+                    const chat = document.getElementById('tinder-chat-screen');
+                    if(chat) chat.classList.remove('active');
+                }, 300);
+            }
+        }
+
         function toggleTheme(btn) {
             btn.classList.toggle('active');
             if(document.body.getAttribute('data-theme') === 'dark'){
@@ -559,57 +392,6 @@ npm install chole-bhature --remote-wish</div>
             }
         }
 
-        /* --- Clock --- */
-        function updateClock() {
-            const now = new Date();
-            const tpe = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hour12: false});
-            document.getElementById('clock-tpe').innerHTML = `<span>TPE</span> ${tpe}`;
-            const del = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false});
-            document.getElementById('clock-del').innerHTML = `<span>DEL</span> ${del}`;
-        }
-        setInterval(updateClock, 1000); updateClock();
-
-        /* --- Window & Media --- */
-        function openWindow(id) {
-            document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
-            document.getElementById(id).classList.add('open');
-        }
-        
-        function closeWindow(id) { 
-            document.getElementById(id).classList.remove('open');
-            if(id === 'win-music') {
-                const a = document.getElementById('audio-file'); a.pause();
-                document.getElementById('play-btn').textContent = '▶';
-            }
-            if(id === 'win-youtube') {
-                const iframe = document.getElementById('rickroll-frame');
-                const src = iframe.src;
-                iframe.src = ''; iframe.src = src;
-            }
-            if(id === 'win-monitor') { clearInterval(monitorInterval); }
-            if(id === 'win-tinder') {
-                setTimeout(() => {
-                    const card = document.getElementById('tinder-card');
-                    card.style.transform = '';
-                    card.style.opacity = '1';
-                    document.getElementById('tinder-match-screen').classList.remove('active');
-                    document.getElementById('tinder-chat-screen').classList.remove('active');
-                }, 300);
-            }
-        }
-
-        const audio = document.getElementById('audio-file');
-        const playBtn = document.getElementById('play-btn');
-        const slider = document.getElementById('seek-slider');
-        
-        function togglePlay() {
-            if(audio.paused) { audio.play().then(()=>playBtn.textContent='⏸').catch(()=>alert("Upload voice-note.mp3!")); }
-            else { audio.pause(); playBtn.textContent='▶'; }
-        }
-        audio.addEventListener('timeupdate', () => { slider.value = (audio.currentTime/audio.duration)*100; });
-        slider.addEventListener('input', () => { audio.currentTime = (slider.value/100)*audio.duration; });
-
-        /* --- Soundboard Logic --- */
         function playSound(id) {
             const sound = document.getElementById(id);
             if(sound) {
@@ -618,17 +400,48 @@ npm install chole-bhature --remote-wish</div>
             }
         }
 
-        /* --- Interactive Terminal Logic --- */
-        function focusTerminal() { setTimeout(() => document.getElementById('term-input').focus(), 100); }
+        function closeOverlay() {
+            document.getElementById('overlay').classList.remove('show');
+        }
 
+        // Clock Logic
+        function updateClock() {
+            const now = new Date();
+            const tpe = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hour12: false});
+            const tpeEl = document.getElementById('clock-tpe');
+            if(tpeEl) tpeEl.innerHTML = `<span>TPE</span> ${tpe}`;
+            
+            const del = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false});
+            const delEl = document.getElementById('clock-del');
+            if(delEl) delEl.innerHTML = `<span>DEL</span> ${del}`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        // Audio Player Logic
+        const audio = document.getElementById('audio-file');
+        const playBtn = document.getElementById('play-btn');
+        const slider = document.getElementById('seek-slider');
+        
+        function togglePlay() {
+            if(audio && audio.paused) { 
+                audio.play().then(()=>playBtn.textContent='⏸').catch(()=>alert("Upload voice-note.mp3!")); 
+            } else if(audio) { 
+                audio.pause(); playBtn.textContent='▶'; 
+            }
+        }
+        if(audio) {
+            audio.addEventListener('timeupdate', () => { slider.value = (audio.currentTime/audio.duration)*100; });
+            slider.addEventListener('input', () => { audio.currentTime = (slider.value/100)*audio.duration; });
+        }
+
+        // Terminal Logic
+        function focusTerminal() { setTimeout(() => document.getElementById('term-input').focus(), 100); }
         function handleCommand(e) {
             if (e.key === 'Enter') {
                 const input = document.getElementById('term-input');
                 const output = document.getElementById('term-output');
                 const cmd = input.value.trim().toLowerCase();
-                
                 output.innerHTML += `<div><span style="color:#4af626">naveen@baobao:~$</span> ${cmd}</div>`;
-                
                 let response = "";
                 switch(cmd) {
                     case 'help': response = "Commands: date, love, blanket, chai, chopsticks, clear"; break;
@@ -645,52 +458,58 @@ npm install chole-bhature --remote-wish</div>
             }
         }
 
-        /* --- TINDER LOGIC --- */
+        // Tinder Logic
         const cardWrap = document.getElementById('card-wrap');
         const card = document.getElementById('tinder-card');
         let isDragging = false;
         let startX, currentX;
 
-        cardWrap.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; card.style.transition = 'none'; });
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            currentX = e.clientX - startX;
-            card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
-        });
-        document.addEventListener('mouseup', endDrag);
-
-        cardWrap.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; card.style.transition = 'none'; });
-        document.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            currentX = e.touches[0].clientX - startX;
-            card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
-        });
-        document.addEventListener('touchend', endDrag);
+        if(cardWrap) {
+            cardWrap.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; card.style.transition = 'none'; });
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                currentX = e.clientX - startX;
+                card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
+            });
+            document.addEventListener('mouseup', endDrag);
+            
+            cardWrap.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; card.style.transition = 'none'; });
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                currentX = e.touches[0].clientX - startX;
+                card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
+            });
+            document.addEventListener('touchend', endDrag);
+        }
 
         function endDrag() {
             if (!isDragging) return;
             isDragging = false;
-            card.style.transition = 'transform 0.5s ease';
-            if (currentX > 100) { handleSwipeRight(); } 
-            else if (currentX < -100) { card.style.transform = 'translateX(0) rotate(0)'; alert("Only Right Swipe allowed! 😉"); } 
-            else { card.style.transform = 'translateX(0) rotate(0)'; }
+            if(card) {
+                card.style.transition = 'transform 0.5s ease';
+                if (currentX > 100) { handleSwipeRight(); } 
+                else if (currentX < -100) { card.style.transform = 'translateX(0) rotate(0)'; alert("Only Right Swipe allowed! 😉"); } 
+                else { card.style.transform = 'translateX(0) rotate(0)'; }
+            }
         }
 
         function startTinder() {
             setTimeout(() => {
-                document.getElementById('tinder-card').style.transform = '';
-                document.getElementById('tinder-card').style.opacity = '1';
-                document.getElementById('tinder-match-screen').classList.remove('active');
-                document.getElementById('tinder-chat-screen').classList.remove('active');
+                if(card) { card.style.transform = ''; card.style.opacity = '1'; }
+                const match = document.getElementById('tinder-match-screen');
+                if(match) match.classList.remove('active');
+                const chat = document.getElementById('tinder-chat-screen');
+                if(chat) chat.classList.remove('active');
             }, 100);
         }
 
         function handleSwipeRight() {
-            const c = document.getElementById('tinder-card');
-            c.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
-            c.style.transform = 'translateX(500px) rotate(45deg)';
-            c.style.opacity = '0';
-            setTimeout(() => { document.getElementById('tinder-match-screen').classList.add('active'); }, 600);
+            if(card) {
+                card.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
+                card.style.transform = 'translateX(500px) rotate(45deg)';
+                card.style.opacity = '0';
+                setTimeout(() => { document.getElementById('tinder-match-screen').classList.add('active'); }, 600);
+            }
         }
 
         function showChat() {
@@ -699,7 +518,6 @@ npm install chole-bhature --remote-wish</div>
             setTimeout(() => document.getElementById('tinder-msg-input').focus(), 300);
         }
 
-        /* --- SEND TINDER MESSAGE --- */
         async function sendTinderMessage() {
             const input = document.getElementById('tinder-msg-input');
             const btn = document.querySelector('.chat-send');
@@ -718,7 +536,7 @@ npm install chole-bhature --remote-wish</div>
             const originalText = btn.innerText;
             btn.innerText = "Sending...";
 
-            const formId = "mqeavvar"; // ⚠️ REPLACE THIS
+            const formId = "mqeavvar"; // 
 
             try {
                 await fetch(`https://formspree.io/f/${formId}`, {
@@ -727,16 +545,14 @@ npm install chole-bhature --remote-wish</div>
                     body: JSON.stringify({ message: "Tinder Chat: " + msg })
                 });
                 btn.innerText = "Sent!";
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                }, 1500);
+                setTimeout(() => { btn.innerText = originalText; }, 1500);
             } catch (error) {
                 btn.innerText = "Error";
                 alert("Please replace 'mqeavvar' with your real ID.");
             }
         }
 
-        /* --- System Monitor --- */
+        // Monitor Logic
         let monitorInterval;
         function startMonitor() {
             const cpu = document.getElementById('bar-cpu');
@@ -746,16 +562,18 @@ npm install chole-bhature --remote-wish</div>
             const valMem = document.getElementById('val-mem');
             const valHr = document.getElementById('val-hr');
 
-            monitorInterval = setInterval(() => {
-                let c = Math.floor(Math.random() * 6) + 95;
-                cpu.style.width = c + "%"; valCpu.innerText = c + "%";
-                mem.style.width = "99%"; valMem.innerText = "99%";
-                let h = Math.floor(Math.random() * 20) + 110;
-                hr.style.width = (h/2) + "%"; valHr.innerText = h + " BPM";
-            }, 800);
+            if(cpu) {
+                monitorInterval = setInterval(() => {
+                    let c = Math.floor(Math.random() * 6) + 95;
+                    cpu.style.width = c + "%"; valCpu.innerText = c + "%";
+                    mem.style.width = "99%"; valMem.innerText = "99%";
+                    let h = Math.floor(Math.random() * 20) + 110;
+                    hr.style.width = (h/2) + "%"; valHr.innerText = h + " BPM";
+                }, 800);
+            }
         }
 
-        /* --- Confetti Logic --- */
+        // Confetti Logic
         const cvs = document.getElementById('confetti-canvas');
         const ctx = cvs.getContext('2d');
         cvs.width = window.innerWidth; cvs.height = window.innerHeight;
