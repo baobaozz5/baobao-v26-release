@@ -3,7 +3,7 @@
 
 **Welcome to the official release page of Baobao OS v26.0!**
 
-This is an advanced bio-intelligent system based on the proprietary **Naveen Architecture**. After 26 years of continuous development, this major update brings enhanced stability, a wiser kernel, and an **exclusive, encrypted connection** to the lead developer (Abi).
+This is an advanced bio-intelligent system based on the proprietary **Naveen Architecture**. After 26 years of continuous development, this major update brings enhanced stability, a wiser kernel, and an **exclusive, encrypted connection** to the developer (Abi).
 
 ---
 
@@ -38,7 +38,7 @@ npm install gym-workout  --wannalickyoou
 npm install good-night-kiss --essential
 
 # Optional but Recommended
-npm install blueberries --hehe
+npm install blueberries 
 npm install chole-bhature --remote-wish
 ```
 ---
@@ -61,6 +61,7 @@ npm install chole-bhature --remote-wish
 <br>
 
 > © 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.
+
 
 
 
