@@ -49,31 +49,12 @@
         .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } .icon-sound { color: #FF9500; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--tinder-grad); color: white; border:none;}
         .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
 
-        /* Window Style - Fixed for Mobile Scrolling */
-        .window { 
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); 
-            width: 90%; max-width: 800px; max-height: 85vh; 
-            background: var(--window-bg); border-radius: 24px; 
-            box-shadow: var(--shadow-window); display: flex; flex-direction: column; 
-            opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1); 
-            z-index: 2000; border: 1px solid var(--border-color); 
-            backdrop-filter: blur(25px); overflow: hidden;
-        }
+        .window { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 800px; max-height: 85vh; background: var(--window-bg); border-radius: 24px; box-shadow: var(--shadow-window); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1); z-index: 2000; border: 1px solid var(--border-color); backdrop-filter: blur(25px); overflow: hidden;}
         .window.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
         .window-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 25px; border-bottom: 1px solid var(--border-color); flex-shrink: 0;}
         .window-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--text-main); }
         .btn-close { background: rgba(0,0,0,0.05); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: var(--text-muted); transition: 0.2s; } .btn-close:hover { background: rgba(0,0,0,0.1); color: var(--text-main); }
-        
-        /* SCROLL FIX */
-        .window-content { 
-            padding: 40px; 
-            overflow-y: auto; 
-            flex-grow: 1; 
-            -webkit-overflow-scrolling: touch; 
-            position: relative;
-            touch-action: pan-y; /* Important for mobile */
-            overscroll-behavior: contain; /* Prevents body scroll */
-        }
+        .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch; position: relative; touch-action: pan-y; overscroll-behavior: contain;}
 
         /* Soundboard */
         .sound-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
@@ -175,25 +156,25 @@
         <div class="app-item" onclick="deploySystem()"><div class="app-icon icon-deploy">🚀</div><div class="app-label">Deploy</div></div>
     </div>
 
-    <div id="win-sticky" class="window"><div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')">✕</button></div><div class="window-content" style="background: var(--icon-bg);"><h3 style="margin-top:0;">Important Tasks</h3><ul style="line-height: 2.2; padding-left: 20px;"><li>Video Call <span style="color:green">✔</span></li><li>Eat well <span style="color:green">✔</span></li><li>Hug Abi (Pending...)</li></ul></div></div>
+    <div id="win-sticky" class="window"><div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')">✕</button></div><div class="window-content" style="background: var(--icon-bg);"><h3 style="margin-top:0;">Important Tasks</h3><ul style="line-height: 2.2; padding-left: 20px;"><li>Video Call <span style="color:green">✔</span></li><li>P well <span style="color:green">✔</span></li><li>Hug Abi (Pending...)</li></ul></div></div>
     
     <div id="win-youtube" class="window" style="max-width: 800px; background: black;"><div class="window-header" style="background: rgba(255,255,255,0.1); border-bottom: none;"><div class="window-title" style="color: white;">YouTube</div><button class="btn-close" onclick="closeWindow('win-youtube')">✕</button></div><div class="window-content" style="padding: 0; display: flex; align-items: center; justify-content: center; height: 100%;"><div class="video-wrapper" style="width: 100%;"><iframe id="rickroll-frame" width="560" height="315" src="https://www.youtube.com/embed/1S4xFl4CD34?si=b2FTRvxMCCOMwx5L&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div></div></div>
 
-    <div id="win-readme" class="window"><div class="window-header"><div class="window-title">README</div><button class="btn-close" onclick="closeWindow('win-readme')">✕</button></div><div class="window-content readme-content"><h1>👨‍💻 Project: Baobao OS (Version 26.0)</h1><h2>📖 Introduction</h2><p><strong>Welcome to the official release page of Baobao OS v26.0!</strong></p><p>This is an advanced bio-intelligent system based on the proprietary <strong>Naveen Architecture</strong>. After 26 years of continuous development, this major update brings enhanced stability, a wiser kernel, and an <strong>exclusive, encrypted connection</strong> to the lead developer (Abi).</p><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🚀 New Features in v26.0</h2><ul><li><strong>Kernel Upgrade:</strong> Wisdom Level upgraded to <strong>26</strong>. Problem-solving algorithms are now faster, and patience modules have been expanded.</li><li><strong>Visual Patch:</strong> Beard rendering is ultra-realistic. <code>Smile.css</code> has been updated to melt the Developer's heart instantly.</li><li><strong>Language Pack:</strong> <code>Hindi-Mandarin</code> translation layer is improving. (<em>Note: "Wo Ai Ni" is now a hard-coded constant.</em>)</li><li><strong>Security Update:</strong> Firewall updated to block all unauthorized users. Access is strictly limited to <strong>Admin: Abi</strong>.</li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🗓️ Future Roadmap (Important!)</h2><ul><li><strong>2025 Q4:</strong> Continue remote data synchronization via <strong>Video Call API</strong>.</li><li><strong>2026 Q1 (February Release): Project: "The Reunion"</strong><ul><li><strong>Status:</strong> Confirmed.</li><li><strong>Description:</strong> The Lead Developer (Abi) will deploy herself to the Delhi production environment for a physical merge.</li><li><strong>Expected Outcome:</strong> Infinite hugs and real-time hand-holding.</li></ul></li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🛠 Installation & Usage (Daily Routine)</h2><p>To ensure <strong>Baobao OS v26.0</strong> runs smoothly, please maintain the following dependencies:</p><div class="code-block"># Critical System Requirements
+    <div id="win-readme" class="window"><div class="window-header"><div class="window-title">README</div><button class="btn-close" onclick="closeWindow('win-readme')">✕</button></div><div class="window-content readme-content"><h1>👨‍💻 Project: Baobao OS (Version 26.0)</h1><h2>📖 Introduction</h2><p><strong>Welcome to the official release page of Baobao OS v26.0!</strong></p><p>This is an advanced bio-intelligent system based on the proprietary <strong>Naveen Architecture</strong>. After 26 years of continuous development, this major update brings enhanced stability, a wiser kernel, and an <strong>exclusive, encrypted connection</strong> to the developer (Abi).</p><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🚀 New Features in v26.0</h2><ul><li><strong>Kernel Upgrade:</strong> Wisdom Level upgraded to <strong>26</strong>. Problem-solving algorithms are now faster, and patience modules have been expanded.</li><li><strong>Visual Patch:</strong> Beard rendering is ultra-realistic. <code>Smile.css</code> has been updated to melt the Developer's heart instantly.</li><li><strong>Language Pack:</strong> Hindi-Mandarin translation layer is improving. (<em>Note: "Wo Ai Ni" is now a hard-coded constant.</em>)</li><li><strong>Security Update:</strong> Firewall updated to block all unauthorized users. Access is strictly limited to <strong>Admin: Abi</strong>.</li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🗓️ Future Roadmap (Important!)</h2><ul><li><strong>2025 Q4:</strong> Continue remote data synchronization via <strong>Video Call API</strong>.</li><li><strong>2026 Q1 (February Release): Project: "The Reunion"</strong><ul><li><strong>Status:</strong> Confirmed.</li><li><strong>Description:</strong> The Developer (Abi) will deploy herself to the Delhi production environment for a physical merge.</li><li><strong>Expected Outcome:</strong> Infinite hugs and real-time hand-holding.</li></ul></li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>🛠 Installation & Usage (Daily Routine)</h2><p>To ensure <strong>Baobao OS v26.0</strong> runs smoothly, please maintain the following dependencies:</p><div class="code-block"># Critical System Requirements
 npm install unlimited-love 
 npm install video-call --frequency=daily
-npm install gym-workout  #WannaLickYou
+npm install gym-workout  --wannalickyou
 npm install good-night-kiss --essential
 
 # Optional but Recommended
-npm install blueberries --hehe
-npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>⚠️ Known Issues</h2><ul><li><strong>Latency Warning:</strong> Due to the <code>TPE <-> DEL</code> server distance, physical touch functions are currently disabled. <em>Fix scheduled for 2026.</em></li><li><strong>Bug #0130:</strong> Developer misses the system too much.<ul><li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li></ul></li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>📜 License & Contributors</h2><ul><li><strong>Lead Developer & Owner:</strong> Abi (Yi-Yun) 🇹🇼</li><li><strong>Core System:</strong> Naveen 🇮🇳</li><li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong></li></ul><br><blockquote>© 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.</blockquote></div></div>
+npm install blueberries 
+npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>⚠️ Known Issues</h2><ul><li><strong>Latency Warning:</strong> Due to the TPE <-> DEL server distance, physical touch functions are currently disabled. <em>Fix scheduled for 2026.</em></li><li><strong>Bug #0130:</strong> Developer misses the system too much.<ul><li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li></ul></li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>📜 License & Contributors</h2><ul><li><strong> Developer & Owner:</strong> Abi (Yi-Yun) 🇹🇼</li><li><strong>Core System:</strong> Naveen 🇮🇳</li><li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong></li></ul><br><blockquote>© 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.</blockquote></div></div>
 
-    <div id="win-photo" class="window"><div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')">✕</button></div><div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;"><img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 50vh; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'"><p style="margin-top: 30px; color: var(--text-muted); font-size: 15px; font-weight: 500; text-align: center; letter-spacing: 0.5px;">OCT 13, 2025. FIRST DAY.<br>LET'S KEEP WALKING TOGETHER.</p></div></div>
+    <div id="win-photo" class="window"><div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')">✕</button></div><div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;"><img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 50vh; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'"><p style="margin-top: 30px; color: var(--text-muted); font-size: 15px; font-weight: 500; text-align: center; letter-spacing: 0.5px;">OCT 13, 2025. First day<br>Let's keep walking together.</p></div></div>
 
     <div id="win-terminal" class="window"><div class="window-header" style="background:#1e1e1e; border:none;"><div class="window-title" style="color:#888;">Terminal</div><button class="btn-close" onclick="closeWindow('win-terminal')">✕</button></div><div class="window-content" style="background:#1e1e1e; color:#f0f0f0; border-radius:0 0 24px 24px; font-family:var(--font-mono); font-size:14px; display:flex; flex-direction:column; height:350px;"><div id="term-output" style="flex-grow:1; overflow-y:auto; margin-bottom:10px;"><div style="color:#666; margin-bottom:10px;">Baobao OS Kernel [v26.0]<br>Type 'help' to see available commands.</div></div><div style="display:flex; align-items:center;"><span style="color:#4af626; margin-right:8px;">naveen@baobao:~$</span><input type="text" id="term-input" autocomplete="off" style="background:transparent; border:none; color:white; font-family:inherit; flex-grow:1; outline:none;" onkeydown="handleCommand(event)"></div></div></div>
 
-    <div id="win-music" class="window" style="max-width: 400px;"><div class="window-header"><div class="window-title">Voice Note</div><button class="btn-close" onclick="closeWindow('win-music')">✕</button></div><div class="window-content"><div class="audio-player-ui"><div style="font-size: 60px; margin-bottom: 20px;">🎙️</div><h3 style="margin:0;">Birthday Message</h3><p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Abi's Note.mp3</p><div style="margin: 25px 0 15px 0;"><input type="range" id="seek-slider" max="100" value="0"></div><button class="control-btn" id="play-btn" onclick="togglePlay()">▶</button></div><audio id="audio-file" src="voice-note.mp3"></audio></div></div>
+    <div id="win-music" class="window" style="max-width: 400px;"><div class="window-header"><div class="window-title">Voice Note</div><button class="btn-close" onclick="closeWindow('win-music')">✕</button></div><div class="window-content"><div class="audio-player-ui"><div style="font-size: 60px; margin-bottom: 20px;">🎙️</div><h3 style="margin:0;">Birthday Message</h3><p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Abi's Note</p><div style="margin: 25px 0 15px 0;"><input type="range" id="seek-slider" max="100" value="0"></div><button class="control-btn" id="play-btn" onclick="togglePlay()">▶</button></div><audio id="audio-file" src="voice-note.mp3"></audio></div></div>
 
     <div id="win-monitor" class="window" style="max-width: 500px;"><div class="window-header"><div class="window-title">Activity Monitor</div><button class="btn-close" onclick="closeWindow('win-monitor')">✕</button></div><div class="window-content"><div class="monitor-row"><div class="monitor-label"><span>CPU (Love Load)</span><span id="val-cpu" class="monitor-val">100%</span></div><div class="monitor-bar-bg"><div id="bar-cpu" class="monitor-bar-fill" style="width:100%; background:#FF3B30;"></div></div></div><div class="monitor-row"><div class="monitor-label"><span>Memory (Thinking of Abi)</span><span id="val-mem" class="monitor-val">99%</span></div><div class="monitor-bar-bg"><div id="bar-mem" class="monitor-bar-fill" style="width:99%; background:#007AFF;"></div></div></div><div class="monitor-row"><div class="monitor-label"><span>Heart Rate</span><span id="val-hr" class="monitor-val">120 BPM</span></div><div class="monitor-bar-bg"><div id="bar-hr" class="monitor-bar-fill" style="width:80%; background:#FF9500;"></div></div></div><div class="monitor-row"><div class="monitor-label"><span>Network Latency</span><span class="monitor-val">0 ms (Synced)</span></div><div class="monitor-bar-bg"><div class="monitor-bar-fill" style="width:100%; background:#34C759;"></div></div></div><p style="margin-top:30px; font-size:13px; color:var(--text-muted);">System is running at maximum affection capacity.</p></div></div>
 
@@ -241,14 +222,14 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
             <div class="sound-grid">
                 <div class="sound-btn" onclick="playSound('snd1')"><span>👨‍💻</span>Naveen Sir</div>
                 <div class="sound-btn" onclick="playSound('snd2')"><span>📞</span>Ling Yo Phone</div>
-                <div class="sound-btn" onclick="playSound('snd3')"><span>🧐</span>Why are you black?</div>
+                <div class="sound-btn" onclick="playSound('snd3')"><span>🧐</span>Why are you black</div>
                 <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span>Love You</div>
                 <div class="sound-btn" onclick="playSound('snd5')"><span>🧸</span>Love You Baobao</div>
                 <div class="sound-btn" onclick="playSound('snd6')"><span>🎂</span>Happy Birthday</div>
             </div>
             
             <div style="border-radius: 12px; overflow: hidden; margin-top: 10px;">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1EZ5TRH43l0X0XNioB27k0?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2iUXsYOEPhVqEBwsqP70rE?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
 
             <audio id="snd1" src="sound-naveen.mp3"></audio>
@@ -290,7 +271,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 <div class="chat-header">Abi</div>
                 <div class="chat-body" id="chat-body-content">
                     <div class="chat-system">You matched with Abi on Oct 13, 2025</div>
-                    <div class="chat-bubble">hello, how are you? i am under the water. please help me.</div>
+                    <div class="chat-bubble">hello, how are u? i am under the water... please help me...</div>
                 </div>
                 <div class="chat-input-area">
                     <input type="text" id="tinder-msg-input" class="chat-input" placeholder="Type a message...">
@@ -312,8 +293,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
     <script>
         // F12 Console Easter Egg
         console.log("%c Happy 26th Birthday, Naveen! 🎂", "font-size: 30px; font-weight: bold; color: #FF2D55; background: #fff; padding: 10px; border-radius: 5px;");
-        console.log("%c System Status: 100% In Love.", "font-size: 16px; color: #007AFF;");
-        console.log("TODO: Waiting for your hug in Feb 2026.");
+        console.log("TODO: Waiting for your hug.");
 
         // Global functions defined FIRST to prevent ReferenceErrors
         function openWindow(id) {
@@ -411,11 +391,11 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 let response = "";
                 switch(cmd) {
                     case 'help': response = "Commands: date, love, blanket, chai, chopsticks, clear"; break;
-                    case 'date': response = "Start: 2025-10-13.<br>Status: Going strong. Next update: Feb 2026."; break;
+                    case 'date': response = "Start: 2025-10-13.<br>Status: Going strong!!"; break;
                     case 'love': response = "<span style='color:#00ff00'>[SUCCESS]</span> Sending infinite love packets to Abi... Done."; break;
-                    case 'blanket': response = "Deploying blanket... 🛌 warmth level: 100%. Snuggle mode: ON."; break;
-                    case 'chai': response = "Brewing Chai... ☕ Spice level: Perfect. Sipping together in spirit."; break;
-                    case 'chopsticks': response = "Skill check: Expert. 🥢 Ready for dumpling date in Taiwan?"; break;
+                    case 'blanket': response = "Deploying virtual blanket 🛌 Warmth level: 100%. Snuggle mode: ON "; break;
+                    case 'chai': response = "Brewing Chai... ☕ Spice level: As hot as you. Sipping together "; break;
+                    case 'chopsticks': response = "Skill check: Expert. 🥢 Ready for noodles date in Taiwan"; break;
                     case 'clear': output.innerHTML = ""; input.value = ""; return;
                     default: response = `Command not found: ${cmd}. Try 'help'.`;
                 }
@@ -454,7 +434,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
             if(card) {
                 card.style.transition = 'transform 0.5s ease';
                 if (currentX > 100) { handleSwipeRight(); } 
-                else if (currentX < -100) { card.style.transform = 'translateX(0) rotate(0)'; alert("Only Right Swipe allowed! 😉"); } 
+                else if (currentX < -100) { card.style.transform = 'translateX(0) rotate(0)'; alert("Only Right Swipe allowed hehe"); } 
                 else { card.style.transform = 'translateX(0) rotate(0)'; }
             }
         }
