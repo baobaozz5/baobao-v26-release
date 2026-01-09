@@ -12,24 +12,10 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <style>
-        /* Define Zalando Sans if local, otherwise fallbacks */
-        @font-face {
-            font-family: 'Zalando Sans';
-            src: local('Zalando Sans'), local('ZalandoSans-Regular'), local('Arial');
-            font-weight: 400;
-            font-style: normal;
-        }
-        @font-face {
-            font-family: 'Zalando Sans';
-            src: local('Zalando Sans Bold'), local('ZalandoSans-Bold'), local('Arial Bold');
-            font-weight: 700;
-            font-style: normal;
-        }
-
         :root {
             --bg-color: #f2f4f6; --text-main: #2c3e50; --text-muted: #95a5a6;
             --window-bg: rgba(255, 255, 255, 0.96); --icon-bg: #f2f4f6; --border-color: rgba(255,255,255,0.4);
@@ -38,8 +24,8 @@
             --status-bar-bg: rgba(242, 244, 246, 0.85); --accent-color: #007AFF; --map-filter: none;
             --app-size: 125px; 
             
-            /* FONT CHANGED TO ZALANDO SANS */
-            --font-main: 'Zalando Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            /* FONT CHANGED TO PUBLIC SANS */
+            --font-main: 'Public Sans', sans-serif; 
             
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
             --font-script: 'Pacifico', cursive;
@@ -240,14 +226,14 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
             <div class="sound-grid">
                 <div class="sound-btn" onclick="playSound('snd1')"><span>👦</span>Naveen Sir</div>
                 <div class="sound-btn" onclick="playSound('snd2')"><span>📞</span>Ling Yo Phone</div>
-                <div class="sound-btn" onclick="playSound('snd3')"><span>🧐</span>Why are you black?</div>
+                <div class="sound-btn" onclick="playSound('snd3')"><span>🤨</span>Why are you black?</div>
                 <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span>Love You</div>
                 <div class="sound-btn" onclick="playSound('snd5')"><span>🧸</span>Love You Baobao</div>
                 <div class="sound-btn" onclick="playSound('snd6')"><span>🎂</span>Happy Birthday</div>
             </div>
             
             <div style="border-radius: 12px; overflow: hidden; margin-top: 10px;">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1BYZxKSf0aTxp8ZFoeyM3d?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2iUXsYOEPhVqEBwsqP70rE?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
 
             <audio id="snd1" src="sound-naveen.mp3"></audio>
@@ -270,7 +256,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                     </div>
                 </div>
                 <div class="tinder-actions">
-                    <button class="tinder-btn nope" onclick="alert('Oops! Only one way to swipe 😉')">✕</button>
+                    <button class="tinder-btn nope" onclick="alert('Oops! Only one way to swipe hehe')">✕</button>
                     <button class="tinder-btn like" onclick="handleSwipeRight()">♥</button>
                 </div>
             </div>
