@@ -171,10 +171,10 @@ npm install gym-workout  --wannalickyou
 npm install good-night-kiss --essential
 
 # Optional but Recommended
-npm install blueberries 
+npm install blueberries --yogurt
 npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>⚠️ Known Issues</h2><ul><li><strong>Latency Warning:</strong> Due to the TPE <-> DEL server distance, physical touch functions are currently disabled. <em>Fix scheduled for 2026.</em></li><li><strong>Bug #0130:</strong> Developer misses the system too much.<ul><li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li></ul></li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>📜 License & Contributors</h2><ul><li><strong> Developer & Owner:</strong> Abi (Yi-Yun) 🇹🇼</li><li><strong>Core System:</strong> Naveen 🇮🇳</li><li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong></li></ul><br><blockquote>© 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.</blockquote></div></div>
 
-    <div id="win-photo" class="window"><div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')">✕</button></div><div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;"><img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 50vh; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'"><p style="margin-top: 30px; color: var(--text-muted); font-size: 15px; font-weight: 500; text-align: center; letter-spacing: 0.5px;">OCT 13, 2025. First day<br>Let's keep walking together.</p></div></div>
+    <div id="win-photo" class="window"><div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')">✕</button></div><div class="window-content" style="display:flex; flex-direction: column; justify-content:center; align-items:center;"><img src="baobao.jpg" alt="Us" style="max-width:100%; max-height: 50vh; border-radius:12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Not+Found'"><p style="margin-top: 30px; color: var(--text-muted); font-size: 15px; font-weight: 500; text-align: center; letter-spacing: 0.5px;">OCT 13, 2025. First day<br>Let's keep walking together </p></div></div>
 
     <div id="win-terminal" class="window"><div class="window-header" style="background:#1e1e1e; border:none;"><div class="window-title" style="color:#888;">Terminal</div><button class="btn-close" onclick="closeWindow('win-terminal')">✕</button></div><div class="window-content" style="background:#1e1e1e; color:#f0f0f0; border-radius:0 0 24px 24px; font-family:var(--font-mono); font-size:14px; display:flex; flex-direction:column; height:350px;"><div id="term-output" style="flex-grow:1; overflow-y:auto; margin-bottom:10px;"><div style="color:#666; margin-bottom:10px;">Baobao OS Kernel [v26.0]<br>Type 'help' to see available commands.</div></div><div style="display:flex; align-items:center;"><span style="color:#4af626; margin-right:8px;">naveen@baobao:~$</span><input type="text" id="term-input" autocomplete="off" style="background:transparent; border:none; color:white; font-family:inherit; flex-grow:1; outline:none;" onkeydown="handleCommand(event)"></div></div></div>
 
@@ -227,8 +227,8 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 <div class="sound-btn" onclick="playSound('snd1')"><span>👦</span>Naveen Sir</div>
                 <div class="sound-btn" onclick="playSound('snd2')"><span>📞</span>Ling Yo Phone</div>
                 <div class="sound-btn" onclick="playSound('snd3')"><span>🤨</span>Why are you black</div>
-                <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span>Love You</div>
-                <div class="sound-btn" onclick="playSound('snd5')"><span>🧸</span>Love You Baobao</div>
+                <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span>Tumhe pyaar</div>
+                <div class="sound-btn" onclick="playSound('snd5')"><span>🧸</span>Wo ai ni bao bao</div>
                 <div class="sound-btn" onclick="playSound('snd6')"><span>🎂</span>Happy Birthday</div>
             </div>
             
@@ -394,12 +394,12 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 output.innerHTML += `<div><span style="color:#4af626">naveen@baobao:~$</span> ${cmd}</div>`;
                 let response = "";
                 switch(cmd) {
-                    case 'help': response = "Commands: date, love, blanket, chai, chopsticks, clear"; break;
-                    case 'date': response = "Start: 2025-10-13.<br>Status: Going strong!!"; break;
-                    case 'love': response = "<span style='color:#00ff00'>[SUCCESS]</span> Sending infinite love packets to Abi... Done."; break;
-                    case 'blanket': response = "Deploying virtual blanket 🛌 Warmth level: 100%. Snuggle mode: ON "; break;
+                    case 'help': response = "Commands: love, abi, blanket, chai, chopsticks, clear"; break;
+                    case 'love': response = "Start: 2025-10-13.<br>Status: Going stronger!!"; break;
+                    case 'abi': response = "<span style='color:#00ff00'>[SUCCESS]</span> I'm always here babeee, even if you're not opening this tab"; break;
+                    case 'blanket': response = "Deploying virtual blanket 🛌 Warmth level: 100%. Snuggle mode ON "; break;
                     case 'chai': response = "Brewing Chai... ☕ Spice level: As hot as you. Sipping together "; break;
-                    case 'chopsticks': response = "Skill check: Expert. 🥢 Ready for noodles date in Taiwan"; break;
+                    case 'chopsticks': response = "Skill check: Expert 🥢 Ready for noodles date in Taiwan"; break;
                     case 'clear': output.innerHTML = ""; input.value = ""; return;
                     default: response = `Command not found: ${cmd}. Try 'help'.`;
                 }
