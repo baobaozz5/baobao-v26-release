@@ -12,10 +12,24 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <style>
+        /* Define Zalando Sans if local, otherwise fallbacks */
+        @font-face {
+            font-family: 'Zalando Sans';
+            src: local('Zalando Sans'), local('ZalandoSans-Regular'), local('Arial');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Zalando Sans';
+            src: local('Zalando Sans Bold'), local('ZalandoSans-Bold'), local('Arial Bold');
+            font-weight: 700;
+            font-style: normal;
+        }
+
         :root {
             --bg-color: #f2f4f6; --text-main: #2c3e50; --text-muted: #95a5a6;
             --window-bg: rgba(255, 255, 255, 0.96); --icon-bg: #f2f4f6; --border-color: rgba(255,255,255,0.4);
@@ -23,8 +37,10 @@
             --shadow-window: 0 40px 100px rgba(0,0,0,0.15);
             --status-bar-bg: rgba(242, 244, 246, 0.85); --accent-color: #007AFF; --map-filter: none;
             --app-size: 125px; 
-            /* Updated Font to Hind */
-            --font-main: 'Hind', sans-serif; 
+            
+            /* FONT CHANGED TO ZALANDO SANS */
+            --font-main: 'Zalando Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
             --font-script: 'Pacifico', cursive;
             --tinder-grad: linear-gradient(to right, #fd297b, #ff655b); --tinder-green: #2ee681; --tinder-red: #ec4768;
@@ -158,7 +174,7 @@
         <div class="app-item" onclick="deploySystem()"><div class="app-icon icon-deploy">🚀</div><div class="app-label">Deploy</div></div>
     </div>
 
-    <div id="win-sticky" class="window"><div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')">✕</button></div><div class="window-content" style="background: var(--icon-bg);"><h3 style="margin-top:0;">Important Tasks</h3><ul style="line-height: 2.2; padding-left: 20px;"><li>Video Call <span style="color:green">✔</span></li><li>P well <span style="color:green">✔</span></li><li>Hug Abi (Pending...)</li></ul></div></div>
+    <div id="win-sticky" class="window"><div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')">✕</button></div><div class="window-content" style="background: var(--icon-bg);"><h3 style="margin-top:0;">Important Tasks</h3><ul style="line-height: 2.2; padding-left: 20px;"><li>Video Call <span style="color:green">✔</span></li><li>Eat well <span style="color:green">✔</span></li><li>Hug Abi (Pending...)</li></ul></div></div>
     
     <div id="win-youtube" class="window" style="max-width: 800px; background: black;"><div class="window-header" style="background: rgba(255,255,255,0.1); border-bottom: none;"><div class="window-title" style="color: white;">YouTube</div><button class="btn-close" onclick="closeWindow('win-youtube')">✕</button></div><div class="window-content" style="padding: 0; display: flex; align-items: center; justify-content: center; height: 100%;"><div class="video-wrapper" style="width: 100%;"><iframe id="rickroll-frame" width="560" height="315" src="https://www.youtube.com/embed/1S4xFl4CD34?si=b2FTRvxMCCOMwx5L&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div></div></div>
 
@@ -224,14 +240,14 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
             <div class="sound-grid">
                 <div class="sound-btn" onclick="playSound('snd1')"><span>👦</span>Naveen Sir</div>
                 <div class="sound-btn" onclick="playSound('snd2')"><span>📞</span>Ling Yo Phone</div>
-                <div class="sound-btn" onclick="playSound('snd3')"><span>🤨</span>Why are you black</div>
+                <div class="sound-btn" onclick="playSound('snd3')"><span>🧐</span>Why are you black?</div>
                 <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span>Love You</div>
                 <div class="sound-btn" onclick="playSound('snd5')"><span>🧸</span>Love You Baobao</div>
                 <div class="sound-btn" onclick="playSound('snd6')"><span>🎂</span>Happy Birthday</div>
             </div>
             
             <div style="border-radius: 12px; overflow: hidden; margin-top: 10px;">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1BYZxKSf0aTxp8ZFoeyM3d?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1BYZxKSf0aTxp8ZFoeyM3d?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
 
             <audio id="snd1" src="sound-naveen.mp3"></audio>
