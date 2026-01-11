@@ -394,12 +394,13 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 output.innerHTML += `<div><span style="color:#4af626">naveen@baobao:~$</span> ${cmd}</div>`;
                 let response = "";
                 switch(cmd) {
-                    case 'help': response = "Commands: love, abi, blanket, chai, chopsticks, clear"; break;
-                    case 'love': response = "Start: 2025-10-13.<br>Status: Going stronger!!"; break;
-                    case 'abi': response = "<span style='color:#00ff00'>[SUCCESS]</span> I'm always here babeee, even if you're not opening this tab"; break;
+                    case 'help': response = "Commands: love, abi, blanket, chai, chopsticks, lick, clear"; break;
+                    case 'love': response = "Start: 2025-10-13.<br>Status: We are going stronger!!"; break;
+                    case 'abi': response = "Just a reminder that somewhere in the world, someone is always thinking of you"; break;
                     case 'blanket': response = "Deploying virtual blanket 🛌 Warmth level: 100%. Snuggle mode ON "; break;
-                    case 'chai': response = "Brewing Chai... ☕ Spice level: As hot as you. Sipping together "; break;
-                    case 'chopsticks': response = "Skill check: Expert 🥢 Ready for noodles date in Taiwan"; break;
+                    case 'chai': response = "Brewing Chai... Spice level: As hot as you. Sipping together "; break;
+                    case 'chopsticks': response = "Skill check: Expert 🥢 Ready for noodles date in Taiwan hehe"; break;
+                    case 'lick': response = "SUS why are you typing this 👅"; break;    
                     case 'clear': output.innerHTML = ""; input.value = ""; return;
                     default: response = `Command not found: ${cmd}. Try 'help'.`;
                 }
