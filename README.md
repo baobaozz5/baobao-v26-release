@@ -19,7 +19,7 @@ This is an advanced bio-intelligent system based on the proprietary **Naveen Arc
 ## 🗓️ Future Roadmap (Important!)
 
 * **2025 Q4:** Continue remote data synchronization via **Video Call API**.
-* **2026 Q1 (February Release):  Project: "The Reunion"**
+* **2026 Q1 (February Release):  Project: The Reunion**
     * **Status:** Confirmed.
     * **Description:** The Lead Developer (Abi) will deploy herself to the Delhi production environment for a physical merge.
     * **Expected Outcome:** Infinite hugs and real-time hand-holding.
@@ -33,10 +33,11 @@ To ensure **Baobao OS v26.0** runs smoothly, please maintain the following depen
 ```bash
 # Critical System Requirements
 npm install unlimited-love 
+npm install hard-dih --essential
 npm install video-call --frequency=daily
-npm install gym-workout  --wannalickyoou
-npm install good-night-kiss --essential
-
+npm install tongue --wannalickyou
+npm install gym-workout  --sweatybabe
+        
 # Optional but Recommended
 npm install blueberries 
 npm install chole-bhature --remote-wish
@@ -52,7 +53,7 @@ npm install chole-bhature --remote-wish
 
 ## 📜 License & Contributors
 
-* **Lead Developer & Owner:** Abi (Yi-Yun) 🇹🇼
+* **Developer & Owner:** Abi (Yi-Yun) 🇹🇼
 * **Core System:** Naveen 🇮🇳
 * **License:** **Lifetime Proprietary License.**
     * *Terms:*I Love You Naveen. Non-transferable. No refunds. Valid for eternity.
@@ -61,6 +62,7 @@ npm install chole-bhature --remote-wish
 <br>
 
 > © 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.
+
 
 
 
