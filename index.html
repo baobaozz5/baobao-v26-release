@@ -357,23 +357,34 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
         }
 
         // Clock Logic
-function updateClock() {
+    function updateClock() {
     const now = new Date();
-    const options = { hour: '2-digit', minute: '2-digit', hour12: false, hourCycle: 'h23' };
+    const options = { hour: '2-digit', minute: '2-digit', hour12: false };
+
+    // --- 取得時間並修正24:00 ---
+    const getTimeString = (tz) => {
+        // 1. 先取得原始字串
+        let timeStr = now.toLocaleTimeString('en-US', { ...options, timeZone: tz });
+        
+        // 2. 暴力修正：如果開頭是24，直接替換成00
+        // 這樣不管瀏覽器怎麼設定，都一定會顯示00
+        if (timeStr.startsWith('24')) {
+            timeStr = timeStr.replace('24', '00');
+        }
+        return timeStr;
+    };
 
     // TPE Time
-    const tpe = now.toLocaleTimeString('en-US', { ...options, timeZone: 'Asia/Taipei' });
     const tpeEl = document.getElementById('clock-tpe');
-    if(tpeEl) tpeEl.innerHTML = `<span>TPE</span> ${tpe}`;
+    if(tpeEl) tpeEl.innerHTML = `<span>TPE</span> ${getTimeString('Asia/Taipei')}`;
     
     // DEL Time
-    const del = now.toLocaleTimeString('en-US', { ...options, timeZone: 'Asia/Kolkata' });
     const delEl = document.getElementById('clock-del');
-    if(delEl) delEl.innerHTML = `<span>DEL</span> ${del}`;
+    if(delEl) delEl.innerHTML = `<span>DEL</span> ${getTimeString('Asia/Kolkata')}`;
 }
 
-setInterval(updateClock, 1000); 
-updateClock();
+    setInterval(updateClock, 1000); 
+    updateClock();
 
         // Audio Player Logic
         const audio = document.getElementById('audio-file');
