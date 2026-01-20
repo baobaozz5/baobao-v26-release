@@ -357,17 +357,23 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
         }
 
         // Clock Logic
-        function updateClock() {
-            const now = new Date();
-            const tpe = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hour12: false});
-            const tpeEl = document.getElementById('clock-tpe');
-            if(tpeEl) tpeEl.innerHTML = `<span>TPE</span> ${tpe}`;
-            
-            const del = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false});
-            const delEl = document.getElementById('clock-del');
-            if(delEl) delEl.innerHTML = `<span>DEL</span> ${del}`;
-        }
-        setInterval(updateClock, 1000); updateClock();
+function updateClock() {
+    const now = new Date();
+    const options = { hour: '2-digit', minute: '2-digit', hour12: false, hourCycle: 'h23' };
+
+    // TPE Time
+    const tpe = now.toLocaleTimeString('en-US', { ...options, timeZone: 'Asia/Taipei' });
+    const tpeEl = document.getElementById('clock-tpe');
+    if(tpeEl) tpeEl.innerHTML = `<span>TPE</span> ${tpe}`;
+    
+    // DEL Time
+    const del = now.toLocaleTimeString('en-US', { ...options, timeZone: 'Asia/Kolkata' });
+    const delEl = document.getElementById('clock-del');
+    if(delEl) delEl.innerHTML = `<span>DEL</span> ${del}`;
+}
+
+setInterval(updateClock, 1000); 
+updateClock();
 
         // Audio Player Logic
         const audio = document.getElementById('audio-file');
