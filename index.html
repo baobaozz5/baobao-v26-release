@@ -46,7 +46,7 @@
         .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 13px; color: var(--text-muted); font-weight: 700; }
         .clock-group { display: flex; gap: 30px; } .clock-item { font-size: 15px; font-weight: 700; } .clock-item span { color: var(--text-muted); margin-right: 8px; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
 
-        .desktop { padding: 100px 40px 40px 40px; max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 50px; z-index: 1; position: relative; height: 100%; align-content: start; overflow-y: auto; }
+        .desktop { padding: 100px 40px 40px 40px; max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 50px; z-index: 1; position: relative; height: 100%; align-content: start; overflow-y: auto; } -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
         .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); width: var(--app-size); } .app-item:active { transform: scale(0.92); filter: brightness(0.95); }
         .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-shadow: var(--shadow-icon); border: 1px solid var(--border-color); margin-bottom: 15px; color: var(--text-main); position: relative; }
         
@@ -250,22 +250,27 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
         <div class="window-header"><div class="window-title">Matches</div><button class="btn-close" onclick="closeWindow('win-tinder')">✕</button></div>
         <div class="window-content" style="padding: 20px; display:flex; flex-direction:column; height:100%; overflow:hidden; position:relative;">
             
-           <div id="tinder-swipe-interface" class="tinder-container">
-    <div class="tinder-card-wrap" id="card-wrap">
+            <div id="tinder-swipe-interface" class="tinder-container">
+        <div class="tinder-card-wrap" id="card-wrap">
         <div id="tinder-card" class="tinder-card" style="background-image: url('tinder-profile.jpg');">
             <div class="tinder-overlay"><h2 class="tinder-name">比, 24</h2></div>
         </div>
     </div>
 
     <div style="text-align: center; color: #888; font-size: 14px; margin: 10px 0; opacity: 0.8; animation: pulse 2s infinite;">
-        Swipe 👉
+        Swipe to match! 
     </div>
 
     <div class="tinder-actions">
         <button class="tinder-btn nope" onclick="alert('oops! left swipe not allowed hehe')">✕</button>
         <button class="tinder-btn like" onclick="handleSwipeRight()">♥</button>
     </div>
-    </div>
+</div>
+                <div class="tinder-actions">
+                    <button class="tinder-btn nope" onclick="alert('only one way to swipe hehe')">✕</button>
+                    <button class="tinder-btn like" onclick="handleSwipeRight()">♥</button>
+                </div>
+            </div>
 
             <div id="tinder-match-screen" class="tinder-match">
                 <div class="match-title">It's a Match!</div>
@@ -302,9 +307,11 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
     <canvas id="confetti-canvas"></canvas>
 
     <script>
+        // F12 Console Easter Egg
         console.log("%c Happy Birthday Naveen 🎂", "font-size: 30px; font-weight: bold; color: #FF2D55; background: #fff; padding: 10px; border-radius: 5px;");
         console.log("Waiting for our meet hehe");
-        
+
+        // Global functions defined FIRST to prevent ReferenceErrors
         function openWindow(id) {
             document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
             const win = document.getElementById(id);
@@ -322,7 +329,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 if(btn) btn.textContent = '▶';
             }
             if(id === 'win-youtube') {
-                const iframe = document.getElementById('youtube-frame');
+                const iframe = document.getElementById('rickroll-frame');
                 if(iframe) { const src = iframe.src; iframe.src = ''; iframe.src = src; }
             }
             if(id === 'win-monitor') { clearInterval(monitorInterval); }
@@ -363,11 +370,9 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
     function updateClock() {
     const now = new Date();
     const options = { hour: '2-digit', minute: '2-digit', hour12: false };
-
     const getTimeString = (tz) => {
-
-        let timeStr = now.toLocaleTimeString('en-US', { ...options, timeZone: tz });
   
+        let timeStr = now.toLocaleTimeString('en-US', { ...options, timeZone: tz });
         if (timeStr.startsWith('24')) {
             timeStr = timeStr.replace('24', '00');
         }
@@ -416,7 +421,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                     case 'help': response = "Commands: love, abi, blanket, chai, chopsticks, lick, clear"; break;
                     case 'love': response = "Start: 2025-10-13.<br>Status: We are going stronger!!"; break;
                     case 'abi': response = "Just a reminder that somewhere in the world, someone is always thinking of you"; break;
-                    case 'blanket': response = "Deploying virtual blanket 🛌 Warmth level: 100%, Snuggle together "; break;
+                    case 'blanket': response = "Deploying virtual blanket 🛌 Warmth level: 100%. Snuggle mode ON "; break;
                     case 'chai': response = "Brewing Chai... Spice level: As hot as you. Sipping together "; break;
                     case 'chopsticks': response = "Skill check: Expert 🥢 Ready for noodles date in Taiwan hehe"; break;
                     case 'lick': response = "SUS why are you typing this 👅"; break;    
@@ -445,12 +450,11 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
             
             cardWrap.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; card.style.transition = 'none'; });
             document.addEventListener('touchmove', (e) => {
-       if (!isDragging) return;
-       e.preventDefault(); 
-
-      currentX = e.touches[0].clientX - startX;
-      card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
-    }, { passive: false });
+                if (!isDragging) return;
+                currentX = e.touches[0].clientX - startX;
+                card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
+            });
+            document.addEventListener('touchend', endDrag);
         }
 
         function endDrag() {
