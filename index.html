@@ -1,190 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Baobao OS v26.0</title>
-    
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
     <meta property="og:title" content="Baobao OS v26.0 🎂">
     <meta property="og:description" content="Happy 26th Birthday, Naveen Sir! Access Granted.">
     <meta property="og:image" content="baobao.jpg">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Using font-display swap to avoid blocking rendering -->
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    
+
     <style>
-        :root {
-            --bg-color: #f2f4f6; --text-main: #2c3e50; --text-muted: #95a5a6;
-            --window-bg: rgba(255, 255, 255, 0.96); --icon-bg: #f2f4f6; --border-color: rgba(255,255,255,0.4);
-            --shadow-icon: 12px 12px 24px rgba(163, 177, 198, 0.5), -12px -12px 24px rgba(255, 255, 255, 0.9);
+        :root{
+            --bg-color: #f2f4f6;
+            --text-main: #2c3e50;
+            --text-muted: #95a5a6;
+            --window-bg: rgba(255,255,255,0.96);
+            --icon-bg: #f2f4f6;
+            --border-color: rgba(255,255,255,0.4);
+            --shadow-icon: 12px 12px 24px rgba(163,177,198,0.5), -12px -12px 24px rgba(255,255,255,0.9);
             --shadow-window: 0 40px 100px rgba(0,0,0,0.15);
-            --status-bar-bg: rgba(242, 244, 246, 0.85); --accent-color: #007AFF; --map-filter: none;
-            --app-size: 125px; 
-            
-            /* FONT CHANGED TO PUBLIC SANS */
-            --font-main: 'Public Sans', sans-serif; 
-            
-            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+            --status-bar-bg: rgba(242,244,246,0.85);
+            --accent-color: #007AFF;
+            --app-size: 125px;
+            --font-main: 'Public Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
             --font-script: 'Pacifico', cursive;
-            --tinder-grad: linear-gradient(to right, #fd297b, #ff655b); --tinder-green: #2ee681; --tinder-red: #ec4768;
+            --tinder-grad: linear-gradient(to right, #fd297b, #ff655b);
+            --tinder-green: #2ee681;
+            --tinder-red: #ec4768;
         }
-        [data-theme="dark"] {
-            --bg-color: #1a1a1a; --text-main: #f0f0f0; --text-muted: #888;
-            --window-bg: rgba(40, 40, 40, 0.96); --icon-bg: #2a2a2a; --border-color: rgba(255,255,255,0.05);
+        [data-theme="dark"]{
+            --bg-color:#1a1a1a;
+            --text-main:#f0f0f0;
+            --text-muted:#888;
+            --window-bg: rgba(40,40,40,0.96);
+            --icon-bg:#2a2a2a;
+            --border-color: rgba(255,255,255,0.05);
             --shadow-icon: 8px 8px 16px rgba(0,0,0,0.4), -4px -4px 12px rgba(255,255,255,0.05);
             --shadow-window: 0 40px 100px rgba(0,0,0,0.5);
-            --status-bar-bg: rgba(26, 26, 26, 0.85); --accent-color: #0A84FF;
-            --map-filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+            --status-bar-bg: rgba(26,26,26,0.85);
+            --accent-color: #0A84FF;
         }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-main); height: 100vh; width: 100vw; overflow: hidden; user-select: none; }
 
-        .status-bar { position: fixed; top: 0; left: 0; width: 100%; height: 48px; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 14px; font-weight: 60[...]
-        .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 13px; color: var(--text-muted); font-weight: 700; }
-        .clock-group { display: flex; gap: 30px; } .clock-item { font-size: 15px; font-weight: 700; } .clock-item span { color: var(--text-muted); margin-right: 8px; font-weight: 600; font-size: 12px;[...]
+        *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html,body{ height:100%; }
+        body{
+            margin:0;
+            padding:0;
+            background:var(--bg-color);
+            color:var(--text-main);
+            font-family:var(--font-main);
+            width:100%;
+            height:100vh;
+            overflow: hidden; /* desktop-like app */
+            -webkit-font-smoothing:antialiased;
+        }
 
-        .desktop { padding: 100px 40px 40px 40px; max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 50px; z-index: 1; position: relative; height: 100%; a[...]
-        .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); width: var(--app-size); } .app-item:activ[...]
-        .app-icon { width: var(--app-size); height: var(--app-size); border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 58px; background: var(--icon-bg); box-[...]
-        
-        .icon-youtube { color: #e74c3c; } .icon-map { color: #2ecc71; } .icon-sound { color: #FF9500; } .icon-deploy { font-size: 64px; color: var(--accent-color); } .icon-letter { background: var(--t[...]
-        .app-label { font-size: 14px; font-weight: 600; color: var(--text-main); letter-spacing: 0.3px; text-align: center; }
+        /* status bar */
+        .status-bar {
+            position: fixed; top:0; left:0; right:0;
+            height:48px; display:flex; align-items:center; justify-content:space-between;
+            padding:0 20px; background:var(--status-bar-bg); z-index:200;
+            backdrop-filter: blur(4px);
+        }
+        .status-left{ font-weight:700; font-size:13px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+        .clock-group{ display:flex; gap:18px; align-items:center; }
+        .clock-item{ font-weight:700; font-size:15px; }
+        .clock-item span{ color:var(--text-muted); margin-right:8px; font-weight:600; font-size:12px; }
 
-        .window { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95); width: 90%; max-width: 800px; max-height: 85vh; background: var(--window-bg); border-radius: 24px;[...]
-        .window.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
-        .window-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 25px; border-bottom: 1px solid var(--border-color); flex-shrink: 0;}
-        .window-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--text-main); }
-        .btn-close { background: rgba(0,0,0,0.05); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size:[...]
-        .window-content { padding: 40px; overflow-y: auto; flex-grow: 1; -webkit-overflow-scrolling: touch; position: relative; touch-action: pan-y; overscroll-behavior: contain;}
+        /* desktop icons */
+        .desktop{
+            padding:80px 40px 40px 40px; max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:center; gap:40px;
+            position:relative; height:100%; align-content:flex-start;
+        }
+        .app-item{ width:var(--app-size); display:flex; flex-direction:column; align-items:center; cursor:pointer; transition: transform .18s ease; user-select:auto; }
+        .app-item:active{ transform:scale(.98); }
+        .app-icon{ width:var(--app-size); height:var(--app-size); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:48px; background:var(--icon-bg); box-shadow:var(--shadow-icon); }
+        .app-label{ margin-top:8px; font-weight:600; font-size:14px; text-align:center; }
 
-        /* Soundboard */
-        .sound-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
-        .sound-btn { background: var(--icon-bg); border: 2px solid var(--border-color); border-radius: 16px; padding: 25px 10px; cursor: pointer; font-size: 15px; font-weight: 700; color: var(--text-m[...]
-        .sound-btn:active { transform: scale(0.96); background: var(--accent-color); color: white; border-color: var(--accent-color); }
-        .sound-btn span { font-size: 24px; }
-        .sound-alert { text-align:center; color: #FF3B30; font-size:12px; margin-bottom:20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        /* windows */
+        .window{
+            position: fixed;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-45%) scale(.98);
+            width:90%;
+            max-width:800px;
+            max-height:85vh;
+            background:var(--window-bg);
+            border-radius:18px;
+            overflow:hidden;
+            box-shadow:var(--shadow-window);
+            opacity:0; pointer-events:none; transition: transform .28s cubic-bezier(.2,.9,.2,1), opacity .28s;
+            display:flex; flex-direction:column;
+            z-index: 300;
+        }
+        .window.open{ transform:translate(-50%,-50%) scale(1); opacity:1; pointer-events:auto; }
+        .window-header{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border-color); flex-shrink:0; background:transparent; }
+        .window-title{ font-weight:700; font-size:16px; color:var(--text-main); }
+        .btn-close{ width:32px; height:32px; border-radius:50%; border:none; background:rgba(0,0,0,0.06); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:14px; }
 
-        /* Tinder */
-        .tinder-container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding-bottom: 20px; }
-        .tinder-card-wrap { flex-grow: 1; width: 100%; max-width: 380px; position: relative; perspective: 1000px; cursor: grab; touch-action: none; }
-        .tinder-card-wrap:active { cursor: grabbing; }
-        .tinder-card { width: 100%; height: 100%; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); position: absolute; top: 0; left: 0; background-siz[...]
-        .tinder-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); padding: 80px 20px 20px 20px; color: white; }
-        .tinder-name { font-size: 28px; font-weight: 800; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .tinder-actions { display: flex; gap: 30px; margin-top: 25px; z-index: 5; }
-        .tinder-btn { width: 65px; height: 65px; border-radius: 50%; border: none; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-size: 28px; cursor: pointer; transition: 0.2s; displa[...]
-        .tinder-btn:hover { transform: scale(1.1); }
-        .tinder-btn.nope { color: var(--tinder-red); } .tinder-btn.like { color: var(--tinder-green); font-size: 34px; }
-        .tinder-match { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-conten[...]
-        .tinder-match.active { opacity: 1; pointer-events: auto; }
-        .match-title { font-family: var(--font-script); font-size: 65px; margin-bottom: 40px; background: var(--tinder-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filte[...]
-        .match-photos { display: flex; justify-content: center; align-items: center; margin-bottom: 50px; }
-        .match-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin: 0 -20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); background: #eee;}
-        .tinder-chat { position: absolute; top:0; left:0; width:100%; height:100%; background: var(--window-bg); z-index: 20; display: flex; flex-direction: column; opacity: 0; pointer-events: none; t[...]
-        .tinder-chat.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .chat-header { padding: 15px; border-bottom: 1px solid var(--border-color); font-weight: 700; text-align: center; color: var(--text-main); font-size: 16px; background: rgba(255,255,255,0.5); b[...]
-        .chat-body { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .chat-bubble { background: #e5e5ea; padding: 12px 18px; border-radius: 20px; border-bottom-left-radius: 4px; max-width: 80%; font-size: 15px; color: black; align-self: flex-start; line-height:[...]
-        .chat-bubble.me { background: var(--accent-color); color: white; align-self: flex-end; border-bottom-left-radius: 20px; border-bottom-right-radius: 4px; }
-        .chat-system { text-align: center; color: var(--text-muted); font-size: 12px; margin: 20px 0; clear: both; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
-        .chat-input-area { padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; background: var(--window-bg);}
-        .chat-input { flex-grow: 1; border: 1px solid var(--border-color); border-radius: 25px; padding: 12px 20px; outline: none; background: var(--icon-bg); color: var(--text-main); font-size: 15px;[...]
-        .chat-send { background: var(--tinder-grad); border: none; color: white; padding: 0 25px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 15px;}
-        .chat-send:hover { opacity: 0.9; }
+        .window-content{ padding:28px; overflow-y:auto; -webkit-overflow-scrolling:touch; touch-action:pan-y; flex:1; }
+
+        /* soundboard */
+        .sound-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .sound-btn{ padding:16px; border-radius:12px; background:var(--icon-bg); border:1px solid var(--border-color); cursor:pointer; font-weight:700; display:flex; align-items:center; gap:10px; justify-content:center; }
+        .sound-alert{ text-align:center; color:#FF3B30; font-weight:800; text-transform:uppercase; letter-spacing:1px; font-size:12px; margin-bottom:12px; }
+
+        /* tinder */
+        .tinder-container{ height:100%; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding-bottom:20px; position:relative; }
+        .tinder-card-wrap{ flex:1; width:100%; max-width:380px; position:relative; perspective:1000px; touch-action:none; display:flex; align-items:center; justify-content:center; }
+        .tinder-card{ width:100%; height:100%; max-height:520px; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.15); position:absolute; top:0; left:0; background-size:cover; background-position:center; will-change:transform,opacity; transform:translate3d(0,0,0); display:flex; align-items:flex-end; }
+        .tinder-overlay{ width:100%; padding:24px; background:linear-gradient(to top, rgba(0,0,0,0.75), transparent); color:#fff; }
+        .tinder-name{ font-size:28px; font-weight:800; margin:0; text-shadow:0 2px 6px rgba(0,0,0,0.35); }
+        .tinder-actions{ display:flex; gap:20px; margin-top:12px; z-index:5; }
+        .tinder-btn{ width:60px; height:60px; border-radius:50%; border:none; background:#fff; box-shadow:0 8px 20px rgba(0,0,0,0.12); font-size:26px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+        .tinder-btn.like{ color:var(--tinder-green); font-size:28px; }
+        .tinder-match{ position:absolute; inset:0; background:rgba(0,0,0,0.9); z-index:12; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s ease; }
+        .tinder-match.active{ opacity:1; pointer-events:auto; }
+        .match-title{ font-family:var(--font-script); font-size:56px; background:var(--tinder-grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:20px; }
+        .match-photos{ display:flex; gap:10px; align-items:center; justify-content:center; margin-bottom:20px; }
+        .match-img{ width:120px; height:120px; border-radius:50%; border:4px solid white; object-fit:cover; box-shadow:0 10px 30px rgba(0,0,0,0.4); }
+
+        .tinder-chat{ position:absolute; inset:0; background:var(--window-bg); z-index:16; display:flex; flex-direction:column; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .28s, transform .28s; }
+        .tinder-chat.active{ opacity:1; pointer-events:auto; transform:translateY(0); }
+
+        .chat-body{ flex:1; padding:16px; overflow:auto; display:flex; flex-direction:column; gap:8px; -webkit-overflow-scrolling:touch; }
+        .chat-bubble{ background:#e5e5ea; padding:10px 14px; border-radius:16px; max-width:80%; align-self:flex-start; color:#111; }
+        .chat-bubble.me{ background:var(--accent-color); color:white; align-self:flex-end; }
 
         /* swipe hint */
-        .swipe-hint {
-          position: absolute;
-          top: 18px;
-          right: 18px;
-          background: rgba(0,0,0,0.5);
-          color: white;
-          padding: 8px 12px;
-          border-radius: 20px;
-          font-weight: 700;
-          font-size: 14px;
-          z-index: 6;
-          pointer-events: none;
-          opacity: 0.95;
-          transform: translateY(0);
-          transition: opacity 0.25s ease, transform 0.25s ease;
+        .swipe-hint{
+            position:absolute; top:12px; right:12px;
+            background:rgba(0,0,0,0.55); color:white; padding:8px 12px; border-radius:20px; font-weight:700; z-index:6;
+            pointer-events:none; opacity:0.95; transition:opacity .25s, transform .25s;
         }
-        .swipe-hint.hidden { opacity: 0; transform: translateY(-10px); }
+        .swipe-hint.hidden{ opacity:0; transform:translateY(-8px); }
 
-        /* Overlay */
-        #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 10000; /* Ensure Top */
-            opacity: 0; visibility: hidden; 
-            transition: opacity 0.5s ease, visibility 0.5s;
-            text-align: center; cursor: pointer;
-        }
-        [data-theme="dark"] #overlay { background: rgba(0, 0, 0, 0.98); }
-        #overlay.show { opacity: 1; visibility: visible; }
-        #overlay h1 { font-size: 3rem; margin-bottom: 20px; color: #333; font-weight: 800; letter-spacing: -1px; animation: slideUp 0.8s ease; }
-        [data-theme="dark"] #overlay h1 { color: #fff; }
-        #overlay p { color: #666; font-size: 1.2rem; margin-bottom: 30px; }
-        [data-theme="dark"] #overlay p { color: #aaa; }
-        @keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
-        #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10001; }
+        /* confetti canvas */
+        #confetti-canvas{ position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
 
-        /* Helpers */
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .code-container { background: #1e1e1e; border-radius: 12px; overflow: hidden; font-family: 'SF Mono', 'Menlo', monospace; font-size: 14px; line-height: 1.6; display: flex; } .line-numbers { ba[...]
-        .monitor-row { margin-bottom: 25px; } .monitor-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-main); } .monitor[...]
-        .audio-player-ui { text-align: center; padding: 10px 0; max-width: 350px; margin: 0 auto; color: var(--text-main); } input[type=range] { -webkit-appearance: none; width: 100%; background: tran[...]
-        .toggle-switch { width: 50px; height: 28px; background: var(--text-muted); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; } .toggle-knob { width: 24px; height: 24p[...]
-        .readme-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 25px; letter-spacing: -0.5px; color: var(--text-main); } .readme-content h2 { font-size: 20px; font-weight: 700; margin-t[...]
+        /* helpers & responsive tweaks */
+        .video-wrapper{ position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; background:#000; }
+        .video-wrapper iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
 
-        @media (max-width: 768px) {
-            .desktop { padding: 80px 20px; gap: 30px; }
-            .app-icon { width: 85px; height: 85px; font-size: 40px; border-radius: 20px; }
-            .app-label { font-size: 12px; }
-            .window { width: 95%; max-height: 90vh; }
-            .window-content { padding: 25px; }
-            .status-bar { font-size: 12px; padding: 0 15px; }
-            .match-title { font-size: 48px; } .match-img { width: 100px; height: 100px; }
-            .tinder-card { box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+        @media(max-width:768px){
+            body{ overflow:auto; } /* allow page to scroll on small screens if needed */
+            .desktop{ padding:70px 16px 24px 16px; gap:20px; }
+            .app-icon{ width:88px; height:88px; font-size:40px; border-radius:14px; }
+            .app-label{ font-size:12px; }
+            .tinder-card{ max-height:420px; box-shadow:0 8px 20px rgba(0,0,0,0.12); }
+            /* reduce heavy shadows on mobile */
+            :root { --shadow-window: 0 20px 40px rgba(0,0,0,0.12); }
         }
     </style>
 </head>
 <body>
 
-    <div class="status-bar">
+    <div class="status-bar" role="banner">
         <div class="status-left">Baobao OS v26.0</div>
-        <div class="clock-group">
+        <div class="clock-group" aria-hidden="false">
             <div class="clock-item" id="clock-tpe"><span>TPE</span> --:--</div>
             <div class="clock-item" id="clock-del"><span>DEL</span> --:--</div>
         </div>
     </div>
 
-    <div class="desktop">
-        <div class="app-item" onclick="openWindow('win-sticky')"><div class="app-icon">📌</div><div class="app-label">Notes</div></div>
-        <div class="app-item" onclick="openWindow('win-readme')"><div class="app-icon">📄</div><div class="app-label">README</div></div>
-        <div class="app-item" onclick="openWindow('win-photo')"><div class="app-icon">🖼️</div><div class="app-label">Photo</div></div>
-        <div class="app-item" onclick="openWindow('win-music')"><div class="app-icon">🎵</div><div class="app-label">Voice Note</div></div>
-        <div class="app-item" onclick="openWindow('win-youtube')"><div class="app-icon icon-youtube">📺</div><div class="app-label">Anthem</div></div>
-        <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();"><div class="app-icon icon-sys">📊</div><div class="app-label">Activity</div></div>
-        <div class="app-item" onclick="openWindow('win-terminal'); focusTerminal();"><div class="app-icon">📟</div><div class="app-label">Terminal</div></div>
-        <div class="app-item" onclick="openWindow('win-settings')"><div class="app-icon">⚙️</div><div class="app-label">Settings</div></div>
-        <div class="app-item" onclick="openWindow('win-code')"><div class="app-icon">💻</div><div class="app-label">Source</div></div>
-        <div class="app-item" onclick="openWindow('win-sound')"><div class="app-icon icon-sound">🎹</div><div class="app-label">Soundboard</div></div>
-        <div class="app-item" onclick="openWindow('win-tinder'); startTinder();"><div class="app-icon icon-letter">🔥</div><div class="app-label">Matches</div></div>
-        <div class="app-item" onclick="deploySystem()"><div class="app-icon icon-deploy">🚀</div><div class="app-label">Deploy</div></div>
+    <main class="desktop" role="main" aria-label="Desktop">
+        <div class="app-item" onclick="openWindow('win-sticky')" role="button" aria-label="Open Notes"><div class="app-icon">📌</div><div class="app-label">Notes</div></div>
+        <div class="app-item" onclick="openWindow('win-readme')" role="button" aria-label="Open README"><div class="app-icon">📄</div><div class="app-label">README</div></div>
+        <div class="app-item" onclick="openWindow('win-photo')" role="button" aria-label="Open Photos"><div class="app-icon">🖼️</div><div class="app-label">Photo</div></div>
+        <div class="app-item" onclick="openWindow('win-music')" role="button" aria-label="Open Voice Note"><div class="app-icon">🎵</div><div class="app-label">Voice Note</div></div>
+        <div class="app-item" onclick="openWindow('win-youtube')" role="button" aria-label="Open Anthem"><div class="app-icon icon-youtube">📺</div><div class="app-label">Anthem</div></div>
+        <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();" role="button" aria-label="Open Activity"><div class="app-icon icon-sys">📊</div><div class="app-label">Activity</div></div>
+        <div class="app-item" onclick="openWindow('win-terminal'); focusTerminal();" role="button" aria-label="Open Terminal"><div class="app-icon">📟</div><div class="app-label">Terminal</div></div>
+        <div class="app-item" onclick="openWindow('win-settings')" role="button" aria-label="Open Settings"><div class="app-icon">⚙️</div><div class="app-label">Settings</div></div>
+        <div class="app-item" onclick="openWindow('win-code')" role="button" aria-label="Open Source"><div class="app-icon">💻</div><div class="app-label">Source</div></div>
+        <div class="app-item" onclick="openWindow('win-sound')" role="button" aria-label="Open Soundboard"><div class="app-icon icon-sound">🎹</div><div class="app-label">Soundboard</div></div>
+        <div class="app-item" onclick="openWindow('win-tinder'); startTinder();" role="button" aria-label="Open Matches"><div class="app-icon icon-letter">🔥</div><div class="app-label">Matches</div></div>
+        <div class="app-item" onclick="deploySystem()" role="button" aria-label="Deploy"><div class="app-icon icon-deploy">🚀</div><div class="app-label">Deploy</div></div>
+    </main>
+
+    <!-- Notes Window -->
+    <div id="win-sticky" class="window" aria-hidden="true">
+        <div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')" aria-label="Close">✕</button></div>
+        <div class="window-content">
+            <p style="margin:0 0 8px 0;">Quick notes...</p>
+            <textarea style="width:100%;height:160px;border-radius:8px;padding:12px;border:1px solid var(--border-color);background:var(--icon-bg);"></textarea>
+        </div>
     </div>
 
-    <div id="win-sticky" class="window"><div class="window-header"><div class="window-title">Notes</div><button class="btn-close" onclick="closeWindow('win-sticky')">✕</button></div><div class="wind[...]
-    
-    <div id="win-youtube" class="window" style="max-width: 800px; background: black;"><div class="window-header" style="background: rgba(255,255,255,0.1); border-bottom: none;"><div class="window-titl[...]
+    <!-- YouTube Window (iframe lazy-loaded) -->
+    <div id="win-youtube" class="window" style="max-width:800px;background:black;" aria-hidden="true">
+        <div class="window-header" style="background:rgba(255,255,255,0.05);border-bottom:none;"><div class="window-title">Anthem</div><button class="btn-close" onclick="closeWindow('win-youtube')" aria-label="Close">✕</button></div>
+        <div class="window-content" style="padding:12px;">
+            <div class="video-wrapper" id="youtube-wrapper" data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0"></div>
+        </div>
+    </div>
 
-    <div id="win-readme" class="window"><div class="window-header"><div class="window-title">README</div><button class="btn-close" onclick="closeWindow('win-readme')">✕</button></div><div class="win[...]
+    <!-- README window (contains the npm install block - preserved exactly as requested) -->
+    <div id="win-readme" class="window" aria-hidden="true">
+        <div class="window-header"><div class="window-title">README</div><button class="btn-close" onclick="closeWindow('win-readme')" aria-label="Close">✕</button></div>
+        <div class="window-content readme-content">
+            <h1>Baobao OS v26</h1>
+            <p>Some fun README content...</p>
 npm install unlimited-love 
 npm install hard-dih --essential
 npm install video-call --frequency=daily
@@ -193,500 +218,599 @@ npm install gym-workout  --sweatybabe
         
 # Optional but Recommended
 npm install blueberries 
-npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>⚠️ Known Issues</h2><ul><li><strong>Latency Warning:</strong> Due to[...]
+npm install chole-bhature --remote-wish
+            <hr style="margin:18px 0; border:0; border-top:1px solid var(--border-color);" />
+            <h2>⚠️ Known Issues</h2>
+            <ul>
+                <li><strong>Latency Warning:</strong> Some animations may be reduced on low-end devices.</li>
+            </ul>
+        </div>
+    </div>
 
-    <div id="win-photo" class="window"><div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')">✕</button></div><div class="windo[...]
+    <!-- Photo / Other windows (concise) -->
+    <div id="win-photo" class="window" aria-hidden="true">
+        <div class="window-header"><div class="window-title">Photos</div><button class="btn-close" onclick="closeWindow('win-photo')" aria-label="Close">✕</button></div>
+        <div class="window-content">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <img src="baobao.jpg" alt="Baobao" style="width:100%;border-radius:8px;object-fit:cover;">
+                <img src="tinder-profile.jpg" alt="Profile" style="width:100%;border-radius:8px;object-fit:cover;">
+            </div>
+        </div>
+    </div>
 
-    <div id="win-terminal" class="window"><div class="window-header" style="background:#1e1e1e; border:none;"><div class="window-title" style="color:#888;">Terminal</div><button class="btn-close" oncl[...]
+    <!-- Terminal -->
+    <div id="win-terminal" class="window" aria-hidden="true" style="max-width:700px;">
+        <div class="window-header" style="background:#1e1e1e;border:none;color:#fff;"><div class="window-title" style="color:#ddd;">Terminal</div><button class="btn-close" onclick="closeWindow('win-terminal')" aria-label="Close">✕</button></div>
+        <div class="window-content" style="background:#121212;color:#eee;padding:12px;font-family:var(--font-mono);">
+            <div id="term-output" style="height:240px; overflow:auto; padding:8px; border-radius:6px; background:#0f0f0f; color:#ddd; font-size:13px;"></div>
+            <div style="display:flex;gap:8px;margin-top:12px;">
+                <input id="term-input" type="text" placeholder="Type a command..." style="flex:1;padding:8px;border-radius:6px;border:1px solid #333;background:#0b0b0b;color:#eee;" onkeydown="handleCommand(event)">
+                <button class="btn-close" onclick="document.getElementById('term-input').value='';" aria-label="Clear">Clear</button>
+            </div>
+        </div>
+    </div>
 
-    <div id="win-music" class="window" style="max-width: 400px;"><div class="window-header"><div class="window-title">Voice Note</div><button class="btn-close" onclick="closeWindow('win-music')">✕</[...]
+    <!-- Music (voice note) -->
+    <div id="win-music" class="window" style="max-width:420px;" aria-hidden="true">
+        <div class="window-header"><div class="window-title">Voice Note</div><button class="btn-close" onclick="closeWindow('win-music')" aria-label="Close">✕</button></div>
+        <div class="window-content">
+            <div class="audio-player-ui">
+                <button id="play-btn" onclick="togglePlay()" aria-label="Play">▶</button>
+                <input id="seek-slider" type="range" min="0" max="100" value="0" style="width:70%;vertical-align:middle;">
+            </div>
+            <!-- lazy-loaded audio: data-src used; real src assigned when window opens -->
+            <audio id="audio-file" preload="none" data-src="voice-note.mp3"></audio>
+        </div>
+    </div>
 
-    <div id="win-monitor" class="window" style="max-width: 500px;"><div class="window-header"><div class="window-title">Activity Monitor</div><button class="btn-close" onclick="closeWindow('win-monito[...]
+    <!-- Monitor -->
+    <div id="win-monitor" class="window" style="max-width:520px;" aria-hidden="true">
+        <div class="window-header"><div class="window-title">Activity Monitor</div><button class="btn-close" onclick="closeWindow('win-monitor')" aria-label="Close">✕</button></div>
+        <div class="window-content">
+            <div class="monitor-row">
+                <div class="monitor-label"><span>CPU</span><span id="val-cpu">--%</span></div>
+                <div style="background:var(--icon-bg);height:12px;border-radius:8px;overflow:hidden;"><div id="bar-cpu" style="width:0;height:12px;background:var(--accent-color);"></div></div>
+            </div>
+            <div class="monitor-row">
+                <div class="monitor-label"><span>Memory</span><span id="val-mem">--%</span></div>
+                <div style="background:var(--icon-bg);height:12px;border-radius:8px;overflow:hidden;"><div id="bar-mem" style="width:0;height:12px;background:#ffcc00;"></div></div>
+            </div>
+            <div class="monitor-row">
+                <div class="monitor-label"><span>HR</span><span id="val-hr">-- BPM</span></div>
+                <div style="background:var(--icon-bg);height:12px;border-radius:8px;overflow:hidden;"><div id="bar-hr" style="width:0;height:12px;background:#ff6b81;"></div></div>
+            </div>
+        </div>
+    </div>
 
-    <div id="win-settings" class="window" style="max-width: 400px;"><div class="window-header"><div class="window-title">Settings</div><button class="btn-close" onclick="closeWindow('win-settings')">�[...]
+    <!-- Settings -->
+    <div id="win-settings" class="window" style="max-width:420px;" aria-hidden="true">
+        <div class="window-header"><div class="window-title">Settings</div><button class="btn-close" onclick="closeWindow('win-settings')" aria-label="Close">✕</button></div>
+        <div class="window-content">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <div><strong>Theme</strong></div>
+                <div style="display:flex;gap:8px;"><button onclick="toggleTheme(this)">Toggle Dark</button></div>
+            </div>
+        </div>
+    </div>
 
-    <div id="win-code" class="window" style="max-width: 600px;"><div class="window-header"><div class="window-title">kernel_love.cpp</div><button class="btn-close" onclick="closeWindow('win-code')">��[...]
-<span class="kw">#include</span> <span class="str"><string></span>
+    <!-- Code window -->
+    <div id="win-code" class="window" style="max-width:640px;" aria-hidden="true">
+        <div class="window-header"><div class="window-title">kernel_love.cpp</div><button class="btn-close" onclick="closeWindow('win-code')" aria-label="Close">✕</button></div>
+        <div class="window-content" style="font-family:var(--font-mono); font-size:13px;">
+            <pre style="white-space:pre-wrap;">
+#include &lt;iostream&gt;
+using namespace std;
 
-<span class="kw">using namespace</span> std;
-
-<span class="kw">class</span> <span class="type">Relationship</span> {
-<span class="kw">public</span>:
+class Relationship {
+public:
     string him;
     string her;
-    <span class="kw">int</span> distance_km;
+    int distance_km;
 
-    <span class="fn">Relationship</span>(string h, string w) {
+    Relationship(string h, string w) {
         him = h;
         her = w;
-        distance_km = <span class="num">4300</span>;
+        distance_km = 4300;
     }
 
-    <span class="kw">void</span> <span class="fn">maintain_connection</span>() {
-        <span class="kw">while</span> (<span class="kw">true</span>) { <span class="cmt">// Forever loop</span>
-            <span class="kw">if</span> (distance_km > <span class="num">0</span>) {
-                <span class="fn">video_call</span>();
-                <span class="cmt">// TODO: Merge in Feb 2026</span>
-            } <span class="kw">else</span> {
-                <span class="fn">hug</span>();
+    void maintain_connection() {
+        while (true) {
+            if (distance_km > 0) {
+                // video_call();
+                // TODO: Merge in Feb 2026
+            } else {
+                // hug();
             }
         }
     }
 };
 
-<span class="kw">int</span> <span class="fn">main</span>() {
-    <span class="type">Relationship</span> baobao(<span class="str">"Naveen"</span>, <span class="str">"Abi"</span>);
-    baobao.<span class="fn">maintain_connection</span>();
-    <span class="kw">return</span> <span class="num">0</span>;
-}</div></div></div>
-
-    <div id="win-sound" class="window" style="max-width: 500px;">
-        <div class="window-header"><div class="window-title">Soundboard</div><button class="btn-close" onclick="closeWindow('win-sound')">✕</button></div>
-        <div class="window-content">
-            <div class="sound-alert">🔊 Please turn on sound</div>
-            <div class="sound-grid">
-                <div class="sound-btn" onclick="playSound('snd1')"><span>👦</span>Naveen Sir</div>
-                <div class="sound-btn" onclick="playSound('snd2')"><span>📞</span>Ling Yo Phone</div>
-                <div class="sound-btn" onclick="playSound('snd3')"><span>🤨</span>Why are you black</div>
-                <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span>Tumhe pyaar</div>
-                <div class="sound-btn" onclick="playSound('snd5')"><span>🧸</span>Wo ai ni bao bao</div>
-                <div class="sound-btn" onclick="playSound('snd6')"><span>🎂</span>Happy Birthday</div>
-            </div>
-            
-            <div style="border-radius: 12px; overflow: hidden; margin-top: 10px;">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1BYZxKSf0aTxp8ZFoeyM3d?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" a[...]
-            </div>
-
-            <audio id="snd1" src="sound-naveen.mp3"></audio>
-            <audio id="snd2" src="sound-ling.mp3"></audio>
-            <audio id="snd3" src="sound-black.mp3"></audio>
-            <audio id="snd4" src="sound-hindi1.mp3"></audio>
-            <audio id="snd5" src="sound-hindi2.mp3"></audio>
-            <audio id="snd6" src="sound-hindi3.mp3"></audio>
+int main() {
+    Relationship baobao("Naveen", "Abi");
+    // baobao.maintain_connection();
+    return 0;
+}
+            </pre>
         </div>
     </div>
 
-    <div id="win-tinder" class="window" style="max-width: 450px; height: 750px; max-height: 85vh;">
-        <div class="window-header"><div class="window-title">Matches</div><button class="btn-close" onclick="closeWindow('win-tinder')">✕</button></div>
-        <div class="window-content" style="padding: 20px; display:flex; flex-direction:column; height:100%; overflow:hidden; position:relative;">
-            
+    <!-- Soundboard -->
+    <div id="win-sound" class="window" style="max-width:520px;" aria-hidden="true">
+        <div class="window-header"><div class="window-title">Soundboard</div><button class="btn-close" onclick="closeWindow('win-sound')" aria-label="Close">✕</button></div>
+        <div class="window-content">
+            <div class="sound-alert">🔊 Please turn on sound</div>
+            <div class="sound-grid">
+                <div class="sound-btn" onclick="playSound('snd1')"><span>👦</span> Naveen Sir</div>
+                <div class="sound-btn" onclick="playSound('snd2')"><span>📞</span> Ling Yo Phone</div>
+                <div class="sound-btn" onclick="playSound('snd3')"><span>🤨</span> Why are you black</div>
+                <div class="sound-btn" onclick="playSound('snd4')"><span>❤️</span> Tumhe pyaar</div>
+                <div class="sound-btn" onclick="playSound('snd5')"><span>🧸</span> Wo ai ni bao bao</div>
+                <div class="sound-btn" onclick="playSound('snd6')"><span>🎂</span> Happy Birthday</div>
+            </div>
+
+            <div style="border-radius:12px;overflow:hidden;margin-top:12px;">
+                <iframe id="spotify-embed" style="border-radius:12px" data-src="https://open.spotify.com/embed/track/1BYZxKSf0aTxp8ZFoeyM3d?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <audio id="snd1" data-src="sound-naveen.mp3"></audio>
+            <audio id="snd2" data-src="sound-ling.mp3"></audio>
+            <audio id="snd3" data-src="sound-black.mp3"></audio>
+            <audio id="snd4" data-src="sound-hindi1.mp3"></audio>
+            <audio id="snd5" data-src="sound-hindi2.mp3"></audio>
+            <audio id="snd6" data-src="sound-hindi3.mp3"></audio>
+        </div>
+    </div>
+
+    <!-- Tinder / Matches -->
+    <div id="win-tinder" class="window" style="max-width:450px; height:750px; max-height:85vh;" aria-hidden="true">
+        <div class="window-header"><div class="window-title">Matches</div><button class="btn-close" onclick="closeWindow('win-tinder')" aria-label="Close">✕</button></div>
+        <div class="window-content" style="padding:20px; display:flex; flex-direction:column; height:100%; overflow:hidden; position:relative;">
             <div id="tinder-swipe-interface" class="tinder-container">
                 <div class="tinder-card-wrap" id="card-wrap">
-                    <div id="tinder-card" class="tinder-card" style="background-image: url('tinder-profile.jpg');">
+                    <div id="tinder-card" class="tinder-card" style="background-image:url('tinder-profile.jpg');">
                         <div class="tinder-overlay"><h2 class="tinder-name">比, 24</h2></div>
                         <div class="swipe-hint" id="swipe-hint">Swipe →</div>
                     </div>
                 </div>
+
                 <div class="tinder-actions">
-                    <button class="tinder-btn nope" onclick="alert('Oops! Only one way to swipe hehe')">✕</button>
-                    <button class="tinder-btn like" onclick="handleSwipeRight()">♥</button>
+                    <button class="tinder-btn nope" onclick="alert(left swipe not allowed hehe')" aria-label="Nope">✕</button>
+                    <button class="tinder-btn like" onclick="handleSwipeRight()" aria-label="Like">♥</button>
                 </div>
             </div>
 
-            <div id="tinder-match-screen" class="tinder-match">
+            <div id="tinder-match-screen" class="tinder-match" aria-hidden="true">
                 <div class="match-title">It's a Match!</div>
                 <div class="match-photos">
-                    <img src="tinder-profile.jpg" class="match-img" style="z-index:2;">
-                    <img src="him.jpg" class="match-img" style="z-index:1;">
+                    <img src="tinder-profile.jpg" alt="You" class="match-img" style="z-index:2;">
+                    <img src="him.jpg" alt="Him" class="match-img" style="z-index:1;">
                 </div>
-                <p style="font-size:14px; margin-bottom: 30px;">You and Abi have liked each other.</p>
-                <button class="chat-send" onclick="showChat()" style="width: 80%; font-size: 16px;">Send a Message</button>
+                <p style="font-size:14px;color:#fff;margin-bottom:14px;">You and Abi have liked each other.</p>
+                <button class="chat-send" onclick="showChat()" style="width:80%;font-size:16px;">Send a Message</button>
             </div>
 
-            <div id="tinder-chat-screen" class="tinder-chat">
-                <div class="chat-header">Abi</div>
+            <div id="tinder-chat-screen" class="tinder-chat" aria-hidden="true">
+                <div class="chat-header" style="padding:12px;border-bottom:1px solid var(--border-color);font-weight:700;text-align:center;">Abi</div>
                 <div class="chat-body" id="chat-body-content">
                     <div class="chat-system">You matched with Abi on Oct 13, 2025</div>
                     <div class="chat-bubble">hello, how are u? i am under the water... please help me </div>
                     <div class="chat-bubble">btw i am able to receive yo texts... </div>
                 </div>
-                <div class="chat-input-area">
-                    <input type="text" id="tinder-msg-input" class="chat-input" placeholder="Type a message...">
+                <div class="chat-input-area" style="padding:12px;border-top:1px solid var(--border-color);display:flex;gap:8px;">
+                    <input type="text" id="tinder-msg-input" class="chat-input" placeholder="Type a message..." style="flex:1;padding:10px;border-radius:20px;border:1px solid var(--border-color);">
                     <button class="chat-send" onclick="sendTinderMessage()">Send</button>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <div id="overlay" onclick="closeOverlay()">
+    <!-- overlay/confetti -->
+    <div id="overlay" onclick="closeOverlay()" style="text-align:center;">
         <h1>Happy Birthday Naveen Sir!</h1>
         <p>Baobao OS Update Complete.</p>
-        <div style="font-size: 5rem;">🎂</div>
-        <p style="margin-top:20px; font-size:14px; color:#888;">(Click anywhere to enter)</p>
+        <div style="font-size:5rem;">🎂</div>
+        <p style="margin-top:16px;color:#888;">(Click anywhere to enter)</p>
     </div>
     <canvas id="confetti-canvas"></canvas>
 
     <script>
-        // F12 Console Easter Egg
-        console.log("%c Happy Birthday Naveen 🎂", "font-size: 30px; font-weight: bold; color: #FF2D55; background: #fff; padding: 10px; border-radius: 5px;");
-        console.log("Waiting for our meet hehe");
-
-        // Global functions defined FIRST to prevent ReferenceErrors
-        function openWindow(id) {
-            document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
-            const win = document.getElementById(id);
-            if(win) win.classList.add('open');
+    // --- Utilities & defensive helpers ---
+    function el(id){ return document.getElementById(id); }
+    function safeSetSrc(elm, srcAttr){
+        if(!elm) return;
+        const src = elm.getAttribute && elm.getAttribute(srcAttr);
+        if(src && !elm.src){
+            elm.src = src;
         }
-        
-        function closeWindow(id) { 
-            const win = document.getElementById(id);
-            if(win) win.classList.remove('open');
-            
-            if(id === 'win-music') {
-                const a = document.getElementById('audio-file'); 
-                if(a) a.pause();
-                const btn = document.getElementById('play-btn');
-                if(btn) btn.textContent = '▶';
-            }
-            if(id === 'win-youtube') {
-                const iframe = document.getElementById('rickroll-frame');
-                if(iframe) { const src = iframe.src; iframe.src = ''; iframe.src = src; }
-            }
-            if(id === 'win-monitor') { clearInterval(monitorInterval); }
-            if(id === 'win-tinder') {
-                setTimeout(() => {
-                    const card = document.getElementById('tinder-card');
-                    if(card) { card.style.transform = ''; card.style.opacity = '1'; }
-                    const match = document.getElementById('tinder-match-screen');
-                    if(match) match.classList.remove('active');
-                    const chat = document.getElementById('tinder-chat-screen');
-                    if(chat) chat.classList.remove('active');
-                    const hint = document.getElementById('swipe-hint');
-                    if(hint) hint.classList.remove('hidden');
-                }, 300);
-            }
-        }
+    }
+    function escapeHtml(str){ return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[s]); }
 
-        function toggleTheme(btn) {
-            btn.classList.toggle('active');
-            if(document.body.getAttribute('data-theme') === 'dark'){
-                document.body.removeAttribute('data-theme');
-            } else {
-                document.body.setAttribute('data-theme', 'dark');
-            }
-        }
+    // F12 console easter egg
+    console.log("%c Happy Birthday Naveen 🎂", "font-size:30px; font-weight:bold; color:#FF2D55; background:#fff; padding:10px; border-radius:5px;");
+    console.log("Waiting for our meet hehe");
 
-        function playSound(id) {
-            const sound = document.getElementById(id);
-            if(sound) {
-                sound.currentTime = 0;
-                sound.play().catch(() => alert("Sound file not found! Check filenames."));
-            }
-        }
-
-        function closeOverlay() {
-            document.getElementById('overlay').classList.remove('show');
-        }
-
-        // Clock Logic - More robust timezone handling using Intl.DateTimeFormat.formatToParts
-        function formatTimeForTZ(date, tz) {
-            try {
-                const fmt = new Intl.DateTimeFormat('en-GB', {
-                    hour: '2-digit', minute: '2-digit', hour12: false, timeZone: tz
-                });
-                const parts = fmt.formatToParts(date);
-                const hourPart = parts.find(p => p.type === 'hour');
-                const minutePart = parts.find(p => p.type === 'minute');
-                let hour = hourPart ? hourPart.value : '00';
-                const minute = minutePart ? minutePart.value : '00';
-                // Some implementations may return '24' for midnight; normalize to '00'
-                if (hour === '24') hour = '00';
-                return `${hour}:${minute}`;
-            } catch (e) {
-                // Fallback
-                try {
-                    const s = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: tz });
-                    return s.startsWith('24') ? s.replace('24','00') : s;
-                } catch (e2) {
-                    return '--:--';
+    // Window management
+    function openWindow(id){
+        document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
+        const win = el(id);
+        if(!win) return;
+        win.classList.add('open');
+        // lazy-load assets when window opens
+        if(id === 'win-youtube'){
+            const wrapper = el('youtube-wrapper');
+            if(wrapper){
+                const src = wrapper.getAttribute('data-src');
+                if(src && !wrapper.querySelector('iframe')){
+                    const iframe = document.createElement('iframe');
+                    iframe.width = "100%";
+                    iframe.height = "400";
+                    iframe.src = src;
+                    iframe.frameBorder = "0";
+                    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                    iframe.allowFullscreen = true;
+                    wrapper.appendChild(iframe);
                 }
             }
         }
-
-        function updateClock() {
-            const now = new Date();
-            const tpeEl = document.getElementById('clock-tpe');
-            if(tpeEl) tpeEl.innerHTML = `<span>TPE</span> ${formatTimeForTZ(now, 'Asia/Taipei')}`;
-            const delEl = document.getElementById('clock-del');
-            if(delEl) delEl.innerHTML = `<span>DEL</span> ${formatTimeForTZ(now, 'Asia/Kolkata')}`;
+        if(id === 'win-music'){
+            const a = el('audio-file');
+            if(a && a.dataset && a.dataset.src && !a.src) a.src = a.dataset.src;
         }
-
-        setInterval(updateClock, 1000); 
-        updateClock();
-
-        // Audio Player Logic (defensive)
-        const audio = document.getElementById('audio-file');
-        const playBtn = document.getElementById('play-btn');
-        const slider = document.getElementById('seek-slider');
-        
-        function togglePlay() {
-            if(!audio) return;
-            if(audio.paused) { 
-                audio.play().then(()=>{ if(playBtn) playBtn.textContent='⏸'; }).catch(()=>alert("Upload voice-note.mp3!")); 
-            } else { 
-                audio.pause(); if(playBtn) playBtn.textContent='▶'; 
-            }
-        }
-        if(audio) {
-            audio.addEventListener('timeupdate', () => { if(slider && audio.duration) slider.value = (audio.currentTime/audio.duration)*100; });
-            if(slider) slider.addEventListener('input', () => { if(audio.duration) audio.currentTime = (slider.value/100)*audio.duration; });
-        }
-
-        // Terminal Logic
-        function focusTerminal() { setTimeout(() => { const el = document.getElementById('term-input'); if(el) el.focus(); }, 100); }
-        function escapeHtml(str) {
-            return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[s]);
-        }
-        function handleCommand(e) {
-            if (e.key === 'Enter') {
-                const input = document.getElementById('term-input');
-                const output = document.getElementById('term-output');
-                if(!input || !output) return;
-                const cmd = input.value.trim();
-                output.innerHTML += `<div><span style="color:#4af626">naveen@baobao:~$</span> ${escapeHtml(cmd)}</div>`;
-                let response = "";
-                switch(cmd.toLowerCase()) {
-                    case 'help': response = "Commands: love, abi, blanket, chai, chopsticks, lick, clear"; break;
-                    case 'love': response = "Start: 2025-10-13.<br>Status: We are going stronger!!"; break;
-                    case 'abi': response = "Just a reminder that somewhere in the world, someone is always thinking of you"; break;
-                    case 'blanket': response = "Deploying virtual blanket 🛌 Warmth level: 100%. Snuggle together "; break;
-                    case 'chai': response = "Brewing Chai... Spice level: As hot as you. Sipping together "; break;
-                    case 'chopsticks': response = "Skill check: Expert 🥢 Ready for noodles date in Taiwan hehe"; break;
-                    case 'lick': response = "SUS why are you typing this 👅"; break;    
-                    case 'clear': output.innerHTML = ""; input.value = ""; return;
-                    default: response = `Command not found: ${escapeHtml(cmd)}. Try 'help'.`;
-                }
-                if(response) output.innerHTML += `<div style="color:#ccc; margin-bottom:10px;">${response}</div>`;
-                input.value = ""; output.scrollTop = output.scrollHeight;
-            }
-        }
-
-        // Tinder Logic - Pointer Events + rAF for smooth dragging + swipe hint
-        (function initTinder() {
-            const cardWrap = document.getElementById('card-wrap');
-            const card = document.getElementById('tinder-card');
-            const swipeHint = document.getElementById('swipe-hint');
-            if (!cardWrap || !card) return;
-
-            let dragging = false;
-            let startX = 0;
-            let translateX = 0;
-            let rotation = 0;
-            let rafId = null;
-
-            function updateTransform() {
-                card.style.transform = `translate3d(${translateX}px, 0, 0) rotate(${rotation}deg)`;
-                rafId = null;
-            }
-            function scheduleUpdate() {
-                if (!rafId) rafId = requestAnimationFrame(updateTransform);
-            }
-
-            function onPointerDown(e) {
-                // only left/mouse or touch
-                dragging = true;
-                startX = e.clientX;
-                card.style.transition = 'none';
-                if (swipeHint) swipeHint.classList.add('hidden');
-                // capture pointer if available
-                try { if (e.pointerId && card.setPointerCapture) card.setPointerCapture(e.pointerId); } catch (err) {}
-            }
-            function onPointerMove(e) {
-                if (!dragging) return;
-                translateX = e.clientX - startX;
-                rotation = translateX * 0.08;
-                scheduleUpdate();
-            }
-            function onPointerUp(e) {
-                if (!dragging) return;
-                dragging = false;
-                card.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-                // release pointer capture if possible
-                try { if (e.pointerId && card.releasePointerCapture) card.releasePointerCapture(e.pointerId); } catch (err) {}
-
-                if (translateX > 100) {
-                    // swipe right -> match
-                    card.style.transform = `translate3d(500px, 0, 0) rotate(45deg)`;
-                    card.style.opacity = '0';
-                    setTimeout(() => {
-                        const match = document.getElementById('tinder-match-screen');
-                        if (match) match.classList.add('active');
-                    }, 600);
-                } else if (translateX < -100) {
-                    // left swipe not allowed in this app; bounce back and show hint
-                    card.style.transform = 'translate3d(0,0,0) rotate(0)';
-                    card.style.opacity = '1';
-                    setTimeout(()=> { if (swipeHint) swipeHint.classList.remove('hidden'); }, 300);
-                    setTimeout(()=>{ alert("only Right Swipe allowed hehe"); }, 50);
-                } else {
-                    // snap back
-                    card.style.transform = 'translate3d(0,0,0) rotate(0)';
-                    card.style.opacity = '1';
-                    if (swipeHint) swipeHint.classList.remove('hidden');
-                }
-                translateX = 0;
-                rotation = 0;
-            }
-
-            // Use pointer events where available
-            card.addEventListener('pointerdown', onPointerDown, { passive: true });
-            card.addEventListener('pointermove', onPointerMove, { passive: true });
-            card.addEventListener('pointerup', onPointerUp, { passive: true });
-            card.addEventListener('pointercancel', onPointerUp, { passive: true });
-
-            // Accessibility: allow keyboard "like" via Enter when focused
-            card.setAttribute('tabindex', '0');
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') handleSwipeRight();
+        if(id === 'win-sound'){
+            // load sound audio tags src if not loaded
+            ['snd1','snd2','snd3','snd4','snd5','snd6'].forEach(i => {
+                const s = el(i);
+                if(s && s.dataset && s.dataset.src && !s.src) s.src = s.dataset.src;
             });
+            // lazy load spotify iframe
+            const sp = el('spotify-embed');
+            if(sp) safeSetSrc(sp, 'data-src');
+        }
+        if(id === 'win-readme'){
+            // nothing special
+        }
+        if(id === 'win-tinder'){
+            startTinder && startTinder();
+        }
+    }
 
-            // expose programmatic functions
-            window.startTinder = function() {
-                setTimeout(() => {
-                    card.style.transform = '';
-                    card.style.opacity = '1';
-                    if (swipeHint) swipeHint.classList.remove('hidden');
-                    const match = document.getElementById('tinder-match-screen');
-                    if(match) match.classList.remove('active');
-                    const chat = document.getElementById('tinder-chat-screen');
-                    if(chat) chat.classList.remove('active');
-                }, 100);
-            };
+    function closeWindow(id){
+        const win = el(id);
+        if(!win) return;
+        win.classList.remove('open');
+        // cleanup specific windows
+        if(id === 'win-youtube'){
+            const wrapper = el('youtube-wrapper');
+            if(wrapper) wrapper.innerHTML = '';
+        }
+        if(id === 'win-monitor'){
+            stopMonitor();
+        }
+        if(id === 'win-tinder'){
+            setTimeout(()=> {
+                const card = el('tinder-card');
+                if(card){ card.style.transform=''; card.style.opacity='1'; }
+                const match = el('tinder-match-screen'); if(match) match.classList.remove('active');
+                const chat = el('tinder-chat-screen'); if(chat) chat.classList.remove('active');
+                const hint = el('swipe-hint'); if(hint) hint.classList.remove('hidden');
+            }, 300);
+        }
+    }
 
-            window.handleSwipeRight = function() {
-                // programmatic right swipe (same visual)
-                card.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
-                card.style.transform = 'translate3d(500px, 0, 0) rotate(45deg)';
+    function toggleTheme(btn){
+        btn && btn.classList.toggle('active');
+        if(document.body.getAttribute('data-theme') === 'dark') document.body.removeAttribute('data-theme');
+        else document.body.setAttribute('data-theme','dark');
+    }
+
+    function playSound(id){
+        const s = el(id);
+        if(!s){
+            alert('Sound file not found! Check filenames.');
+            return;
+        }
+        if(!s.src && s.dataset && s.dataset.src) s.src = s.dataset.src;
+        s.currentTime = 0;
+        s.play().catch(()=> { alert('Unable to play sound.'); });
+    }
+
+    function closeOverlay(){ const o = el('overlay'); if(o) o.style.display='none'; }
+
+    // --- Clock (robust) ---
+    function formatTimeForTZ(date, tz){
+        try{
+            const fmt = new Intl.DateTimeFormat('en-GB',{ hour:'2-digit', minute:'2-digit', hour12:false, timeZone:tz });
+            const parts = fmt.formatToParts(date);
+            const hourP = parts.find(p=>p.type==='hour');
+            const minP = parts.find(p=>p.type==='minute');
+            let hour = hourP ? hourP.value : '00';
+            const minute = minP ? minP.value : '00';
+            if(hour === '24') hour = '00';
+            return `${hour}:${minute}`;
+        } catch(e){
+            try {
+                const s = date.toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', hour12:false, timeZone:tz });
+                return s.startsWith('24') ? s.replace('24','00') : s;
+            } catch(e2){
+                return '--:--';
+            }
+        }
+    }
+    function updateClock(){
+        const now = new Date();
+        const tpe = el('clock-tpe'); if(tpe) tpe.innerHTML = `<span>TPE</span> ${formatTimeForTZ(now,'Asia/Taipei')}`;
+        const del = el('clock-del'); if(del) del.innerHTML = `<span>DEL</span> ${formatTimeForTZ(now,'Asia/Kolkata')}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // --- Audio player ---
+    const audioEl = el('audio-file');
+    const playBtn = el('play-btn');
+    const seekSlider = el('seek-slider');
+    function togglePlay(){
+        if(!audioEl) return;
+        if(!audioEl.src && audioEl.dataset && audioEl.dataset.src) audioEl.src = audioEl.dataset.src;
+        if(audioEl.paused){ audioEl.play().then(()=>{ if(playBtn) playBtn.textContent='⏸'; }).catch(()=> alert('Upload voice-note.mp3!')); }
+        else { audioEl.pause(); if(playBtn) playBtn.textContent='▶'; }
+    }
+    if(audioEl){
+        audioEl.addEventListener('timeupdate', ()=> { if(seekSlider && audioEl.duration) seekSlider.value = (audioEl.currentTime / audioEl.duration) * 100; });
+        seekSlider && seekSlider.addEventListener('input', ()=> { if(audioEl.duration) audioEl.currentTime = (seekSlider.value/100) * audioEl.duration; });
+    }
+
+    // --- Terminal ---
+    function focusTerminal(){ setTimeout(()=> { const t = el('term-input'); t && t.focus(); }, 80); }
+    function handleCommand(e){
+        if(e.key !== 'Enter') return;
+        const input = el('term-input'); const output = el('term-output');
+        if(!input || !output) return;
+        const cmd = input.value.trim();
+        if(!cmd) return;
+        // limit output growth
+        const maxLines = 400;
+        while(output.childNodes.length > maxLines) output.removeChild(output.firstChild);
+        const pre = document.createElement('div');
+        pre.innerHTML = `<span style="color:#4af626">naveen@baobao:~$</span> ${escapeHtml(cmd)}`;
+        output.appendChild(pre);
+        let response = '';
+        switch(cmd.toLowerCase()){
+            case 'help': response = "Commands: love, abi, blanket, chai, chopsticks, lick, clear"; break;
+            case 'love': response = "Start: 2025-10-13.<br>Status: We are going stronger!!"; break;
+            case 'abi': response = "Just a reminder that somewhere in the world, someone is always thinking of you"; break;
+            case 'blanket': response = "Deploying virtual blanket 🛌 Warmth level: 100%. Snuggle mode ON "; break;
+            case 'chai': response = "Brewing Chai... Spice level: As hot as you. Sipping together "; break;
+            case 'chopsticks': response = "Skill check: Expert 🥢 Ready for noodles date in Taiwan hehe"; break;
+            case 'lick': response = "SUS why are you typing this 👅"; break;
+            case 'clear': output.innerHTML = ''; input.value=''; return;
+            default: response = `Command not found: ${escapeHtml(cmd)}. Try 'help'.`;
+        }
+        const resp = document.createElement('div');
+        resp.style.color = '#ccc'; resp.style.marginBottom = '10px';
+        resp.innerHTML = response;
+        output.appendChild(resp);
+        input.value = '';
+        output.scrollTop = output.scrollHeight;
+    }
+
+    // --- Monitor (Page Visibility optimized) ---
+    let monitorInterval = null;
+    function startMonitor(){
+        if(monitorInterval) return;
+        const cpu = el('bar-cpu'); const mem = el('bar-mem'); const hr = el('bar-hr');
+        const valCpu = el('val-cpu'); const valMem = el('val-mem'); const valHr = el('val-hr');
+        if(!cpu) return;
+        // run only when page visible
+        function tick(){
+            let c = Math.floor(Math.random() * 6) + 95;
+            cpu.style.width = c + '%'; valCpu && (valCpu.innerText = c + '%');
+            mem.style.width = '99%'; valMem && (valMem.innerText='99%');
+            let h = Math.floor(Math.random() * 20) + 110;
+            hr.style.width = (h/2) + '%'; valHr && (valHr.innerText = h + ' BPM');
+        }
+        tick();
+        monitorInterval = setInterval(tick, 900);
+    }
+    function stopMonitor(){
+        if(monitorInterval){ clearInterval(monitorInterval); monitorInterval = null; }
+    }
+    document.addEventListener('visibilitychange', ()=> {
+        if(document.hidden) stopMonitor(); else { /* resume if monitor window open */ }
+    }, { passive: true });
+
+    // --- Tinder: pointer events + requestAnimationFrame + swipe hint ---
+    (function(){
+        const card = el('tinder-card');
+        const cardWrap = el('card-wrap');
+        const swipeHint = el('swipe-hint');
+        if(!card || !cardWrap) return;
+        let dragging = false;
+        let startX = 0;
+        let translateX = 0;
+        let rotation = 0;
+        let rafId = null;
+
+        function update(){
+            card.style.transform = `translate3d(${translateX}px,0,0) rotate(${rotation}deg)`;
+            rafId = null;
+        }
+        function schedule(){
+            if(!rafId) rafId = requestAnimationFrame(update);
+        }
+
+        function onDown(e){
+            dragging = true;
+            startX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || 0;
+            card.style.transition = 'none';
+            swipeHint && swipeHint.classList.add('hidden');
+            if(e.pointerId && card.setPointerCapture) try{ card.setPointerCapture(e.pointerId); }catch(err){}
+        }
+        function onMove(e){
+            if(!dragging) return;
+            const clientX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || 0;
+            translateX = clientX - startX;
+            rotation = translateX * 0.08;
+            schedule();
+        }
+        function onUp(e){
+            if(!dragging) return;
+            dragging = false;
+            card.style.transition = 'transform .45s cubic-bezier(.2,.9,.2,1), opacity .45s';
+            try{ if(e.pointerId && card.releasePointerCapture) card.releasePointerCapture(e.pointerId); }catch(err){}
+            if(translateX > 110){
+                // right swipe -> match
+                card.style.transform = `translate3d(500px,0,0) rotate(45deg)`;
                 card.style.opacity = '0';
-                if (swipeHint) swipeHint.classList.add('hidden');
-                setTimeout(() => {
-                    const match = document.getElementById('tinder-match-screen');
-                    if (match) match.classList.add('active');
-                }, 600);
-            };
-
-        })();
-
-        function showChat() {
-            document.getElementById('tinder-match-screen').classList.remove('active');
-            document.getElementById('tinder-chat-screen').classList.add('active');
-            setTimeout(() => { const el = document.getElementById('tinder-msg-input'); if(el) el.focus(); }, 300);
-        }
-
-        async function sendTinderMessage() {
-            const input = document.getElementById('tinder-msg-input');
-            const btn = document.querySelector('.chat-send');
-            const chatBody = document.getElementById('chat-body-content');
-            if(!input || !chatBody || !btn) return;
-            const msg = input.value.trim();
-
-            if(!msg) return;
-
-            const bubble = document.createElement('div');
-            bubble.className = 'chat-bubble me'; 
-            bubble.innerText = msg;
-            chatBody.appendChild(bubble);
-            chatBody.scrollTop = chatBody.scrollHeight; 
-
-            input.value = ""; 
-            const originalText = btn.innerText;
-            btn.innerText = "Sending...";
-
-            const formId = "mqeavvar"; // 
-
-            try {
-                await fetch(`https://formspree.io/f/${formId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "Tinder Chat: " + msg })
-                });
-                btn.innerText = "Sent!";
-                setTimeout(() => { btn.innerText = originalText; }, 1500);
-            } catch (error) {
-                btn.innerText = "Error";
-                alert("Please replace 'mqeavvar' with your real ID.");
+                swipeHint && swipeHint.classList.add('hidden');
+                setTimeout(()=> { const match = el('tinder-match-screen'); match && match.classList.add('active'); }, 600);
+            } else if(translateX < -110){
+                // bounce back and show hint
+                card.style.transform = 'translate3d(0,0,0) rotate(0)';
+                card.style.opacity = '1';
+                setTimeout(()=> swipeHint && swipeHint.classList.remove('hidden'), 300);
+                setTimeout(()=> alert('Only Right Swipe allowed hehe'), 80);
+            } else {
+                // snap back
+                card.style.transform = 'translate3d(0,0,0) rotate(0)';
+                card.style.opacity = '1';
+                setTimeout(()=> swipeHint && swipeHint.classList.remove('hidden'), 300);
             }
+            translateX = 0; rotation = 0;
         }
 
-        // Monitor Logic
-        let monitorInterval;
-        function startMonitor() {
-            const cpu = document.getElementById('bar-cpu');
-            const mem = document.getElementById('bar-mem');
-            const hr = document.getElementById('bar-hr');
-            const valCpu = document.getElementById('val-cpu');
-            const valMem = document.getElementById('val-mem');
-            const valHr = document.getElementById('val-hr');
+        // pointer events
+        card.addEventListener('pointerdown', onDown, { passive: true });
+        card.addEventListener('pointermove', onMove, { passive: true });
+        card.addEventListener('pointerup', onUp, { passive: true });
+        card.addEventListener('pointercancel', onUp, { passive: true });
+        // touch fallback (some browsers)
+        card.addEventListener('touchstart', onDown, { passive: true });
+        card.addEventListener('touchmove', onMove, { passive: true });
+        card.addEventListener('touchend', onUp, { passive: true });
+        // keyboard accessibility
+        card.setAttribute('tabindex','0');
+        card.addEventListener('keydown', (e)=> { if(e.key === 'Enter') handleSwipeRight(); });
 
-            if(cpu) {
-                monitorInterval = setInterval(() => {
-                    let c = Math.floor(Math.random() * 6) + 95;
-                    cpu.style.width = c + "%"; if(valCpu) valCpu.innerText = c + "%";
-                    if(mem) mem.style.width = "99%"; if(valMem) valMem.innerText = "99%";
-                    let h = Math.floor(Math.random() * 20) + 110;
-                    if(hr) hr.style.width = (h/2) + "%"; if(valHr) valHr.innerText = h + " BPM";
-                }, 800);
-            }
-        }
+        // expose functions
+        window.startTinder = function(){
+            setTimeout(()=> {
+                card.style.transform=''; card.style.opacity='1';
+                const match = el('tinder-match-screen'); match && match.classList.remove('active');
+                const chat = el('tinder-chat-screen'); chat && chat.classList.remove('active');
+                swipeHint && swipeHint.classList.remove('hidden');
+            }, 100);
+        };
+        window.handleSwipeRight = function(){
+            card.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
+            card.style.transform = 'translate3d(500px,0,0) rotate(45deg)';
+            card.style.opacity = '0';
+            swipeHint && swipeHint.classList.add('hidden');
+            setTimeout(()=> { const match = el('tinder-match-screen'); match && match.classList.add('active'); }, 600);
+        };
+    })();
 
-        // Confetti Logic - corrected and limited for mobile
-        const cvs = document.getElementById('confetti-canvas');
-        const ctx = cvs ? cvs.getContext('2d') : null;
-        if (cvs) { cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
-        let conf = []; let spawning = false;
-        const cols = ['#007AFF','#FF2D55','#5856D6','#FF9500'];
+    function showChat(){
+        el('tinder-match-screen') && el('tinder-match-screen').classList.remove('active');
+        el('tinder-chat-screen') && el('tinder-chat-screen').classList.add('active');
+        setTimeout(()=> { const t = el('tinder-msg-input'); t && t.focus(); }, 300);
+    }
 
-        function isLowEndDevice() {
-            try {
-                return (window.innerWidth < 420) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
-            } catch (e) { return false; }
-        }
-
-        function spawnConfettiLimited() {
-            if (!cvs) return;
-            const count = isLowEndDevice() ? 60 : 150;
-            for (let i = 0; i < count; i++) {
-                conf.push({
-                  x: Math.random() * cvs.width,
-                  y: Math.random() * -cvs.height,
-                  c: cols[Math.floor(Math.random() * cols.length)],
-                  s: Math.random() * 8 + 5,
-                  v: Math.random() * 3 + 2,
-                  a: Math.random() * Math.PI * 2
-                });
-            }
-        }
-
-        function drawConfetti() {
-            if (!ctx || !cvs) return;
-            ctx.clearRect(0,0,cvs.width,cvs.height);
-            let active = 0;
-            conf.forEach(p=>{
-                p.y += p.v;
-                p.x += Math.sin(p.a) * 2;
-                p.a += 0.02;
-                if(p.y < cvs.height) {
-                    ctx.fillStyle = p.c;
-                    ctx.fillRect(p.x, p.y, p.s, p.s);
-                    active++;
-                } else if(spawning) {
-                    p.y = -10;
-                    p.x = Math.random() * cvs.width;
-                    active++;
-                }
+    async function sendTinderMessage(){
+        const input = el('tinder-msg-input'); const btn = document.querySelector('.chat-send'); const chatBody = el('chat-body-content');
+        if(!input || !chatBody || !btn) return;
+        const msg = input.value.trim();
+        if(!msg) return;
+        const bubble = document.createElement('div'); bubble.className='chat-bubble me'; bubble.innerText = msg;
+        chatBody.appendChild(bubble);
+        // keep recent limit
+        while(chatBody.children.length > 300) chatBody.removeChild(chatBody.firstChild);
+        chatBody.scrollTop = chatBody.scrollHeight;
+        input.value = '';
+        const original = btn.innerText;
+        btn.innerText = 'Sending...';
+        const formId = 'mqeavvar';
+        try{
+            await fetch(`https://formspree.io/f/${formId}`, {
+                method:'POST',
+                headers:{ 'Content-Type':'application/json' },
+                body: JSON.stringify({ message: "Tinder Chat: " + msg })
             });
-            if(active > 0) requestAnimationFrame(drawConfetti);
+            btn.innerText = 'Sent!';
+            setTimeout(()=> btn.innerText = original, 1300);
+        } catch(err){
+            btn.innerText = 'Error';
+            alert("Please replace 'mqeavvar' with your real ID.");
+            setTimeout(()=> btn.innerText = original, 1300);
         }
+    }
 
-        function deploySystem() {
-            document.getElementById('overlay').classList.add('show');
-            spawning = true;
-            spawnConfettiLimited();
-            drawConfetti();
-            setTimeout(()=>{spawning=false;},3000);
+    // --- Confetti (optimized) ---
+    const cvs = el('confetti-canvas');
+    const ctx = cvs && cvs.getContext ? cvs.getContext('2d') : null;
+    if(cvs){
+        function setCanvasSize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+        setCanvasSize();
+        window.addEventListener('resize', setCanvasSize, { passive:true });
+    }
+    let confetti = [];
+    let confettiSpawning = false;
+    const colors = ['#007AFF','#FF2D55','#5856D6','#FF9500'];
+    function isLowEnd(){
+        try { return (window.innerWidth < 420) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2); } catch(e){ return false; }
+    }
+    function spawnConfetti(){
+        if(!cvs) return;
+        const count = isLowEnd() ? 60 : 150;
+        for(let i=0;i<count;i++){
+            confetti.push({
+                x: Math.random()*cvs.width,
+                y: Math.random()*-cvs.height,
+                c: colors[Math.floor(Math.random()*colors.length)],
+                s: Math.random()*8 + 5,
+                v: Math.random()*3 + 2,
+                a: Math.random()*Math.PI*2
+            });
         }
-        window.addEventListener('resize', ()=>{ if(cvs){ cvs.width=window.innerWidth; cvs.height=window.innerHeight; }});
+    }
+    function drawConfetti(){
+        if(!ctx || !cvs) return;
+        ctx.clearRect(0,0,cvs.width,cvs.height);
+        let active=0;
+        for(let i=0;i<confetti.length;i++){
+            const p = confetti[i];
+            p.y += p.v;
+            p.x += Math.sin(p.a)*2;
+            p.a += 0.02;
+            if(p.y < cvs.height){
+                ctx.fillStyle = p.c;
+                ctx.fillRect(p.x,p.y,p.s,p.s);
+                active++;
+            } else if(confettiSpawning){
+                p.y = -10;
+                p.x = Math.random()*cvs.width;
+                active++;
+            }
+        }
+        if(active>0) requestAnimationFrame(drawConfetti);
+    }
+
+    function deploySystem(){
+        el('overlay') && el('overlay').classList && el('overlay').classList.add('show');
+        confettiSpawning = true;
+        spawnConfetti();
+        drawConfetti();
+        setTimeout(()=> confettiSpawning = false, 3000);
+    }
+
+    // --- Lazy & defensive load for audio/iframe on open of windows handled in openWindow ---
+
+    // Accessibility & small fixes
+    // ensure body scroll on mobile but keep app feel - we've allowed overflow:auto in media query
+    // Keep user selection allowed for text
+    document.addEventListener('DOMContentLoaded', function(){
+        // remove global user-select:none for content text selection
+        document.body.style.userSelect = 'auto';
+    });
 
     </script>
 </body>
