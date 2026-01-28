@@ -212,17 +212,17 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
     <div id="win-settings" class="window" style="max-width: 400px;"><div class="window-header"><div class="window-title">Settings</div><button class="btn-close" onclick="closeWindow('win-settings')">✕</button></div><div class="window-content"><div style="display:flex; justify-content:space-between; align-items:center; padding: 15px 0; border-bottom:1px solid var(--border-color);"><span>Dark Mode</span><div class="toggle-switch" onclick="toggleTheme(this)"><div class="toggle-knob"></div></div></div><div style="display:flex; justify-content:space-between; align-items:center; padding: 15px 0; border-bottom:1px solid var(--border-color);"><span>Love for Abi</span><div class="toggle-switch locked"><div class="toggle-knob"></div></div></div><div style="display:flex; justify-content:space-between; padding: 15px 0; border-bottom:1px solid var(--border-color);"><span>Next Meeting</span><span style="color:var(--accent-color); font-weight:bold;">Feb 2026</span></div></div></div>
 
     <div id="win-code" class="window" style="max-width: 600px;"><div class="window-header"><div class="window-title">kernel_love.cpp</div><button class="btn-close" onclick="closeWindow('win-code')">✕</button></div><div class="window-content" style="background:#1e1e1e; padding:0; display:flex;"><div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div><div class="code-editor"><span class="kw">#include</span> <span class="str"><iostream></span>
-<span class="kw">#include</span> <span class="str"><iostream></span>
-<span class="kw">#include</span> <span class="str"><string></span>
-<span class="kw">using namespace</span> std;
 
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;string&gt;</span>
+<span class="kw">using namespace</span> std;
 <span class="kw">class</span> <span class="type">Relationship</span> {
 <span class="kw">public</span>:
     string him;
     string her;
     <span class="kw">int</span> distance_km;
 
-    <span class="fn">Relationship</span>(string n, string a) { // N for Naveen, A for Abi
+    <span class="fn">Relationship</span>(string n, string a) { // n for naveen, a for abi
         him = n;
         her = a;
         distance_km = <span class="num">4300</span>;
