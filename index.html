@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&family=Pacifico&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     
     <!-- Supabase Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script crossorigin="anonymous" src="https://unpkg.com/@supabase/supabase-js@2.39.0/dist/umd/supabase.js"></script>
     
     <style>
         :root {
@@ -429,7 +429,15 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
     <script>
         console.log("%c Happy Birthday Naveen 🎂", "font-size: 30px; font-weight: bold; color: #FF2D55; background: #fff; padding: 10px; border-radius: 5px;");
         console.log("Waiting for our meet hehe");
-
+       
+        // ============================================
+        // SUPABASE INITIALIZATION 
+        // ============================================
+        const SUPABASE_URL = 'https://btaouqxvaioibtsdboeu.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0YW91cXh2YWlvaWJ0c2Rib2V1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NTI5OTcsImV4cCI6MjA4NTIyODk5N30.2JvFe3AXqnmfB5G8mb1SkfXw26DHTF5oBMFkhVYmmhY';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+       
         // ============================================
         // CLOCK & COUNTDOWN
         // ============================================
