@@ -242,7 +242,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
 
             <div id="tab-upload" class="tab-content">
                 <div style="background: var(--icon-bg); border-radius: 16px; padding: 25px; margin-bottom: 20px; border: 2px dashed var(--border-color);">
-                    <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--text-main);"> Upload New Photo</h3>
+                    <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--text-main);">Upload New Photo</h3>
                     
                     <input type="file" id="photo-input" accept="image/*" style="display: none;" onchange="handlePhotoSelect(event)">
                     
@@ -270,7 +270,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 
                 <div style="background: var(--icon-bg); border-radius: 12px; padding: 20px;">
                     <p style="font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.6;">
-                         <strong>Tip:</strong> All uploaded photos will appear in the Gallery tab
+                         </strong> All uploaded photos will appear in the Gallery tab. 
                     </p>
                 </div>
             </div>
@@ -289,7 +289,9 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
 
 <span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
 <span class="kw">#include</span> <span class="str">&lt;string&gt;</span>
+        
 <span class="kw">using namespace</span> std;
+        
 <span class="kw">class</span> <span class="type">Relationship</span> {
 <span class="kw">public</span>:
     string him;
@@ -495,7 +497,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                     .insert([{
                         url: urlData.publicUrl,
                         caption: caption || null,
-                        uploaded_by: 'naveen'
+                        uploaded_by: 'abi'
                     }]);
                 
                 if (dbError) throw dbError;
@@ -615,7 +617,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 
                 data.forEach(msg => {
                     const bubble = document.createElement('div');
-                    bubble.className = msg.from_user === 'naveen' ? 'chat-bubble me' : 'chat-bubble';
+                    bubble.className = msg.from_user === 'abi' ? 'chat-bubble me' : 'chat-bubble';
                     bubble.textContent = msg.content;
                     chatBody.appendChild(bubble);
                 });
@@ -634,7 +636,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                     { event: 'INSERT', schema: 'public', table: 'messages' },
                     (payload) => {
                         const chatBody = document.getElementById('chat-body-content');
-                        if (chatBody && payload.new.from_user !== 'naveen') {
+                        if (chatBody && payload.new.from_user !== 'abi') {
                             const bubble = document.createElement('div');
                             bubble.className = 'chat-bubble';
                             bubble.textContent = payload.new.content;
@@ -676,7 +678,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 const { error } = await supabase
                     .from('messages')
                     .insert([{
-                        from_user: 'naveen',
+                        from_user: 'abi',
                         content: msg
                     }]);
                 
