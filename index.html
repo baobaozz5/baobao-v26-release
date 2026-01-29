@@ -47,51 +47,6 @@
         .status-left { letter-spacing: 0.5px; text-transform: uppercase; font-size: 13px; color: var(--text-muted); font-weight: 700; }
         .clock-group { display: flex; gap: 30px; } .clock-item { font-size: 15px; font-weight: 700; } .clock-item span { color: var(--text-muted); margin-right: 8px; font-weight: 600; font-size: 13px; }
 
-        /* Countdown Widget - Fixed Bottom Right */
-        .countdown-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--window-bg);
-            border-radius: 20px;
-            padding: 20px 25px;
-            box-shadow: var(--shadow-window);
-            backdrop-filter: blur(20px);
-            z-index: 99;
-            min-width: 280px;
-            border: 1px solid var(--border-color);
-        }
-        .countdown-widget-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .countdown-widget-display {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-        }
-        .countdown-widget-unit {
-            text-align: center;
-        }
-        .countdown-widget-number {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--accent-color);
-            line-height: 1;
-        }
-        .countdown-widget-label {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 4px;
-            font-weight: 600;
-        }
-
         .desktop { 
             padding: 100px 40px 40px 40px; 
             max-width: 1200px; 
@@ -160,7 +115,6 @@
         .sound-alert { text-align:center; color: #FF3B30; font-size:12px; margin-bottom:20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 
-
         .tinder-container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding-bottom: 20px; }
         
         .tinder-card-wrap { flex-grow: 1; width: 100%; max-width: 380px; position: relative; perspective: 1000px; cursor: grab; touch-action: none; user-select: none; }
@@ -205,7 +159,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255, 255, 255, 0.98);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 10000; /* Ensure Top */
+            z-index: 10000;
             opacity: 0; visibility: hidden; 
             transition: opacity 0.5s ease, visibility 0.5s;
             text-align: center; cursor: pointer;
@@ -235,14 +189,8 @@
             .window { width: 95%; max-height: 90vh; }
             .window-content { padding: 25px; }
             .status-bar { font-size: 12px; padding: 0 15px; }
+            .clock-group { gap: 15px; }
             .match-title { font-size: 48px; } .match-img { width: 100px; height: 100px; }
-            .countdown-widget {
-                bottom: 15px;
-                right: 15px;
-                padding: 15px 20px;
-                min-width: 240px;
-            }
-            .countdown-widget-number { font-size: 24px; }
         }
     </style>
 </head>
@@ -253,36 +201,14 @@
         <div class="clock-group">
             <div class="clock-item" id="clock-tpe"><span>TPE</span> --:--</div>
             <div class="clock-item" id="clock-del"><span>DEL</span> --:--</div>
-        </div>
-    </div>
-
-    <!-- Countdown Widget - Fixed Bottom Right -->
-    <div class="countdown-widget">
-        <div class="countdown-widget-title">✈️ Delhi Reunion</div>
-        <div class="countdown-widget-display">
-            <div class="countdown-widget-unit">
-                <div class="countdown-widget-number" id="widget-days">--</div>
-                <div class="countdown-widget-label">Days</div>
-            </div>
-            <div class="countdown-widget-unit">
-                <div class="countdown-widget-number" id="widget-hours">--</div>
-                <div class="countdown-widget-label">Hours</div>
-            </div>
-            <div class="countdown-widget-unit">
-                <div class="countdown-widget-number" id="widget-minutes">--</div>
-                <div class="countdown-widget-label">Mins</div>
-            </div>
-            <div class="countdown-widget-unit">
-                <div class="countdown-widget-number" id="widget-seconds">--</div>
-                <div class="countdown-widget-label">Secs</div>
-            </div>
+            <div class="clock-item" id="clock-countdown" style="color: var(--accent-color);"><span>✈️</span> Loading...</div>
         </div>
     </div>
 
     <div class="desktop">
         <div class="app-item" onclick="openWindow('win-sticky')"><div class="app-icon">📌</div><div class="app-label">Notes</div></div>
         <div class="app-item" onclick="openWindow('win-readme')"><div class="app-icon">📄</div><div class="app-label">README</div></div>
-        <div class="app-item" onclick="openWindow('win-photo')"><div class="app-icon">💑</div><div class="app-label">Photos</div></div>
+        <div class="app-item" onclick="openWindow('win-photo')"><div class="app-icon">👩‍❤️‍👨</div><div class="app-label">Photos</div></div>
         <div class="app-item" onclick="openWindow('win-music')"><div class="app-icon">🎵</div><div class="app-label">Voice Note</div></div>
         <div class="app-item" onclick="openWindow('win-youtube')"><div class="app-icon icon-youtube">📺</div><div class="app-label">Anthem</div></div>
         <div class="app-item" onclick="openWindow('win-monitor'); startMonitor();"><div class="app-icon icon-sys">📊</div><div class="app-label">Activity</div></div>
@@ -310,30 +236,26 @@ npm install blueberries
 npm install rajma-chawal 
 npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>⚠️ Known Issues</h2><ul><li><strong>Latency Warning:</strong> Due to the <code>TPE &lt;-&gt; DEL</code> server distance, physical touch functions are currently disabled. <em>Fix scheduled for 2026.</em></li><li><strong>Bug #0130:</strong> Developer misses this system too much.<ul><li><em>Status:</em> <strong>Won't Fix.</strong> This is a feature, not a bug.</li></ul></li></ul><hr style="margin:25px 0; border:0; border-top:1px solid var(--border-color);"><h2>📜 License & Contributors</h2><ul><li><strong>Developer & Owner:</strong> Abi (Yi-Yun) 🇹🇼</li><li><strong>Core System:</strong> Naveen 🇮🇳</li><li><strong>License:</strong> <strong>Lifetime Proprietary License.</strong><ul><li><em>Terms:</em> I Love You Naveen. Non-transferable. No refunds. Valid for eternity.</li></ul></li></ul><br><blockquote style="border-left:4px solid var(--accent-color); padding-left:15px; color:var(--text-muted); font-style:italic;">© 2026 Baobao OS Inc. All rights reserved. Made with ❤️ in Taiwan.</blockquote></div></div>
 
-    <!-- Photo Window with Tabs -->
     <div id="win-photo" class="window" style="max-width: 700px; max-height: 90vh;">
         <div class="window-header">
             <div class="window-title">Photos 💕</div>
             <button class="btn-close" onclick="closeWindow('win-photo')">✕</button>
         </div>
         <div class="window-content">
-            <!-- Tabs -->
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('featured')">Featured</button>
                 <button class="tab" onclick="switchTab('gallery')">Gallery</button>
                 <button class="tab" onclick="switchTab('upload')">Upload</button>
             </div>
 
-            <!-- Featured Tab -->
             <div id="tab-featured" class="tab-content active">
                 <div style="text-align:center;">
                     <img src="baobao.jpg" style="max-width:100%; border-radius:16px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); margin-bottom:20px;">
                     <p style="font-size:16px; font-weight:600; color:var(--text-main);">Your Baobao 🐻💕</p>
-                    <p style="font-size:14px; color:var(--text-muted);">Missing you every day</p>
+                    <p style="font-size:14px; color:var(--text-muted);">Missing you every day until February...</p>
                 </div>
             </div>
 
-            <!-- Gallery Tab -->
             <div id="tab-gallery" class="tab-content">
                 <div id="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
                     <div style="text-align: center; padding: 40px; grid-column: 1/-1; color: var(--text-muted);">
@@ -342,7 +264,6 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
                 </div>
             </div>
 
-            <!-- Upload Tab -->
             <div id="tab-upload" class="tab-content">
                 <div style="background: var(--icon-bg); border-radius: 16px; padding: 25px; margin-bottom: 20px; border: 2px dashed var(--border-color);">
                     <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--text-main);">📤 Upload New Photo</h3>
@@ -506,71 +427,78 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
     <canvas id="confetti-canvas"></canvas>
 
     <script>
+        console.log("%c Happy Birthday Naveen 🎂", "font-size: 30px; font-weight: bold; color: #FF2D55; background: #fff; padding: 10px; border-radius: 5px;");
+        console.log("Waiting for our meet hehe");
+
         // ============================================
-        // SUPABASE INITIALIZATION 
+        // SUPABASE INITIALIZATION (只在這裡宣告一次)
         // ============================================
         const SUPABASE_URL = 'https://btaouqxvaioibtsdboeu.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0YW91cXh2YWlvaWJ0c2Rib2V1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NTI5OTcsImV4cCI6MjA4NTIyODk5N30.2JvFe3AXqnmfB5G8mb1SkfXw26DHTF5oBMFkhVYmmhY';
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        
+
         // ============================================
-        // TAB SWITCHING FOR PHOTO WINDOW
+        // CLOCK & COUNTDOWN
+        // ============================================
+        function updateClock() {
+            const now = new Date();
+            const options = { hour: '2-digit', minute: '2-digit', hour12: false };
+            const getTimeString = (tz) => {
+                let timeStr = now.toLocaleTimeString('en-US', { ...options, timeZone: tz });
+                if (timeStr.startsWith('24')) {
+                    timeStr = timeStr.replace('24', '00');
+                }
+                return timeStr;
+            };
+
+            const tpeEl = document.getElementById('clock-tpe');
+            if(tpeEl) tpeEl.innerHTML = `<span>TPE</span> ${getTimeString('Asia/Taipei')}`;
+            
+            const delEl = document.getElementById('clock-del');
+            if(delEl) delEl.innerHTML = `<span>DEL</span> ${getTimeString('Asia/Kolkata')}`;
+        }
+
+        function updateCountdown() {
+            const targetDate = new Date('2026-02-13T00:00:00+05:30');
+            const now = new Date();
+            const diff = targetDate - now;
+            
+            const countdownEl = document.getElementById('clock-countdown');
+            if (!countdownEl) return;
+            
+            if (diff <= 0) {
+                countdownEl.innerHTML = '<span>✈️</span> Today!';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            countdownEl.innerHTML = `<span>✈️</span> ${days}d ${hours}h ${minutes}m`;
+        }
+
+        setInterval(updateClock, 1000);
+        setInterval(updateCountdown, 60000);
+        updateClock();
+        updateCountdown();
+
+        // ============================================
+        // TAB SWITCHING
         // ============================================
         function switchTab(tabName) {
-            // Remove active class from all tabs
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            // Add active class to selected tab
             event.target.classList.add('active');
             document.getElementById('tab-' + tabName).classList.add('active');
             
-            // Load gallery when switching to gallery tab
             if (tabName === 'gallery') {
                 loadGallery();
             }
         }
-        
-        // ============================================
-        // COUNTDOWN WIDGET (桌面固定顯示)
-        // ============================================
-        let countdownInterval;
-        
-        function startCountdownWidget() {
-            const targetDate = new Date('2026-02-13T00:00:00+05:30');
-            
-            function updateCountdown() {
-                const now = new Date();
-                const diff = targetDate - now;
-                
-                if (diff <= 0) {
-                    document.getElementById('widget-days').textContent = '0';
-                    document.getElementById('widget-hours').textContent = '0';
-                    document.getElementById('widget-minutes').textContent = '0';
-                    document.getElementById('widget-seconds').textContent = '0';
-                    clearInterval(countdownInterval);
-                    return;
-                }
-                
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                document.getElementById('widget-days').textContent = days;
-                document.getElementById('widget-hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('widget-minutes').textContent = minutes.toString().padStart(2, '0');
-                document.getElementById('widget-seconds').textContent = seconds.toString().padStart(2, '0');
-            }
-            
-            updateCountdown();
-            countdownInterval = setInterval(updateCountdown, 1000);
-        }
-        
-        // Start countdown on page load
-        startCountdownWidget();
-        
+
         // ============================================
         // GALLERY FUNCTIONALITY
         // ============================================
@@ -641,8 +569,6 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
                     uploadBtn.style.background = 'var(--text-muted)';
                     uploadBtn.style.cursor = 'not-allowed';
                     statusDiv.textContent = '';
-                    
-                    // Switch to gallery tab to show uploaded photo
                     switchTab('gallery');
                 }, 1500);
                 
@@ -728,7 +654,7 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
             viewer.onclick = () => viewer.remove();
             document.body.appendChild(viewer);
         }
-        
+
         // ============================================
         // CHAT FUNCTIONALITY
         // ============================================
@@ -841,11 +767,9 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
         }
 
         // ============================================
-        // ORIGINAL CODE
+        // WINDOW MANAGEMENT
         // ============================================
-        console.log("%c Happy Birthday Naveen 🎂", "font-size: 30px; font-weight: bold; color: #FF2D55; background: #fff; padding: 10px; border-radius: 5px;");
-        console.log("Waiting for our meet hehe");
-
+        
         function openWindow(id) {
             document.querySelectorAll('.window').forEach(w => w.classList.remove('open'));
             const win = document.getElementById(id);
@@ -866,7 +790,7 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
                 const iframe = document.getElementById('rickroll-frame');
                 if(iframe) { const src = iframe.src; iframe.src = ''; iframe.src = src; }
             }
-            if(id === 'win-monitor') { clearInterval(monitorInterval); }
+            if(id === 'win-monitor') { clearInterval(window.monitorInterval); }
             if(id === 'win-tinder') {
                 setTimeout(() => {
                     const card = document.getElementById('tinder-card');
@@ -899,27 +823,6 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
         function closeOverlay() {
             document.getElementById('overlay').classList.remove('show');
         }
-
-        function updateClock() {
-            const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit', hour12: false };
-            const getTimeString = (tz) => {
-                let timeStr = now.toLocaleTimeString('en-US', { ...options, timeZone: tz });
-                if (timeStr.startsWith('24')) {
-                    timeStr = timeStr.replace('24', '00');
-                }
-                return timeStr;
-            };
-
-            const tpeEl = document.getElementById('clock-tpe');
-            if(tpeEl) tpeEl.innerHTML = `<span>TPE</span> ${getTimeString('Asia/Taipei')}`;
-            
-            const delEl = document.getElementById('clock-del');
-            if(delEl) delEl.innerHTML = `<span>DEL</span> ${getTimeString('Asia/Kolkata')}`;
-        }
-
-        setInterval(updateClock, 1000); 
-        updateClock();
 
         const audio = document.getElementById('audio-file');
         const playBtn = document.getElementById('play-btn');
@@ -1017,7 +920,6 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
             }
         }
 
-        let monitorInterval;
         function startMonitor() {
             const cpu = document.getElementById('bar-cpu');
             const mem = document.getElementById('bar-mem');
@@ -1027,7 +929,7 @@ npm install chole-bhature --remote-wish</pre></div></div><hr style="margin:25px 
             const valHr = document.getElementById('val-hr');
 
             if(cpu) {
-                monitorInterval = setInterval(() => {
+                window.monitorInterval = setInterval(() => {
                     let c = Math.floor(Math.random() * 6) + 95;
                     cpu.style.width = c + "%"; valCpu.innerText = c + "%";
                     mem.style.width = "99%"; valMem.innerText = "99%";
