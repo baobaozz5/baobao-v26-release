@@ -497,7 +497,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                     .insert([{
                         url: urlData.publicUrl,
                         caption: caption || null,
-                        uploaded_by: 'abi'
+                        uploaded_by: 'naveen'
                     }]);
                 
                 if (dbError) throw dbError;
@@ -617,7 +617,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 
                 data.forEach(msg => {
                     const bubble = document.createElement('div');
-                    bubble.className = msg.from_user === 'abi' ? 'chat-bubble me' : 'chat-bubble';
+                    bubble.className = msg.from_user === 'naveen' ? 'chat-bubble me' : 'chat-bubble';
                     bubble.textContent = msg.content;
                     chatBody.appendChild(bubble);
                 });
@@ -636,7 +636,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                     { event: 'INSERT', schema: 'public', table: 'messages' },
                     (payload) => {
                         const chatBody = document.getElementById('chat-body-content');
-                        if (chatBody && payload.new.from_user !== 'abi') {
+                        if (chatBody && payload.new.from_user !== 'naveen') {
                             const bubble = document.createElement('div');
                             bubble.className = 'chat-bubble';
                             bubble.textContent = payload.new.content;
@@ -678,7 +678,7 @@ npm install chole-bhature --remote-wish</div><hr style="margin:25px 0; border:0;
                 const { error } = await supabase
                     .from('messages')
                     .insert([{
-                        from_user: 'abi',
+                        from_user: 'naveen',
                         content: msg
                     }]);
                 
